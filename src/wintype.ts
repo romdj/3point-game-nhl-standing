@@ -1,0 +1,1 @@
+export enum WinType { REGULAR, OVERTIME, SHOOTOUT}
