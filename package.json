@@ -4,7 +4,8 @@
   "description": "--- ## About this Project",
   "main": "dist/app.js",
   "scripts": {
-    "start": "tsc; node dist/webserver.js",
+    "start": "rm -rf dist; tsc; node dist/webserver.js",
+    "fetch": "rm -rf dist; tsc; node dist/app.js",
     "build": "rm -rf dist && npm test && tsc",
     "prepare": "npm run build",
     "test": "mocha -r ts-node/register test/unit/**/*.ts",
@@ -43,6 +44,7 @@
   },
   "dependencies": {
     "express": "^4.17.1",
+    "request": "^2.88.2",
     "request-promise-native": "^1.0.8"
   }
 }
