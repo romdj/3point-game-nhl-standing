@@ -4,9 +4,10 @@
   "description": "--- ## About this Project",
   "main": "dist/app.js",
   "scripts": {
-    "start": "rm -rf dist; tsc; node dist/webserver.js",
-    "fetch": "rm -rf dist; tsc; node dist/app.js",
-    "build": "rm -rf dist && npm test && tsc",
+    "clean": "rm -rf dist",
+    "start": "npm run clean; tsc; node dist/webserver.js",
+    "fetch": "npm run clean; tsc; node dist/app.js",
+    "build": "npm run clean && npm test && tsc",
     "prepare": "npm run build",
     "test": "mocha -r ts-node/register test/unit/**/*.ts",
     "coverage": "nyc npm run test",
