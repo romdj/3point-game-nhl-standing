@@ -1,1 +1,1 @@
-export enum WinType { REGULAR, OVERTIME, SHOOTOUT}
+export enum WinType { REGULATION, OVERTIME, SHOOTOUT,UNDEFINED}
