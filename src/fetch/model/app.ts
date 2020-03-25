@@ -18,23 +18,4 @@ rq.get(nhlCompleteScheduleURL).then(value => {
 
   console.log(`number of games found for the period between ${intervalStartDate} and ${intervalEndDate}: ${NHLDownstreamGames.length}`);
 
-
-
-  console.log(`other games : ${JSON.stringify(RegularSeasonGames.filter((game: any) => !isComplete(game)))}`);
-  writeFileSync("data/others.json", JSON.stringify(RegularSeasonGames.filter((game: any) => !isComplete(game)), null, 2), "utf8");
-
-  // console.log(`Number of PreSeason games played : ${PreSeasonGames.length}`);
-  console.log(`Number of Regular Season games played : ${RegularSeasonGames.length}`);
-  // console.log(`Number of Playoff games played : ${PlayoffGames.length}`);
-  // console.log(`Number of All Star games played : ${All_StarGames.length}`);
-
-  console.log(`Number of Regular Season games  / Complete: ${RegularSeasonGames.length} / ${CompletedRegularSeasonGames.length}`);
-  console.log(`Number of Regulation Regular Season games played : ${RegulationRegularSeasonGames.length}`);
-  console.log(`Number of OverTime Regular Season games played : ${OvertimeRegularSeasonGames.length}`);
-  console.log(`Number of Shootout Regular Season games played : ${ShootoutRegularSeasonGames.length}`);
-
-
-  // writeFileSync("data/result.json", JSON.stringify(NHLDownstreamGames, null, 2), "utf8");
-
-
 });
