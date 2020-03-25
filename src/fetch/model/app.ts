@@ -37,6 +37,9 @@ rq.get(nhlCompleteScheduleURL).then(value => {
   // const All_StarGames = NHLDownstreamGames.filter((game: any) => all_starRegex.test(game.gamePk));
 
 
+  console.log(`other games : ${JSON.stringify(RegularSeasonGames.filter((game: any) => !isComplete(game)))}`);
+  writeFileSync("data/others.json", JSON.stringify(RegularSeasonGames.filter((game: any) => !isComplete(game)), null, 2), "utf8");
+  
   // console.log(`Number of PreSeason games played : ${PreSeasonGames.length}`);
   console.log(`Number of Regular Season games played : ${RegularSeasonGames.length}`);
   // console.log(`Number of Playoff games played : ${PlayoffGames.length}`);
