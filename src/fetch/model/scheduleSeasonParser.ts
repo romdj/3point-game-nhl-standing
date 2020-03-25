@@ -13,7 +13,7 @@
  * For playoff games, the 2nd digit of the specific number gives the round of the playoffs, the 3rd digit specifies the matchup, and the 4th digit specifies the game (out of 7).
 
  */
-class ScheduleSeasonParser {
+export class ScheduleSeasonParser {
     readonly preSeasonGames: Array<Object>;
     readonly regularSeasonGames: any;
     readonly playoffGames: any;
