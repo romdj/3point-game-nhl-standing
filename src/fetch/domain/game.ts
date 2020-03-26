@@ -1,5 +1,6 @@
 import { TeamInformation } from "./teamInformation";
 import { WinType } from "./wintype";
+import { LeagueRecord } from "./leagueRecord";
 
 export class Game {
   readonly _id: string;
@@ -15,6 +16,24 @@ export class Game {
     if (isRegulation(gameNHLSchedule)) this.winType = WinType.REGULATION;
     if (isOvertime(gameNHLSchedule)) this.winType = WinType.OVERTIME;
     if (isShootout(gameNHLSchedule)) this.winType = WinType.SHOOTOUT;
+  }
+
+  getPoint = (teamName: string): number => {
+    if (teamName === this.winnerId) {
+      if (this.winType === WinType.REGULATION) return 3;
+      return 2;
+    }
+    if (this.winType === WinType.REGULATION) return 0;
+    return 1;
+  }
+
+  addRecord = (teamName: string, record: LeagueRecord): number => {
+    if (teamName === this.winnerId) {
+      if (this.winType === WinType.REGULATION) return 3;
+      return 2;
+    }
+    if (this.winType === WinType.REGULATION) return 0;
+    return 1;
   }
 }
 
