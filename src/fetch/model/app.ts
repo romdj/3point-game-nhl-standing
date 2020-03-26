@@ -52,11 +52,12 @@ rq.get(nhlCompleteScheduleURL)
         });
       teamsWithPoints.push({
         name: team,
-        record: record
+        points: score,
+        record
       });
     });
     console.log(teamsWithPoints.sort((a: any, b: any) => b.points - a.points));
-    rq.get(nhlStandingsURL).then((something: any) => console.log(something));
+    // rq.get(nhlStandingsURL).then((something: any) => console.log(something));
 
     // .reduce((accumulator, currentGame) => {
     //   return accumulator.getPoint(team) + currentGame.getPoint(team);
