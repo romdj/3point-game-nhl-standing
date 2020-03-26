@@ -1,13 +1,15 @@
-export class TeamInformation {
-  public name: string;
-  public id?: string;
-  public acronym?: string;
-  public points: number;
+import { LeagueRecord } from "./leagueRecord";
 
-  constructor(name: string, points: number, acronym?: string, id?: string) {
+export class TeamInformation {
+  name: string;
+  id?: string;
+  acronym?: string;
+  record: LeagueRecord;
+
+  constructor(name: string, record: LeagueRecord, acronym?: string, id?: string) {
     this.name = name;
-    this.points = points;
     this.id = id;
     this.acronym = acronym;
+    this.record = record;
   }
 }

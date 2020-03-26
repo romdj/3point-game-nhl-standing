@@ -27,13 +27,8 @@ export class Game {
     return 1;
   }
 
-  addRecord = (teamName: string, record: LeagueRecord): number => {
-    if (teamName === this.winnerId) {
-      if (this.winType === WinType.REGULATION) return 3;
-      return 2;
-    }
-    if (this.winType === WinType.REGULATION) return 0;
-    return 1;
+  addRecord = (teamName: string, record: LeagueRecord): void => {
+    record.addRecord(teamName === this.winnerId, this.winType);
   }
 }
 
