@@ -49,7 +49,6 @@ export class LeagueRecord {
         this.updatePoints();
     }
 
-
     private addRegulationWin = () => { this.regulationWin += 1; };
     private addRegulationLoss = () => { this.regulationLoss += 1; };
     private addOvertimeWin = () => { this.overtimeWin += 1; };
@@ -60,7 +59,7 @@ export class LeagueRecord {
     updatePoints = () => {
         this.points = this.getPoints();
     }
-    getPoints = ():number => {
+    getPoints = (): number => {
         return this.regulationWin * 3 + this.overtimeWin * 2 + this.shootoutWin * 2 + this.overtimeLoss + this.shootoutLoss;
     }
 }
