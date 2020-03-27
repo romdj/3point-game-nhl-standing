@@ -37,7 +37,7 @@ rq.get(nhlCompleteScheduleURL)
       const tInfo = new TeamInformation(team, record);
       await fillTeamInfo(tInfo).then(_ => teamsWithPoints.push(tInfo));
     });
-    console.log(teamsWithPoints.sort((a: TeamInformation, b: TeamInformation) => b.record.points - a.record.points));
+    // console.log(teamsWithPoints.sort((a: TeamInformation, b: TeamInformation) => b.record.points - a.record.points));
 
     // .reduce((accumulator, currentGame) => {
     //   return accumulator.getPoint(team) + currentGame.getPoint(team);
