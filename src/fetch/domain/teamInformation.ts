@@ -1,15 +1,33 @@
+import * as rq from "request-promise-native";
+
 import { LeagueRecord } from "./leagueRecord";
+import { writeFileSync } from "fs";
 
 export class TeamInformation {
-  name: string;
-  id?: string;
-  acronym?: string;
+  id: string;
   record: LeagueRecord;
+  name?: string;
+  fullName?: string;
+  acronym?: string;
+  conference?: string;
+  division?: string;
 
-  constructor(name: string, record: LeagueRecord, acronym?: string, id?: string) {
-    this.name = name;
+  constructor(id: string, record: LeagueRecord) {
     this.id = id;
-    this.acronym = acronym;
     this.record = record;
   }
+}
+
+export async function fillTeamInfo(team: TeamInformation): Promise<void> {
+  const teamAPIURL = `https://statsapi.web.nhl.com/api/v1/teams/${team.id}`;
+  await rq.get(teamAPIURL)
+    .then((teamResponseData: any) => {
+      const teamInfo = JSON.parse(teamResponseData).teams[0];
+      team.acronym = teamInfo.abbreviation;
+      team.name = teamInfo.teamName;
+      team.fullName = `${teamInfo.locationName} ${teamInfo.teamName}`;
+      team.division = teamInfo.division.name;
+      team.conference = teamInfo.conference.name;
+    })
+    .catch(err => console.log(`err!: ${err}`));
 }
