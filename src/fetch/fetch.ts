@@ -1,10 +1,10 @@
 import * as rq from "request-promise-native";
 import moment = require('moment');
 
-import { Game } from '../domain/game';
-import { LeagueRecord } from "../domain/leagueRecord";
-import { ScheduleSeasonParser } from './scheduleSeasonParser';
-import { TeamInformation, fillTeamInfo } from "../domain/teamInformation";
+import { Game } from './domain/game';
+import { LeagueRecord } from "./domain/leagueRecord";
+import { ScheduleSeasonParser } from './model/scheduleSeasonParser';
+import { TeamInformation, fillTeamInfo } from "./domain/teamInformation";
 
 const intervalStartDate: string = '2019-09-01';
 const season: string = '20192020';
