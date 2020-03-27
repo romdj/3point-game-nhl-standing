@@ -54,16 +54,12 @@ const isHomeWin = (gameNHLSchedule: any): boolean => {
 
 const getWinner = (gameNHLSchedule: any): string => {
   if (isHomeWin(gameNHLSchedule))
-    return gameNHLSchedule.linescore.teams.home.team.name;
-  return gameNHLSchedule.linescore.teams.away.team.name;
-  // return gameNHLSchedule.linescore.teams.home.team.id;
-  // return gameNHLSchedule.linescore.teams.away.team.id;
+    return gameNHLSchedule.linescore.teams.home.team.id;
+  return gameNHLSchedule.linescore.teams.away.team.id;
 }
 
 const getLoser = (gameNHLSchedule: any): string => {
   if (isHomeWin(gameNHLSchedule))
-    return gameNHLSchedule.linescore.teams.away.team.name;
-  return gameNHLSchedule.linescore.teams.home.team.name;
-  // return gameNHLSchedule.linescore.teams.away.team.id;
-  // return gameNHLSchedule.linescore.teams.home.team.id;
+    return gameNHLSchedule.linescore.teams.away.team.id;
+  return gameNHLSchedule.linescore.teams.home.team.id;
 }
