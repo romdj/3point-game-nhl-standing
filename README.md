@@ -22,7 +22,7 @@ open up a MR/PR and I will get it merged.  Generally speaking I get things done
 in a few days as time permits between work and other obligations.
 
 ## Contact
-You can reach me by mp, I'll think if Gitter makes sense, but since this is probably a very insignificant project, I don't expect an overwhelming popularity :)
+You can reach me by mp, I'll think if Gitter makes sense, but since this is probably a very insignificant project, I don't expect an overwhelming popularity :grin:
 
 ## Acknowledgements
 
