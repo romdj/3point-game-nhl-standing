@@ -15,6 +15,10 @@ Here is what remains to be done:
 - Deployment to AWS || GCP
 - Storing data in Cache/DB
 
+## Stack Architecture
+Here is a very simple diagram of what the architecture looks like:
+![AWS Architecture diagram](./media/architecture_diagram.png)
+
 ## Contributing
 
 I am only one person so if you see something I have missed please feel free to 
