@@ -1,8 +1,7 @@
 {
   "name": "3point-game-nhl-standing",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "--- ## About this Project",
-  "main": "dist/app.js",
   "scripts": {
     "clean": "rm -rf dist",
     "fetch": "npm run clean; tsc; node dist/fetch/model/fetch.js",
@@ -16,8 +15,8 @@
     "type": "git",
     "url": "git+https://gitlab.com/romdj/nhlapi.git"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["NHL", "IIHF", "Hockey"],
+  "author": "Romain Lussier",
   "license": "ISC",
   "bugs": {
     "url": "https://gitlab.com/romdj/nhlapi/issues"
