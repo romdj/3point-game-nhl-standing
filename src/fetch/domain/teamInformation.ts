@@ -1,7 +1,5 @@
 import * as rq from "request-promise-native";
-
 import { LeagueRecord } from "./leagueRecord";
-import { writeFileSync } from "fs";
 
 export class TeamInformation {
   id: string;
