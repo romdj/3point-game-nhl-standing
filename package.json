@@ -4,10 +4,10 @@
   "description": "--- ## About this Project",
   "scripts": {
     "clean": "rm -rf dist",
-    "fetch": "npm run clean; tsc; node dist/fetch/model/fetch.js",
+    "fetch": "npm run clean; tsc; node dist/fetch/fetch.js",
     "cfetch": "clear; npm run fetch",
     "build": "npm run clean ; npm i; tsc; npm test",
-    "test": "mocha -r ts-node/register test/unit/**/*.ts",
+    "test": "mocha --recursive -r ts-node/register test/unit/**/*.ts test/unit/**/**/*.ts",
     "coverage": "nyc npm run test",
     "lint": "eslint './{src,test}/**/*.ts'"
   },
@@ -16,7 +16,7 @@
     "url": "git+https://gitlab.com/romdj/nhlapi.git"
   },
   "keywords": ["NHL", "IIHF", "Hockey"],
-  "author": "Romain Lussier",
+  "author": "romdj",
   "license": "ISC",
   "bugs": {
     "url": "https://gitlab.com/romdj/nhlapi/issues"
