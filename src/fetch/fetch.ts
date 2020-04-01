@@ -8,7 +8,7 @@ import { TeamInformation, fillTeamInfo } from "./domain/teamInformation";
 
 const fetch = async () => {
   const intervalStartDate: string = '2019-09-01';
-  const season: string = '20192020';
+  const season: string = getCurrentSeason();
   const intervalEndDate: string = moment().format("YYYY-MM-DD");
   const nhlAPIURL: string = "https://statsapi.web.nhl.com/api/v1/";
   const from: string = `?startDate=${intervalStartDate}`;
@@ -23,6 +23,7 @@ const fetch = async () => {
       const NHLDownstreamGames = dates.map((item: any) => item.games).flat();
       const regularSeasonGames = new ScheduleSeasonParser(NHLDownstreamGames).regularSeasonGames;
       const games: Array<Game> = regularSeasonGames.map((game: any) => new Game(game));
+      
       const teams = Array.from(new Set([...games.map((game: any) => game.winnerId), ...games.map((game: any) => game.loserId)]));
 
       const teamsWithPoints: TeamInformation[] = [];
@@ -46,7 +47,15 @@ const fetch = async () => {
     });
 }
 
+const getCurrentSeason = () => {
+  if (moment().month() >= 9 && moment().month() <= 12)
+    return `${moment().year()}${moment().year() + 1}`;
+  return `${moment().year() - 1}${moment().year()}`;
+};
+
 exports.handler = async function (event: any, context: any) {
   await fetch();
   return 'ok';
 }
+
+fetch();
