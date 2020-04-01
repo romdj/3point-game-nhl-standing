@@ -5,11 +5,9 @@
   "main": "dist/app.js",
   "scripts": {
     "clean": "rm -rf dist",
-    "start": "npm run clean; tsc; node dist/serve/webserver.js",
-    "fetch": "npm run clean; tsc; node dist/fetch/model/app.js",
-    "cfetch": "clear; npm run clean; tsc; time node dist/fetch/model/app.js",
+    "fetch": "npm run clean; tsc; node dist/fetch/model/fetch.js",
+    "cfetch": "clear; npm run fetch",
     "build": "npm run clean ; npm i; tsc; npm test",
-    "prepare": "npm run build",
     "test": "mocha -r ts-node/register test/unit/**/*.ts",
     "coverage": "nyc npm run test",
     "lint": "eslint './{src,test}/**/*.ts'"
