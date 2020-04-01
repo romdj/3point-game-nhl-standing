@@ -9,7 +9,7 @@ export class Game {
   readonly winType: WinType;
 
   constructor(gameNHLSchedule: any) {
-    this._id = gameNHLSchedule.gamePk;
+    this._id = `${gameNHLSchedule.gamePk}`;
     this.winnerId = getWinner(gameNHLSchedule);
     this.loserId = getLoser(gameNHLSchedule);
     this.winType = WinType.UNDEFINED;
@@ -18,8 +18,8 @@ export class Game {
     if (isShootout(gameNHLSchedule)) this.winType = WinType.SHOOTOUT;
   }
 
-  getPoint = (teamName: string): number => {
-    if (teamName === this.winnerId) {
+  getPoint = (teamId: string): number => {
+    if (teamId === this.winnerId) {
       if (this.winType === WinType.REGULATION) return 3;
       return 2;
     }
@@ -27,8 +27,8 @@ export class Game {
     return 1;
   }
 
-  addRecord = (teamName: string, record: LeagueRecord): void => {
-    record.addRecord(teamName === this.winnerId, this.winType);
+  addRecord = (teamId: string, record: LeagueRecord): void => {
+    record.addRecord(teamId === this.winnerId, this.winType);
   }
 }
 
@@ -54,12 +54,12 @@ const isHomeWin = (gameNHLSchedule: any): boolean => {
 
 const getWinner = (gameNHLSchedule: any): string => {
   if (isHomeWin(gameNHLSchedule))
-    return gameNHLSchedule.linescore.teams.home.team.id;
-  return gameNHLSchedule.linescore.teams.away.team.id;
+    return `${gameNHLSchedule.linescore.teams.home.team.id}`;
+  return `${gameNHLSchedule.linescore.teams.away.team.id}`;
 }
 
 const getLoser = (gameNHLSchedule: any): string => {
   if (isHomeWin(gameNHLSchedule))
-    return gameNHLSchedule.linescore.teams.away.team.id;
-  return gameNHLSchedule.linescore.teams.home.team.id;
+    return `${gameNHLSchedule.linescore.teams.away.team.id}`;
+  return `${gameNHLSchedule.linescore.teams.home.team.id}`;
 }
