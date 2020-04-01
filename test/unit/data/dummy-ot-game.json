@@ -1,0 +1,175 @@
+{
+    "gamePk": 2019020002,
+    "link": "/api/v1/game/2019020002/feed/live",
+    "gameType": "R",
+    "season": "20192020",
+    "gameDate": "2019-10-03T00:00:00Z",
+    "status": {
+        "abstractGameState": "Final",
+        "codedGameState": "7",
+        "detailedState": "Final",
+        "statusCode": "7",
+        "startTimeTBD": false
+    },
+    "teams": {
+        "away": {
+            "leagueRecord": {
+                "wins": 1,
+                "losses": 0,
+                "ot": 0,
+                "type": "league"
+            },
+            "score": 3,
+            "team": {
+                "id": 15,
+                "name": "Washington Capitals",
+                "link": "/api/v1/teams/15"
+            }
+        },
+        "home": {
+            "leagueRecord": {
+                "wins": 0,
+                "losses": 0,
+                "ot": 1,
+                "type": "league"
+            },
+            "score": 2,
+            "team": {
+                "id": 19,
+                "name": "St. Louis Blues",
+                "link": "/api/v1/teams/19"
+            }
+        }
+    },
+    "linescore": {
+        "currentPeriod": 4,
+        "currentPeriodOrdinal": "OT",
+        "currentPeriodTimeRemaining": "Final",
+        "periods": [
+            {
+                "periodType": "REGULAR",
+                "startTime": "2019-10-03T00:21:40Z",
+                "endTime": "2019-10-03T00:56:13Z",
+                "num": 1,
+                "ordinalNum": "1st",
+                "home": {
+                    "goals": 2,
+                    "shotsOnGoal": 7,
+                    "rinkSide": "left"
+                },
+                "away": {
+                    "goals": 1,
+                    "shotsOnGoal": 5,
+                    "rinkSide": "right"
+                }
+            },
+            {
+                "periodType": "REGULAR",
+                "startTime": "2019-10-03T01:14:48Z",
+                "endTime": "2019-10-03T01:54:00Z",
+                "num": 2,
+                "ordinalNum": "2nd",
+                "home": {
+                    "goals": 0,
+                    "shotsOnGoal": 8,
+                    "rinkSide": "right"
+                },
+                "away": {
+                    "goals": 1,
+                    "shotsOnGoal": 15,
+                    "rinkSide": "left"
+                }
+            },
+            {
+                "periodType": "REGULAR",
+                "startTime": "2019-10-03T02:12:42Z",
+                "endTime": "2019-10-03T02:47:13Z",
+                "num": 3,
+                "ordinalNum": "3rd",
+                "home": {
+                    "goals": 0,
+                    "shotsOnGoal": 7,
+                    "rinkSide": "left"
+                },
+                "away": {
+                    "goals": 0,
+                    "shotsOnGoal": 10,
+                    "rinkSide": "right"
+                }
+            },
+            {
+                "periodType": "OVERTIME",
+                "startTime": "2019-10-03T02:48:40Z",
+                "endTime": "2019-10-03T02:54:00Z",
+                "num": 4,
+                "ordinalNum": "OT",
+                "home": {
+                    "goals": 0,
+                    "shotsOnGoal": 0,
+                    "rinkSide": "right"
+                },
+                "away": {
+                    "goals": 1,
+                    "shotsOnGoal": 4,
+                    "rinkSide": "left"
+                }
+            }
+        ],
+        "shootoutInfo": {
+            "away": {
+                "scores": 0,
+                "attempts": 0
+            },
+            "home": {
+                "scores": 0,
+                "attempts": 0
+            }
+        },
+        "teams": {
+            "home": {
+                "team": {
+                    "id": 19,
+                    "name": "St. Louis Blues",
+                    "link": "/api/v1/teams/19"
+                },
+                "goals": 2,
+                "shotsOnGoal": 22,
+                "goaliePulled": false,
+                "numSkaters": 3,
+                "powerPlay": false
+            },
+            "away": {
+                "team": {
+                    "id": 15,
+                    "name": "Washington Capitals",
+                    "link": "/api/v1/teams/15"
+                },
+                "goals": 3,
+                "shotsOnGoal": 34,
+                "goaliePulled": false,
+                "numSkaters": 3,
+                "powerPlay": false
+            }
+        },
+        "powerPlayStrength": "Even",
+        "hasShootout": false,
+        "intermissionInfo": {
+            "intermissionTimeRemaining": 0,
+            "intermissionTimeElapsed": 0,
+            "inIntermission": false
+        },
+        "powerPlayInfo": {
+            "situationTimeRemaining": 0,
+            "situationTimeElapsed": 171,
+            "inSituation": false
+        }
+    },
+    "venue": {
+        "id": 5076,
+        "name": "Enterprise Center",
+        "link": "/api/v1/venues/5076"
+    },
+    "content": {
+        "link": "/api/v1/game/2019020002/content"
+    }
+}
