@@ -3,3 +3,11 @@ node_js:
   - stable
 script:
   - npm run build
+
+# deploy:
+#   provider: lambda
+#   function_name: "fetch"
+#   region: "eu-west-1"
+#   role: "arn:aws:iam::0123456789012:role/lambda_basic_execution"
+#   runtime: "nodejs12.x"
+#   handler_name: "handler"  
