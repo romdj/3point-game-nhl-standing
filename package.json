@@ -28,7 +28,6 @@
   },
   "homepage": "https://gitlab.com/romdj/nhlapi#readme",
   "devDependencies": {
-    "@istanbuljs/nyc-config-typescript": "^1.0.1",
     "@types/chai": "^4.2.9",
     "@types/express": "^4.17.3",
     "@types/jest": "^25.2.1",
