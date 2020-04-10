@@ -1,0 +1,43 @@
+x-httpStatusMock: &httpStatusMock
+  AuthorizationType: 'NONE'
+  HttpMethod: 'ANY'
+  Integration:
+    Type: 'MOCK'
+    RequestTemplates:
+      'application/json': '{"statusCode": 200}'
+    IntegrationResponses:
+      - StatusCode: 405
+        ResponseParameters:
+          'method.response.header.X-Frame-Options': "'deny'"
+          'method.response.header.Cache-Control': "'no-cache, no-store, must-revalidate'"
+          'method.response.header.Pragma': "'no-cache'"
+          'method.response.header.Expires': "'0'"
+          'method.response.header.api-version': "'${self:custom.apiVersion}'"
+          'method.response.header.transactionId': 'context.requestId'
+  MethodResponses:
+    - ResponseModels:
+        'application/json': 'Empty'
+      ResponseParameters:
+        'method.response.header.X-Frame-Options': True
+        'method.response.header.Cache-Control': True
+        'method.response.header.Pragma': True
+        'method.response.header.Expires': True
+        'method.response.header.api-version': True
+        'method.response.header.transactionId': True
+      StatusCode: 405
+  RestApiId: ${cf:${self:custom.apiStack}.ApiGatewayRestApiId}
+
+resources:
+  Resources:
+    SubscriberMock:
+      Type: 'AWS::ApiGateway::Method'
+      Properties:
+        <<: *httpStatusMock
+        ResourceId:
+          Ref: 'ApiGatewayResourceConnectDatabrokerSubscriber'
+    SubscriberIdMock:
+      Type: 'AWS::ApiGateway::Method'
+      Properties:
+        <<: *httpStatusMock
+        ResourceId:
+          Ref: 'ApiGatewayResourceConnectDatabrokerSubscriberIdVar'

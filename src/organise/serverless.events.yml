@@ -1,0 +1,130 @@
+apiGateway:
+  restApiId:
+    'Fn::ImportValue': DBS-Api-RestApiId-${self:provider.stage}
+  restApiRootResourceId:
+    'Fn::ImportValue': DBS-Api-RootResourceId-${self:provider.stage}
+  restApiResources:
+    /connect/databroker:
+      'Fn::ImportValue': DBS-Api-DatabrokerResourceId-${self:provider.stage}
+create:
+  path: /connect/databroker/Subscriber
+  method: post
+  authorizer:
+    type: CUSTOM
+    authorizerId:
+      'Fn::ImportValue': DBS-Api-AuthorizerId-${self:provider.stage}
+  documentation:
+    requestModels:
+      'application/json': SubscriberRequest
+    requestHeaders:
+      - ${self:custom.parameter-definitions.accept}
+      - ${self:custom.parameter-definitions.api-version}
+      - ${self:custom.parameter-definitions.authorization}
+    methodResponses:
+      - statusCode: '201'
+        description: __OK.__ Created.
+        responseHeaders:
+          - ${self:custom.parameter-definitions.api-version}
+          - ${self:custom.parameter-definitions.location}
+          - ${self:custom.parameter-definitions.e-tag}
+          - ${self:custom.parameter-definitions.last-modified}
+        responseModels:
+          'application/json': SubscriberResponse
+      - ${self:custom.returnCodes.400}
+      - ${self:custom.returnCodes.401}
+      - ${self:custom.returnCodes.403}
+      - ${self:custom.returnCodes.406}
+      - ${self:custom.returnCodes.415}
+      - ${self:custom.returnCodes.500}
+list:
+  path: /connect/databroker/Subscriber
+  method: get
+  authorizer:
+    type: CUSTOM
+    authorizerId:
+      'Fn::ImportValue': DBS-Api-AuthorizerId-${self:provider.stage}
+  documentation:
+    tags:
+      - Subscriber
+    requestHeaders:
+      - ${self:custom.parameter-definitions.api-version}
+      - ${self:custom.parameter-definitions.authorization}
+    queryParams:
+      - ${self:custom.parameter-definitions._lastUpdated}
+      - ${self:custom.parameter-definitions._id}
+      - name: SubscriberName
+        in: query
+        description: Search by name.
+        required: false
+        type: string
+    methodResponses:
+      - statusCode: '200'
+        description: '__Success.__ '
+        responseHeaders:
+          - ${self:custom.parameter-definitions.api-version}
+          - ${self:custom.parameter-definitions.content-type}
+        responseModels:
+          'application/json': BundleOfSubscriber
+      - ${self:custom.returnCodes.400}
+      - ${self:custom.returnCodes.401}
+      - ${self:custom.returnCodes.403}
+      - ${self:custom.returnCodes.406}
+      - ${self:custom.returnCodes.500}
+get:
+  path: /connect/databroker/Subscriber/{id}
+  method: get
+  authorizer:
+    type: CUSTOM
+    authorizerId:
+      'Fn::ImportValue': DBS-Api-AuthorizerId-${self:provider.stage}
+  documentation:
+    tags:
+      - Subscriber
+    requestHeaders:
+      - ${self:custom.parameter-definitions.api-version}
+      - ${self:custom.parameter-definitions.authorization}
+    queryParams:
+      - ${self:custom.parameter-definitions.id}
+    methodResponses:
+      - statusCode: '200'
+        description: '__Success.__ '
+        responseHeaders:
+          - ${self:custom.parameter-definitions.api-version}
+          - ${self:custom.parameter-definitions.content-type}
+        responseModels:
+          'application/json': SubscriberResponse
+      - ${self:custom.returnCodes.400}
+      - ${self:custom.returnCodes.401}
+      - ${self:custom.returnCodes.403}
+      - ${self:custom.returnCodes.406}
+      - ${self:custom.returnCodes.500}
+delete:
+  path: /connect/databroker/Subscriber/{id}
+  method: delete
+  authorizer:
+    type: CUSTOM
+    authorizerId:
+      'Fn::ImportValue': DBS-Api-AuthorizerId-${self:provider.stage}
+  documentation:
+    tags:
+      - Subscriber
+    requestHeaders:
+      - ${self:custom.parameter-definitions.api-version}
+      - ${self:custom.parameter-definitions.authorization}
+    queryParams:
+      - ${self:custom.parameter-definitions.id}
+    methodResponses:
+      - statusCode: '204'
+        description: __No content.__ Deleted.
+        responseHeaders:
+          - ${self:custom.parameter-definitions.api-version}
+          - ${self:custom.parameter-definitions.e-tag}
+          - ${self:custom.parameter-definitions.last-modified}
+      - ${self:custom.returnCodes.400}
+      - ${self:custom.returnCodes.401}
+      - ${self:custom.returnCodes.403}
+      - ${self:custom.returnCodes.409}
+      - ${self:custom.returnCodes.412}
+      - ${self:custom.returnCodes.415}
+      - ${self:custom.returnCodes.422}
+      - ${self:custom.returnCodes.500}
