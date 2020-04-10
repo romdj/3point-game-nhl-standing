@@ -7,7 +7,8 @@
     "fetch": "npm run clean; tsc; node dist/fetch/fetch.js",
     "cfetch": "clear; npm run fetch",
     "build": "npm run clean ; npm i; tsc; npm test",
-    "test": "mocha --recursive -r ts-node/register test/unit/**/*.ts test/unit/**/**/*.ts",
+    "test": "npx jest",
+    "test2": "mocha --recursive -r ts-node/register test/unit/**/*.ts test/unit/**/**/*.ts",
     "coverage": "nyc npm run test",
     "lint": "eslint './{src,test}/**/*.ts'"
   },
