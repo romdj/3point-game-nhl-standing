@@ -30,11 +30,10 @@
     "@istanbuljs/nyc-config-typescript": "^1.0.1",
     "@types/chai": "^4.2.9",
     "@types/express": "^4.17.3",
-    "@types/jest": "^25.1.4",
+    "@types/jest": "^25.2.1",
     "@types/mocha": "^7.0.1",
     "@types/node": "^13.7.1",
     "@types/request-promise-native": "^1.0.17",
-    "@types/sinon": "^9.0.0",
     "@typescript-eslint/eslint-plugin": "^2.19.2",
     "@typescript-eslint/parser": "^2.19.2",
     "chai": "^4.2.0",
@@ -45,17 +44,14 @@
     "nyc": "^15.0.0",
     "prettier": "^1.19.1",
     "source-map-support": "^0.5.16",
-    "ts-jest": "^25.3.0",
+    "ts-jest": "^25.3.1",
     "ts-node": "^8.6.2",
+    "request": "^2.88.2",
+    "request-promise-native": "^1.0.8",
+    "express": "^4.17.1",
     "typescript": "^3.7.5"
   },
   "dependencies": {
-    "aws-sdk": "^2.648.0",
-    "express": "^4.17.1",
-    "request": "^2.88.2",
-    "request-promise-native": "^1.0.8"
-  },
-  "jest": {
-    "preset": "ts-jest"
+    "aws-sdk": "^2.648.0"
   }
 }
