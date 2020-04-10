@@ -1,87 +1,35 @@
 import 'mocha';
 // import * as jest from 'jest';
 import { mocked } from 'ts-jest/utils'
-import * as request from "request-promise-native";
+import * as rq from "request-promise-native";
 import { expect } from 'chai';
 
-import { TeamInformation } from "../../../../src/fetch/domain/TeamInformation";
-console.log('imported TeamInformation');
-import { LeagueRecord } from '../../../../src/fetch/domain/leagueRecord';
-console.log('imported LeagueRecord');
+jest.mock('rq');
 
-//   SearchSource: [Getter],
-//   TestScheduler: [Getter],
-//   TestWatcher: [Getter],
-//   getVersion: [Getter],
-//   runCLI: [Getter],
-//   run:
-// console.log(new jest.SearchSource().;
-// console.log(jest.TestScheduler);
-// console.log(jest.TestWatcher);
-// console.log(jest.getVersion());
-// console.log(jest.runCLI());
-// console.log(jest.run);
-// jest.mock('request-promise-native', () => {
-//   return {
-//     post: jest.fn()
-//   };
-// });
+import { TeamInformation } from './teamInformation';
+import { LeagueRecord } from './leagueRecord';
 
-const dummyRegGameData = require("../../data/dummy-game.json");
-const dummyOTGameData = require("../../data/dummy-ot-game.json");
-const dummySOGameData = require("../../data/dummy-so-game.json");
 
-const teamInfoResponse = require("../../data/teamInfoResponse.json");
+before(() => { });
+after(() => { });
 
-function get(url: any) {
-  return new Promise((resolve, reject) => {
-    const teamID = url.split('/').pop();
-    process.nextTick(() =>
-      teamInfoResponse[teamID]
-        ? resolve(teamInfoResponse[teamID])
-        : reject({
-          error: `Team with ${teamID} not found.`,
-        }),
-    );
-  });
-}
-
-before(() => {
-  // rq.get.mockImplementation((url: any) => get(url));
+beforeEach(() => {
+  require('rq').__setMockFiles();
 });
-afterEach(() => {
-});
-after(() => {
+afterEach(() => { });
 
-});
-// const sandbox = sinon.createSandbox();
-describe.only('Team Information', () => {
+describe('Team Information', () => {
   console.log(jest);
-  console.log(JSON.stringify(jest, null,2 ));
-  const mockSeasonCal = [dummyRegGameData, dummyOTGameData, dummySOGameData];
+  console.log(JSON.stringify(jest, null, 2));
   const teamIds: Array<string> = ['10', '9', '15', '19', '12', '8'];
 
-  before(() => {
-    // const team = { id: 'something' };
-    // const nhlUrl = `https://statsapi.web.nhl.com/api/v1/teams/${team.id}`;
-    // const id = url.split('/').pop();
-
-    // return teamInfoResponse[id];
-    // });
-    // export default function get(url) {
-
-
-    // const postSpy = jest.spyOn(request, 'get').mockResolvedValue({ success: true });
-
-    after(() => {
-      // sandbox.restore();
-    });
-  });
   describe('Team Information', () => {
     it('Creating Valid Record for NHL Team', () => {
       const dummyRecord: LeagueRecord = new LeagueRecord();
-      const teamInfo = new TeamInformation('10', dummyRecord);
-      const a = mocked.
+      const teamInfo = new TeamInformation(teamIds[0], dummyRecord);
+      expect(teamInfo.id).to.equal(teamIds[0]);
+      console.log(teamInfo);
+      // const a = mocked./ TO BE FINISHED
     });
 
     it.skip("Creating team Info with teamId not in the resource object to make sure we're calling the mocked API", () => {

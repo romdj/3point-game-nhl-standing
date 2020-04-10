@@ -1,11 +1,11 @@
 import 'mocha';
 import { expect } from 'chai';
 
-import { Game } from "../../../../src/fetch/domain/game";
+import { Game } from './game';
 
 describe('Game', () => {
     it('Creating Valid Regulation Game', () => {
-        const dummyGameData = require("../../data/dummy-game.json");
+        const dummyGameData = require("../../../__mock__/data/dummy-game.json");
         const game: Game = new Game(dummyGameData);
         expect(game._id).to.equal('2019020001');
         expect(game.winnerId).to.equal('10');
@@ -16,7 +16,7 @@ describe('Game', () => {
     });
 
     it('Creating Valid Overtime Game', () => {
-        const dummyGameData = require("../../data/dummy-ot-game.json");
+        const dummyGameData = require("../../../__mock__/data/dummy-ot-game.json");
         const game = new Game(dummyGameData);
         expect(game.winnerId).to.equal('15');
         expect(game.loserId).to.equal('19');
@@ -26,7 +26,7 @@ describe('Game', () => {
     });
 
     it('Creating Valid Shootout Game', () => {
-        const dummyGameData = require("../../data/dummy-so-game.json");
+        const dummyGameData = require("../../../__mock__/data/dummy-so-game.json");
         const game = new Game(dummyGameData);
         expect(game.winType).to.equal('SHOOTOUT');
         expect(game.winnerId).to.equal('12');
