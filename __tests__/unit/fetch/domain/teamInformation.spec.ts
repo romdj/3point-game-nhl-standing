@@ -1,10 +1,13 @@
 import 'mocha';
 // import * as jest from 'jest';
+import { mocked } from 'ts-jest/utils'
 import * as request from "request-promise-native";
 import { expect } from 'chai';
 
 import { TeamInformation } from "../../../../src/fetch/domain/TeamInformation";
+console.log('imported TeamInformation');
 import { LeagueRecord } from '../../../../src/fetch/domain/leagueRecord';
+console.log('imported LeagueRecord');
 
 //   SearchSource: [Getter],
 //   TestScheduler: [Getter],
@@ -78,7 +81,7 @@ describe.only('Team Information', () => {
     it('Creating Valid Record for NHL Team', () => {
       const dummyRecord: LeagueRecord = new LeagueRecord();
       const teamInfo = new TeamInformation('10', dummyRecord);
-
+      const a = mocked.
     });
 
     it.skip("Creating team Info with teamId not in the resource object to make sure we're calling the mocked API", () => {
