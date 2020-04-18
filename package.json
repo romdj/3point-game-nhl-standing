@@ -4,7 +4,7 @@
   "description": "--- ## About this Project",
   "scripts": {
     "clean": "rm -rf dist",
-    "fetch": "npm run clean; tsc; node dist/fetch/fetch.js",
+    "fetch": "npm run clean; tsc; node dist/fetch.js",
     "cfetch": "clear; npm run fetch",
     "build": "npm run clean ; npm i; tsc; npm test",
     "test": "npx jest --verbose",
