@@ -1,0 +1,277 @@
+{
+    "9": {
+        "copyright": "NHL and the NHL Shield are registered trademarks of the National Hockey League. NHL and NHL team marks are the property of the NHL and its teams. © NHL 2020. All Rights Reserved.",
+        "teams": [
+            {
+                "id": 9,
+                "name": "Ottawa Senators",
+                "link": "/api/v1/teams/9",
+                "venue": {
+                    "id": 5031,
+                    "name": "Canadian Tire Centre",
+                    "link": "/api/v1/venues/5031",
+                    "city": "Ottawa",
+                    "timeZone": {
+                        "id": "America/New_York",
+                        "offset": -4,
+                        "tz": "EDT"
+                    }
+                },
+                "abbreviation": "OTT",
+                "teamName": "Senators",
+                "locationName": "Ottawa",
+                "firstYearOfPlay": "1990",
+                "division": {
+                    "id": 17,
+                    "name": "Atlantic",
+                    "nameShort": "ATL",
+                    "link": "/api/v1/divisions/17",
+                    "abbreviation": "A"
+                },
+                "conference": {
+                    "id": 6,
+                    "name": "Eastern",
+                    "link": "/api/v1/conferences/6"
+                },
+                "franchise": {
+                    "franchiseId": 30,
+                    "teamName": "Senators",
+                    "link": "/api/v1/franchises/30"
+                },
+                "shortName": "Ottawa",
+                "officialSiteUrl": "http://www.ottawasenators.com/",
+                "franchiseId": 30,
+                "active": true
+            }
+        ]
+    },
+    "10": {
+        "copyright": "NHL and the NHL Shield are registered trademarks of the National Hockey League. NHL and NHL team marks are the property of the NHL and its teams. © NHL 2020. All Rights Reserved.",
+        "teams": [
+            {
+                "id": 10,
+                "name": "Toronto Maple Leafs",
+                "link": "/api/v1/teams/10",
+                "venue": {
+                    "name": "Scotiabank Arena",
+                    "link": "/api/v1/venues/null",
+                    "city": "Toronto",
+                    "timeZone": {
+                        "id": "America/Toronto",
+                        "offset": -4,
+                        "tz": "EDT"
+                    }
+                },
+                "abbreviation": "TOR",
+                "teamName": "Maple Leafs",
+                "locationName": "Toronto",
+                "firstYearOfPlay": "1917",
+                "division": {
+                    "id": 17,
+                    "name": "Atlantic",
+                    "nameShort": "ATL",
+                    "link": "/api/v1/divisions/17",
+                    "abbreviation": "A"
+                },
+                "conference": {
+                    "id": 6,
+                    "name": "Eastern",
+                    "link": "/api/v1/conferences/6"
+                },
+                "franchise": {
+                    "franchiseId": 5,
+                    "teamName": "Maple Leafs",
+                    "link": "/api/v1/franchises/5"
+                },
+                "shortName": "Toronto",
+                "officialSiteUrl": "http://www.mapleleafs.com/",
+                "franchiseId": 5,
+                "active": true
+            }
+        ]
+    },
+    "8": {
+        "copyright": "NHL and the NHL Shield are registered trademarks of the National Hockey League. NHL and NHL team marks are the property of the NHL and its teams. © NHL 2020. All Rights Reserved.",
+        "teams": [
+            {
+                "id": 8,
+                "name": "Montréal Canadiens",
+                "link": "/api/v1/teams/8",
+                "venue": {
+                    "id": 5028,
+                    "name": "Bell Centre",
+                    "link": "/api/v1/venues/5028",
+                    "city": "Montréal",
+                    "timeZone": {
+                        "id": "America/Montreal",
+                        "offset": -4,
+                        "tz": "EDT"
+                    }
+                },
+                "abbreviation": "MTL",
+                "teamName": "Canadiens",
+                "locationName": "Montréal",
+                "firstYearOfPlay": "1909",
+                "division": {
+                    "id": 17,
+                    "name": "Atlantic",
+                    "nameShort": "ATL",
+                    "link": "/api/v1/divisions/17",
+                    "abbreviation": "A"
+                },
+                "conference": {
+                    "id": 6,
+                    "name": "Eastern",
+                    "link": "/api/v1/conferences/6"
+                },
+                "franchise": {
+                    "franchiseId": 1,
+                    "teamName": "Canadiens",
+                    "link": "/api/v1/franchises/1"
+                },
+                "shortName": "Montréal",
+                "officialSiteUrl": "http://www.canadiens.com/",
+                "franchiseId": 1,
+                "active": true
+            }
+        ]
+    },
+    "19": {
+        "copyright": "NHL and the NHL Shield are registered trademarks of the National Hockey League. NHL and NHL team marks are the property of the NHL and its teams. © NHL 2020. All Rights Reserved.",
+        "teams": [
+            {
+                "id": 19,
+                "name": "St. Louis Blues",
+                "link": "/api/v1/teams/19",
+                "venue": {
+                    "id": 5076,
+                    "name": "Enterprise Center",
+                    "link": "/api/v1/venues/5076",
+                    "city": "St. Louis",
+                    "timeZone": {
+                        "id": "America/Chicago",
+                        "offset": -5,
+                        "tz": "CDT"
+                    }
+                },
+                "abbreviation": "STL",
+                "teamName": "Blues",
+                "locationName": "St. Louis",
+                "firstYearOfPlay": "1967",
+                "division": {
+                    "id": 16,
+                    "name": "Central",
+                    "nameShort": "CEN",
+                    "link": "/api/v1/divisions/16",
+                    "abbreviation": "C"
+                },
+                "conference": {
+                    "id": 5,
+                    "name": "Western",
+                    "link": "/api/v1/conferences/5"
+                },
+                "franchise": {
+                    "franchiseId": 18,
+                    "teamName": "Blues",
+                    "link": "/api/v1/franchises/18"
+                },
+                "shortName": "St Louis",
+                "officialSiteUrl": "http://www.stlouisblues.com/",
+                "franchiseId": 18,
+                "active": true
+            }
+        ]
+    },
+    "12": {
+        "copyright": "NHL and the NHL Shield are registered trademarks of the National Hockey League. NHL and NHL team marks are the property of the NHL and its teams. © NHL 2020. All Rights Reserved.",
+        "teams": [
+            {
+                "id": 12,
+                "name": "Carolina Hurricanes",
+                "link": "/api/v1/teams/12",
+                "venue": {
+                    "id": 5066,
+                    "name": "PNC Arena",
+                    "link": "/api/v1/venues/5066",
+                    "city": "Raleigh",
+                    "timeZone": {
+                        "id": "America/New_York",
+                        "offset": -4,
+                        "tz": "EDT"
+                    }
+                },
+                "abbreviation": "CAR",
+                "teamName": "Hurricanes",
+                "locationName": "Carolina",
+                "firstYearOfPlay": "1979",
+                "division": {
+                    "id": 18,
+                    "name": "Metropolitan",
+                    "nameShort": "Metro",
+                    "link": "/api/v1/divisions/18",
+                    "abbreviation": "M"
+                },
+                "conference": {
+                    "id": 6,
+                    "name": "Eastern",
+                    "link": "/api/v1/conferences/6"
+                },
+                "franchise": {
+                    "franchiseId": 26,
+                    "teamName": "Hurricanes",
+                    "link": "/api/v1/franchises/26"
+                },
+                "shortName": "Carolina",
+                "officialSiteUrl": "http://www.carolinahurricanes.com/",
+                "franchiseId": 26,
+                "active": true
+            }
+        ]
+    },
+    "15": {
+        "copyright": "NHL and the NHL Shield are registered trademarks of the National Hockey League. NHL and NHL team marks are the property of the NHL and its teams. © NHL 2020. All Rights Reserved.",
+        "teams": [
+            {
+                "id": 15,
+                "name": "Washington Capitals",
+                "link": "/api/v1/teams/15",
+                "venue": {
+                    "id": 5094,
+                    "name": "Capital One Arena",
+                    "link": "/api/v1/venues/5094",
+                    "city": "Washington",
+                    "timeZone": {
+                        "id": "America/New_York",
+                        "offset": -4,
+                        "tz": "EDT"
+                    }
+                },
+                "abbreviation": "WSH",
+                "teamName": "Capitals",
+                "locationName": "Washington",
+                "firstYearOfPlay": "1974",
+                "division": {
+                    "id": 18,
+                    "name": "Metropolitan",
+                    "nameShort": "Metro",
+                    "link": "/api/v1/divisions/18",
+                    "abbreviation": "M"
+                },
+                "conference": {
+                    "id": 6,
+                    "name": "Eastern",
+                    "link": "/api/v1/conferences/6"
+                },
+                "franchise": {
+                    "franchiseId": 24,
+                    "teamName": "Capitals",
+                    "link": "/api/v1/franchises/24"
+                },
+                "shortName": "Washington",
+                "officialSiteUrl": "http://www.washingtoncapitals.com/",
+                "franchiseId": 24,
+                "active": true
+            }
+        ]
+    }
+}
