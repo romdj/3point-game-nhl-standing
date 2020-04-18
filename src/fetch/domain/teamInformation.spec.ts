@@ -4,9 +4,7 @@ import { mocked } from 'ts-jest/utils'
 import { expect } from 'chai';
 
 jest.mock('request-promise-native');
-console.log('TeamInformation');
 import { TeamInformation } from './teamInformation';
-console.log('LeagueRecord');
 import { LeagueRecord } from './leagueRecord';
 
 
@@ -28,5 +26,9 @@ describe('Team Information', () => {
       const dummyRecord: LeagueRecord = new LeagueRecord();
       const teamInfo = new TeamInformation('10', dummyRecord);
     });
+
+    it.skip("Creating team Info with teamId not in the resource object to make sure we're calling the mocked API", () => {
+    });
+    
   });
 });
