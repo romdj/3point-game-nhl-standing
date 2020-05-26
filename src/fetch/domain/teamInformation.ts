@@ -14,18 +14,18 @@ export class TeamInformation {
     this.id = id;
     this.record = record;
   }
-}
 
-export async function fillTeamInfo(team: TeamInformation): Promise<void> {
-  const teamAPIURL = `https://statsapi.web.nhl.com/api/v1/teams/${team.id}`;
-  await rq.get(teamAPIURL)
-    .then((teamResponseData: any) => {
-      const teamInfo = JSON.parse(teamResponseData).teams[0];
-      team.acronym = teamInfo.abbreviation;
-      team.name = teamInfo.teamName;
-      team.fullName = `${teamInfo.locationName} ${teamInfo.teamName}`;
-      team.division = teamInfo.division.name;
-      team.conference = teamInfo.conference.name;
-    })
-    .catch(err => console.log(`err!: ${err}`));
+  async fillTeamInfo(): Promise<void> {
+    const teamAPIURL = `https://statsapi.web.nhl.com/api/v1/teams/${this.id}`;
+    await rq.get(teamAPIURL)
+      .then((teamResponseData: any) => {
+        const teamInfo = JSON.parse(teamResponseData).teams[0];
+        this.acronym = teamInfo.abbreviation;
+        this.name = teamInfo.teamName;
+        this.fullName = `${teamInfo.locationName} ${teamInfo.teamName}`;
+        this.division = teamInfo.division.name;
+        this.conference = teamInfo.conference.name;
+      })
+      .catch(err => Promise.reject(err));
+  }
 }

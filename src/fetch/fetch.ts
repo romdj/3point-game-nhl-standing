@@ -1,16 +1,17 @@
 import * as rq from "request-promise-native";
 import { Game } from './domain/game';
 import { LeagueRecord } from "./domain/leagueRecord";
-import { fillTeamInfo, TeamInformation } from "./domain/teamInformation";
+import { TeamInformation } from "./domain/teamInformation";
 import { ScheduleSeasonParser } from './model/scheduleSeasonParser';
 import moment = require('moment');
-import { writeFileSync } from "fs";
+import { writeFileSync, appendFileSync } from "fs";
 
 
 const fetchNHLSchedule = async () => {
   const intervalStartDate: string = '2020-02-01';
   const season: string = getCurrentSeason();
   const intervalEndDate: string = moment().format("YYYY-MM-DD");
+  // const intervalEndDate: string = '2020-03-01';
   const nhlAPIURL: string = "https://statsapi.web.nhl.com/api/v1/";
   const from: string = `?startDate=${intervalStartDate}`;
   const to: string = `&endDate=${intervalEndDate}`;
@@ -33,9 +34,8 @@ const getTeamsFromSchedule = async (games: any) => {
     .filter(teamId => teamId !== '');
 }
 
-const get3PointStandings = async (teams: any, games: any) => {
-  const teamsWithPoints: TeamInformation[] = [];
-  await teams.forEach(async (team: string) => {
+const get3PointStandings = async (team: any, games: any): Promise<TeamInformation> => {
+  // teams.map(async (team: string) => {
     let points = 0;
     let record: LeagueRecord = new LeagueRecord();
     games
@@ -45,12 +45,10 @@ const get3PointStandings = async (teams: any, games: any) => {
         points += currentGame.getPoint(team);
       });
     const tInfo = new TeamInformation(team, record);
-    await fillTeamInfo(tInfo)
-      .then(_ => console.log(0))
-      .then(_ => teamsWithPoints.push(tInfo))
-      .then(_ => writeFileSync('./teamStanding.json', JSON.stringify(teamsWithPoints), 'utf8'));
-  });
-  return teamsWithPoints;
+    await tInfo.fillTeamInfo();
+    return tInfo;
+    // teamsWithPoints.push(Object.assign({}, tInfo));
+  // });
 }
 
 const sortStandings = async (teams: Array<TeamInformation>) => {
@@ -67,14 +65,16 @@ const getCurrentSeason = () => {
 };
 
 exports.handler = async function (event: any, context: any) {
-  await fetchNHLSchedule();
-  return 'ok';
 }
-
-async () => {
+const main = async () => {
   const nhlSchedule = await fetchNHLSchedule();
-  const games = getGamesFromSchedule(nhlSchedule);
-  const teams = getTeamsFromSchedule(games);
-  const unsortedStandings = get3PointStandings(teams, games);
-  const sortedStandings = (unsortedStandings);
+  const games = await getGamesFromSchedule(nhlSchedule);
+  const teams = await getTeamsFromSchedule(games);
+  const teamsWithPoints: TeamInformation[] = [];
+  teams.map(async (team: any) => {
+    teamsWithPoints.push(await get3PointStandings(team, games));
+  });
+  return sortStandings(teamsWithPoints);
 }
+// main();
+main().then(sortedStanding => console.log(sortedStanding));
