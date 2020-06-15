@@ -1,11 +1,10 @@
-import 'mocha';
-
-import { mocked } from 'ts-jest/utils'
 import { expect } from 'chai';
+import 'mocha';
+import { LeagueRecord } from './leagueRecord';
+import { TeamInformation } from './teamInformation';
+
 
 jest.mock('request-promise-native');
-import { TeamInformation } from './teamInformation';
-import { LeagueRecord } from './leagueRecord';
 
 
 beforeEach(() => {

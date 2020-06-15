@@ -1,6 +1,5 @@
-import { TeamInformation } from "./teamInformation";
-import { WinType } from "./wintype";
 import { LeagueRecord } from "./leagueRecord";
+import { WinType } from "./wintype";
 
 export class Game {
   readonly _id: string;

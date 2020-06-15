@@ -34,10 +34,12 @@ const getTeamsFromSchedule = async (games: any) => {
 }
 const get3PointStandings = async (teams: any, games: any): Promise<Array<TeamInformation>> => {
   const teamsWithPoints: TeamInformation[] = [];
-  teams.map(async (team: any) => {
-    teamsWithPoints.push(await buildTeamInformation(team, games));
+  await teams.forEach(async (team: any) => {
+    const something: TeamInformation = await buildTeamInformation(team, games);
+    // console.log(`something: ${JSON.stringify(something, null, 2)}`);
+    teamsWithPoints.push(something);
   });
-  console.log(JSON.stringify(teamsWithPoints));
+  console.log(2);
   return teamsWithPoints;
 }
 const buildTeamInformation = async (team: any, games: any): Promise<TeamInformation> => {
