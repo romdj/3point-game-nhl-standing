@@ -1,0 +1,98 @@
+{
+  "gamePk": 2019021083,
+  "link": "/api/v1/game/2019021083/feed/live",
+  "gameType": "R",
+  "season": "20192020",
+  "gameDate": "2020-03-12T23:00:00Z",
+  "status": {
+    "abstractGameState": "Preview",
+    "codedGameState": "9",
+    "detailedState": "Postponed",
+    "statusCode": "9",
+    "startTimeTBD": false
+  },
+  "teams": {
+    "away": {
+      "leagueRecord": {
+        "wins": 35,
+        "losses": 26,
+        "ot": 8,
+        "type": "league"
+      },
+      "score": 0,
+      "team": {
+        "id": 18,
+        "name": "Nashville Predators",
+        "link": "/api/v1/teams/18"
+      }
+    },
+    "home": {
+      "leagueRecord": {
+        "wins": 36,
+        "losses": 25,
+        "ot": 9,
+        "type": "league"
+      },
+      "score": 0,
+      "team": {
+        "id": 10,
+        "name": "Toronto Maple Leafs",
+        "link": "/api/v1/teams/10"
+      }
+    }
+  },
+  "linescore": {
+    "currentPeriod": 0,
+    "periods": [],
+    "shootoutInfo": {
+      "away": {
+        "scores": 0,
+        "attempts": 0
+      },
+      "home": {
+        "scores": 0,
+        "attempts": 0
+      }
+    },
+    "teams": {
+      "home": {
+        "team": {
+          "id": 10,
+          "name": "Toronto Maple Leafs",
+          "link": "/api/v1/teams/10"
+        },
+        "goals": 0,
+        "shotsOnGoal": 0,
+        "goaliePulled": false,
+        "numSkaters": 0,
+        "powerPlay": false
+      },
+      "away": {
+        "team": {
+          "id": 18,
+          "name": "Nashville Predators",
+          "link": "/api/v1/teams/18"
+        },
+        "goals": 0,
+        "shotsOnGoal": 0,
+        "goaliePulled": false,
+        "numSkaters": 0,
+        "powerPlay": false
+      }
+    },
+    "powerPlayStrength": "Even",
+    "hasShootout": false,
+    "intermissionInfo": {
+      "intermissionTimeRemaining": 0,
+      "intermissionTimeElapsed": 0,
+      "inIntermission": false
+    }
+  },
+  "venue": {
+    "name": "Scotiabank Arena",
+    "link": "/api/v1/venues/null"
+  },
+  "content": {
+    "link": "/api/v1/game/2019021083/content"
+  }
+}

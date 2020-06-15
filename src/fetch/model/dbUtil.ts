@@ -1,13 +1,6 @@
 import * as AWS from 'aws-sdk';
+import moment = require('moment');
 
-const elasticache = new AWS.ElastiCache({apiVersion: '2015-02-02'});
-
-export async function uploadElasticache(toOffload: any) {
-    const params = {
-
-    };
-    await elasticache.addTagsToResource(params, function (err, data) {
-        if (err) console.log(err, err.stack); // an error occurred
-        else console.log(data);           // successful response
-    });
-}
+const fileName: string = `NHL_3PointStandings_${moment().format("YYYY-MM-DD")}`;
+// EXPORT TO S3 FILE
+const elasticache = new AWS.S3();

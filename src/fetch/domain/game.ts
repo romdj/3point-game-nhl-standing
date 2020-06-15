@@ -1,6 +1,5 @@
-import { TeamInformation } from "./teamInformation";
-import { WinType } from "./wintype";
 import { LeagueRecord } from "./leagueRecord";
+import { WinType } from "./wintype";
 
 export class Game {
   readonly _id: string;
@@ -10,12 +9,21 @@ export class Game {
 
   constructor(gameNHLSchedule: any) {
     this._id = `${gameNHLSchedule.gamePk}`;
-    this.winnerId = getWinner(gameNHLSchedule);
-    this.loserId = getLoser(gameNHLSchedule);
-    this.winType = WinType.UNDEFINED;
-    if (isRegulation(gameNHLSchedule)) this.winType = WinType.REGULATION;
-    if (isOvertime(gameNHLSchedule)) this.winType = WinType.OVERTIME;
-    if (isShootout(gameNHLSchedule)) this.winType = WinType.SHOOTOUT;
+    if (isPostponed(gameNHLSchedule)) {
+      this.winnerId = '';
+      this.loserId = '';
+      this.winType = WinType.UNDEFINED;
+    } else {
+      this.winnerId = getWinner(gameNHLSchedule);
+      this.loserId = getLoser(gameNHLSchedule);
+      this.winType = WinType.UNDEFINED;
+      if (isRegulation(gameNHLSchedule)) this.winType = WinType.REGULATION;
+      if (isOvertime(gameNHLSchedule)) this.winType = WinType.OVERTIME;
+      if (isShootout(gameNHLSchedule)) this.winType = WinType.SHOOTOUT;
+      if (this.winType == WinType.UNDEFINED) {
+        throw new Error('Game has no winner');
+      }
+    }
   }
 
   getPoint = (teamId: string): number => {
@@ -33,7 +41,7 @@ export class Game {
 }
 
 const isComplete = (gameNHLSchedule: any): boolean => {
-  return gameNHLSchedule.linescore.currentPeriodTimeRemaining === 'Final';
+  return gameNHLSchedule.linescore.currentPeriodTimeRemaining === 'Final' && !isPostponed(gameNHLSchedule);
 }
 
 const isRegulation = (gameNHLSchedule: any): boolean => {
@@ -46,6 +54,10 @@ const isOvertime = (gameNHLSchedule: any): boolean => {
 
 const isShootout = (gameNHLSchedule: any): boolean => {
   return gameNHLSchedule.linescore.currentPeriodOrdinal === 'SO' && isComplete(gameNHLSchedule);
+}
+
+const isPostponed = (gameNHLSchedule: any): boolean => {
+  return gameNHLSchedule.status.detailedState === 'Postponed';
 }
 
 const isHomeWin = (gameNHLSchedule: any): boolean => {
