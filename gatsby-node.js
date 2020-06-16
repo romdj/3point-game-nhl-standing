@@ -34,21 +34,32 @@ exports.sourceNodes = async ({
   const games = await this.fetchHelper.games(schedule);
   const teams = await this.fetchHelper.teams(games);
   const teamsWithPoints = await this.fetchHelper.teamsWithPoints(teams, games);
-  console.log(`schedule: ${JSON.stringify(schedule, null, 2)}`);
-  console.log(`games: ${JSON.stringify(games, null, 2)}`);
-  console.log(`teams: ${JSON.stringify(teams, null, 2)}`);
-  console.log(teamsWithPoints);
+  // console.log(`schedule: ${JSON.stringify(schedule, null, 2)}`);
+  // console.log(`games: ${JSON.stringify(games, null, 2)}`);
+  // console.log(`teams: ${JSON.stringify(teams, null, 2)}`);
+  // console.log(teamsWithPoints);
+  games.forEach(game => {
+    createNode({
+      id: game._id,
+      winnerId: game.winnerId,
+      loserId: game.loserId,
+      winType: game.winType,
+      internal: {
+        type: `Game`
+      },
+    });
+  });
   createNode({
     // nameWithOwner and url are arbitrary fields from the data
-    nameWithOwner: resultData.full_name,
-    url: resultData.html_url,
+    nameWithOwner: 'SomeOwner1',
+    url: 'https://www.yousendit.com',
     // required fields
-    id: `example-build-time-data`,
+    id: `id001`,
     parent: null,
     children: [],
     internal: {
       type: `Example`,
-      contentDigest: createContentDigest(resultData),
+      contentDigest: `createContentDigest(resultData)`,
     },
   })
 }
