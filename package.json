@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "--- ## About this Project",
   "scripts": {
-    "clean": "rm -rf dist",
+    "clean": "gatsby clean; rm -rf dist",
     "fetch": "npm run clean; tsc; node dist/fetch.js",
     "cfetch": "clear; npm run fetch",
     "test": "npx jest --verbose",
