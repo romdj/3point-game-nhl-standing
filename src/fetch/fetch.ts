@@ -7,10 +7,9 @@ import moment = require('moment');
 
 
 export const fetchNHLSchedule = async (season?: string) => {
-  const intervalStartDate: string = '2019-09-01';
   const seasonInUse: string = season ? season : getCurrentSeason();
-  const intervalEndDate: string = moment().format("YYYY-MM-DD");
-  // const intervalEndDate: string = '2020-03-01';
+  const intervalStartDate: string = `${seasonInUse.slice(0, 4)}-09-01`;
+  const intervalEndDate: string = `${seasonInUse.slice(4, 8)}-09-01`;
   const nhlAPIURL: string = "https://statsapi.web.nhl.com/api/v1/";
   const from: string = `?startDate=${intervalStartDate}`;
   const to: string = `&endDate=${intervalEndDate}`;
