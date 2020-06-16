@@ -5,7 +5,7 @@ module.exports = {
   tabWidth: 2,
   useTabs: false,
   // semi: true,
+  // "semi": false
   arrowParens: 'avoid',
   quoteProps: 'as-needed'
-  // "semi": false
 };
