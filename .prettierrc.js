@@ -4,6 +4,8 @@ module.exports = {
   printWidth: 120,
   tabWidth: 2,
   useTabs: false,
-  semi: true,
-  quoteProps: "as-needed"
+  // semi: true,
+  arrowParens: 'avoid',
+  quoteProps: 'as-needed'
+  // "semi": false
 };
