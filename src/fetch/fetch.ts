@@ -4,19 +4,23 @@ import { LeagueRecord } from "./domain/leagueRecord";
 import { TeamInformation } from "./domain/teamInformation";
 import { ScheduleSeasonParser } from './model/scheduleSeasonParser';
 import moment = require('moment');
+const nhlAPIURL: string = "https://statsapi.web.nhl.com/api/v1/";
 
 
 export const fetchNHLSchedule = async (season?: string) => {
   const seasonInUse: string = season ? season : getCurrentSeason();
   const intervalStartDate: string = `${seasonInUse.slice(0, 4)}-09-01`;
   const intervalEndDate: string = `${seasonInUse.slice(4, 8)}-09-01`;
-  const nhlAPIURL: string = "https://statsapi.web.nhl.com/api/v1/";
   const from: string = `?startDate=${intervalStartDate}`;
   const to: string = `&endDate=${intervalEndDate}`;
   const nhlCompleteScheduleURL: string = `${nhlAPIURL}schedule${from}${to}&expand=schedule.linescore&season=${seasonInUse}`;
-  const nhlStandingsURL: string = `${nhlAPIURL}standings?season=${seasonInUse}`;
   return await rq.get(nhlCompleteScheduleURL);
 }
+
+export const getSeasonStandingsURL = async (season?: string) => {
+  const seasonInUse: string = season ? season : getCurrentSeason();
+  return await rq.get(`${nhlAPIURL}standings?season=${seasonInUse}`);
+};
 
 const getGamesFromSchedule = async (schedule: any) => {
   const result = JSON.parse(schedule);
