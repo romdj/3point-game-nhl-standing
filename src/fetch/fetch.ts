@@ -17,7 +17,7 @@ export const fetchNHLSchedule = async (season?: string) => {
   return await rq.get(nhlCompleteScheduleURL);
 }
 
-export const getSeasonStandingsURL = async (season?: string) => {
+export const getSeasonStanding = async (season?: string) => {
   const seasonInUse: string = season ? season : getCurrentSeason();
   return await rq.get(`${nhlAPIURL}standings?season=${seasonInUse}`);
 };
