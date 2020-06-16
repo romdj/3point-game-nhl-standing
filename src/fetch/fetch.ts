@@ -6,7 +6,7 @@ import { ScheduleSeasonParser } from './model/scheduleSeasonParser';
 import moment = require('moment');
 
 
-const fetchNHLSchedule = async () => {
+export const fetchNHLSchedule = async () => {
   const intervalStartDate: string = '2019-09-01';
   const season: string = getCurrentSeason();
   const intervalEndDate: string = moment().format("YYYY-MM-DD");
@@ -16,7 +16,6 @@ const fetchNHLSchedule = async () => {
   const to: string = `&endDate=${intervalEndDate}`;
   const nhlCompleteScheduleURL: string = `${nhlAPIURL}schedule${from}${to}&expand=schedule.linescore&season=${season}`;
   const nhlStandingsURL: string = `${nhlAPIURL}standings?season=${season}`;
-
   return await rq.get(nhlCompleteScheduleURL);
 }
 
@@ -36,14 +35,11 @@ const get3PointStandings = async (teams: any, games: any): Promise<Array<TeamInf
   const teamsWithPoints: TeamInformation[] = [];
   await teams.forEach(async (team: any) => {
     const something: TeamInformation = await buildTeamInformation(team, games);
-    // console.log(`something: ${JSON.stringify(something, null, 2)}`);
     teamsWithPoints.push(something);
   });
-  console.log(2);
   return teamsWithPoints;
 }
 const buildTeamInformation = async (team: any, games: any): Promise<TeamInformation> => {
-  // teams.map(async (team: string) => {
   let points = 0;
   let record: LeagueRecord = new LeagueRecord();
   games
@@ -54,10 +50,7 @@ const buildTeamInformation = async (team: any, games: any): Promise<TeamInformat
     });
   const tInfo = new TeamInformation(team, record);
   await tInfo.fillTeamInfo();
-  // console.log(JSON.stringify(tInfo));
   return tInfo;
-  // teamsWithPoints.push(Object.assign({}, tInfo));
-  // });
 }
 
 const sortStandings = async (teams: Array<TeamInformation>) => {
@@ -73,16 +66,14 @@ const getCurrentSeason = () => {
   return `${moment().year() - 1}${moment().year()}`;
 };
 
-exports.handler = async function (event: any, context: any) {
-}
-const main = async () => {
+export const games = async (nhlSchedule: any) => await getGamesFromSchedule(nhlSchedule);
+export const teams = async (games: Game[]) => await getTeamsFromSchedule(games);
+export const teamsWithPoints = async (teams: TeamInformation[], games: Game[]) => await get3PointStandings(teams, games);
+
+export const getCompleteStandings = async () => {
   const nhlSchedule = await fetchNHLSchedule();
   const games = await getGamesFromSchedule(nhlSchedule);
   const teams = await getTeamsFromSchedule(games);
   const teamsWithPoints = await get3PointStandings(teams, games);
-  console.log(sortStandings(teamsWithPoints));
-  // console.log(sortStandings(teamsWithPoints));
   return sortStandings(teamsWithPoints);
 }
-// main();
-main().then(sortedStanding => console.log(sortedStanding));

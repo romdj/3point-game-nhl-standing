@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "--- ## About this Project",
   "scripts": {
-    "clean": "npx gatsby clean; rm -rf dist .nyc_output node_modules",
+    "clean": "npx gatsby clean; rm -rf dist .nyc_output",
     "fetch": "npm run clean; tsc; node dist/fetch.js",
     "cfetch": "clear; npm run fetch",
     "test": "npx jest --verbose",
