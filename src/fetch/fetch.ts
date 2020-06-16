@@ -6,16 +6,16 @@ import { ScheduleSeasonParser } from './model/scheduleSeasonParser';
 import moment = require('moment');
 
 
-export const fetchNHLSchedule = async () => {
+export const fetchNHLSchedule = async (season?: string) => {
   const intervalStartDate: string = '2019-09-01';
-  const season: string = getCurrentSeason();
+  const seasonInUse: string = season ? season : getCurrentSeason();
   const intervalEndDate: string = moment().format("YYYY-MM-DD");
   // const intervalEndDate: string = '2020-03-01';
   const nhlAPIURL: string = "https://statsapi.web.nhl.com/api/v1/";
   const from: string = `?startDate=${intervalStartDate}`;
   const to: string = `&endDate=${intervalEndDate}`;
-  const nhlCompleteScheduleURL: string = `${nhlAPIURL}schedule${from}${to}&expand=schedule.linescore&season=${season}`;
-  const nhlStandingsURL: string = `${nhlAPIURL}standings?season=${season}`;
+  const nhlCompleteScheduleURL: string = `${nhlAPIURL}schedule${from}${to}&expand=schedule.linescore&season=${seasonInUse}`;
+  const nhlStandingsURL: string = `${nhlAPIURL}standings?season=${seasonInUse}`;
   return await rq.get(nhlCompleteScheduleURL);
 }
 
