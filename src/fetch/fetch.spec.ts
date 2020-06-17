@@ -1,8 +1,9 @@
 import 'mocha';
 import { expect } from 'chai';
+import { fetchNHLSchedule } from './fetch';
 
-describe('Fetch/main', () => {
-    it('TODO', () => {
-        expect(false).to.be.false;
+describe.only('Fetch/main', () => {
+    it('should get full schedule for something', () => {
+        console.log(fetchNHLSchedule());
     });
 });
