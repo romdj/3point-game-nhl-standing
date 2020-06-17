@@ -1,0 +1,176 @@
+{
+    "gamePk": 2019020008,
+    "link": "/api/v1/game/2019020008/feed/live",
+    "gameType": "R",
+    "season": "20192020",
+    "gameDate": "2019-10-03T23:00:00Z",
+    "status": {
+        "abstractGameState": "Final",
+        "codedGameState": "7",
+        "detailedState": "Final",
+        "statusCode": "7",
+        "startTimeTBD": false
+    },
+    "teams": {
+        "away": {
+            "leagueRecord": {
+                "wins": 0,
+                "losses": 0,
+                "ot": 1,
+                "type": "league"
+            },
+            "score": 3,
+            "team": {
+                "id": 8,
+                "name": "Montréal Canadiens",
+                "link": "/api/v1/teams/8"
+            }
+        },
+        "home": {
+            "leagueRecord": {
+                "wins": 1,
+                "losses": 0,
+                "ot": 0,
+                "type": "league"
+            },
+            "score": 4,
+            "team": {
+                "id": 12,
+                "name": "Carolina Hurricanes",
+                "link": "/api/v1/teams/12"
+            }
+        }
+    },
+    "linescore": {
+        "currentPeriod": 5,
+        "currentPeriodOrdinal": "SO",
+        "currentPeriodTimeRemaining": "Final",
+        "periods": [
+            {
+                "periodType": "REGULAR",
+                "startTime": "2019-10-03T23:15:35Z",
+                "endTime": "2019-10-03T23:51:57Z",
+                "num": 1,
+                "ordinalNum": "1st",
+                "home": {
+                    "goals": 1,
+                    "shotsOnGoal": 10,
+                    "rinkSide": "right"
+                },
+                "away": {
+                    "goals": 0,
+                    "shotsOnGoal": 13,
+                    "rinkSide": "left"
+                }
+            },
+            {
+                "periodType": "REGULAR",
+                "startTime": "2019-10-04T00:10:25Z",
+                "endTime": "2019-10-04T00:51:04Z",
+                "num": 2,
+                "ordinalNum": "2nd",
+                "home": {
+                    "goals": 1,
+                    "shotsOnGoal": 13,
+                    "rinkSide": "left"
+                },
+                "away": {
+                    "goals": 3,
+                    "shotsOnGoal": 13,
+                    "rinkSide": "right"
+                }
+            },
+            {
+                "periodType": "REGULAR",
+                "startTime": "2019-10-04T01:09:25Z",
+                "endTime": "2019-10-04T01:42:47Z",
+                "num": 3,
+                "ordinalNum": "3rd",
+                "home": {
+                    "goals": 1,
+                    "shotsOnGoal": 19,
+                    "rinkSide": "right"
+                },
+                "away": {
+                    "goals": 0,
+                    "shotsOnGoal": 7,
+                    "rinkSide": "left"
+                }
+            },
+            {
+                "periodType": "OVERTIME",
+                "startTime": "2019-10-04T01:45:08Z",
+                "endTime": "2019-10-04T01:51:11Z",
+                "num": 4,
+                "ordinalNum": "OT",
+                "home": {
+                    "goals": 0,
+                    "shotsOnGoal": 1,
+                    "rinkSide": "left"
+                },
+                "away": {
+                    "goals": 0,
+                    "shotsOnGoal": 3,
+                    "rinkSide": "right"
+                }
+            }
+        ],
+        "shootoutInfo": {
+            "away": {
+                "scores": 0,
+                "attempts": 3
+            },
+            "home": {
+                "scores": 1,
+                "attempts": 3
+            },
+            "startTime": "2019-10-04T01:52:58Z"
+        },
+        "teams": {
+            "home": {
+                "team": {
+                    "id": 12,
+                    "name": "Carolina Hurricanes",
+                    "link": "/api/v1/teams/12"
+                },
+                "goals": 4,
+                "shotsOnGoal": 43,
+                "goaliePulled": false,
+                "numSkaters": 0,
+                "powerPlay": false
+            },
+            "away": {
+                "team": {
+                    "id": 8,
+                    "name": "Montréal Canadiens",
+                    "link": "/api/v1/teams/8"
+                },
+                "goals": 3,
+                "shotsOnGoal": 36,
+                "goaliePulled": false,
+                "numSkaters": 1,
+                "powerPlay": false
+            }
+        },
+        "powerPlayStrength": "Even",
+        "hasShootout": true,
+        "intermissionInfo": {
+            "intermissionTimeRemaining": 0,
+            "intermissionTimeElapsed": 0,
+            "inIntermission": false
+        },
+        "powerPlayInfo": {
+            "situationTimeRemaining": 0,
+            "situationTimeElapsed": 0,
+            "inSituation": false
+        }
+    },
+    "venue": {
+        "id": 5066,
+        "name": "PNC Arena",
+        "link": "/api/v1/venues/5066"
+    },
+    "content": {
+        "link": "/api/v1/game/2019020008/content"
+    }
+}
