@@ -34,6 +34,7 @@ const getTeamsFromSchedule = async (games: any) => {
   return Array.from(new Set([...games.map((game: any) => game.winnerId), ...games.map((game: any) => game.loserId)]))
     .filter(teamId => teamId !== '');
 }
+
 const get3PointStandings = async (teams: any, games: any): Promise<Array<TeamInformation>> => {
   const teamsWithPoints: TeamInformation[] = [];
   await teams.forEach(async (team: any) => {
@@ -42,6 +43,7 @@ const get3PointStandings = async (teams: any, games: any): Promise<Array<TeamInf
   });
   return teamsWithPoints;
 }
+
 const buildTeamInformation = async (team: any, games: any): Promise<TeamInformation> => {
   let points = 0;
   let record: LeagueRecord = new LeagueRecord();
@@ -59,6 +61,7 @@ const buildTeamInformation = async (team: any, games: any): Promise<TeamInformat
 const sortStandings = async (teams: Array<TeamInformation>) => {
   return teams.sort((a: TeamInformation, b: TeamInformation) => b.record.points - a.record.points);
 }
+
 // .reduce((accumulator, currentGame) => {
 //   return accumulator.getPoint(team) + currentGame.getPoint(team);
 // });
