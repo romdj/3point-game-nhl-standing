@@ -1,0 +1,529 @@
+[
+  {
+    "id": "7",
+    "record": {
+      "regulationWin": 5,
+      "regulationLoss": 9,
+      "overtimeWin": 2,
+      "overtimeLoss": 0,
+      "shootoutWin": 1,
+      "shootoutLoss": 1,
+      "points": 22
+    },
+    "acronym": "BUF",
+    "name": "Sabres",
+    "fullName": "Buffalo Sabres",
+    "division": "Atlantic",
+    "conference": "Eastern"
+  },
+  {
+    "id": "8",
+    "record": {
+      "regulationWin": 3,
+      "regulationLoss": 9,
+      "overtimeWin": 4,
+      "overtimeLoss": 2,
+      "shootoutWin": 1,
+      "shootoutLoss": 0,
+      "points": 21
+    },
+    "acronym": "MTL",
+    "name": "Canadiens",
+    "fullName": "Montréal Canadiens",
+    "division": "Atlantic",
+    "conference": "Eastern"
+  },
+  {
+    "id": "52",
+    "record": {
+      "regulationWin": 12,
+      "regulationLoss": 5,
+      "overtimeWin": 0,
+      "overtimeLoss": 1,
+      "shootoutWin": 0,
+      "shootoutLoss": 1,
+      "points": 38
+    },
+    "acronym": "WPG",
+    "name": "Jets",
+    "fullName": "Winnipeg Jets",
+    "division": "Central",
+    "conference": "Western"
+  },
+  {
+    "id": "4",
+    "record": {
+      "regulationWin": 13,
+      "regulationLoss": 4,
+      "overtimeWin": 1,
+      "overtimeLoss": 0,
+      "shootoutWin": 0,
+      "shootoutLoss": 0,
+      "points": 41
+    },
+    "acronym": "PHI",
+    "name": "Flyers",
+    "fullName": "Philadelphia Flyers",
+    "division": "Metropolitan",
+    "conference": "Eastern"
+  },
+  {
+    "id": "10",
+    "record": {
+      "regulationWin": 6,
+      "regulationLoss": 8,
+      "overtimeWin": 3,
+      "overtimeLoss": 1,
+      "shootoutWin": 0,
+      "shootoutLoss": 1,
+      "points": 26
+    },
+    "acronym": "TOR",
+    "name": "Maple Leafs",
+    "fullName": "Toronto Maple Leafs",
+    "division": "Atlantic",
+    "conference": "Eastern"
+  },
+  {
+    "id": "25",
+    "record": {
+      "regulationWin": 6,
+      "regulationLoss": 6,
+      "overtimeWin": 3,
+      "overtimeLoss": 3,
+      "shootoutWin": 0,
+      "shootoutLoss": 1,
+      "points": 28
+    },
+    "acronym": "DAL",
+    "name": "Stars",
+    "fullName": "Dallas Stars",
+    "division": "Central",
+    "conference": "Western"
+  },
+  {
+    "id": "13",
+    "record": {
+      "regulationWin": 7,
+      "regulationLoss": 10,
+      "overtimeWin": 0,
+      "overtimeLoss": 2,
+      "shootoutWin": 0,
+      "shootoutLoss": 1,
+      "points": 24
+    },
+    "acronym": "FLA",
+    "name": "Panthers",
+    "fullName": "Florida Panthers",
+    "division": "Atlantic",
+    "conference": "Eastern"
+  },
+  {
+    "id": "23",
+    "record": {
+      "regulationWin": 4,
+      "regulationLoss": 9,
+      "overtimeWin": 2,
+      "overtimeLoss": 0,
+      "shootoutWin": 1,
+      "shootoutLoss": 2,
+      "points": 20
+    },
+    "acronym": "VAN",
+    "name": "Canucks",
+    "fullName": "Vancouver Canucks",
+    "division": "Pacific",
+    "conference": "Western"
+  },
+  {
+    "id": "3",
+    "record": {
+      "regulationWin": 10,
+      "regulationLoss": 7,
+      "overtimeWin": 2,
+      "overtimeLoss": 1,
+      "shootoutWin": 1,
+      "shootoutLoss": 0,
+      "points": 37
+    },
+    "acronym": "NYR",
+    "name": "Rangers",
+    "fullName": "New York Rangers",
+    "division": "Metropolitan",
+    "conference": "Eastern"
+  },
+  {
+    "id": "22",
+    "record": {
+      "regulationWin": 8,
+      "regulationLoss": 7,
+      "overtimeWin": 2,
+      "overtimeLoss": 3,
+      "shootoutWin": 0,
+      "shootoutLoss": 0,
+      "points": 31
+    },
+    "acronym": "EDM",
+    "name": "Oilers",
+    "fullName": "Edmonton Oilers",
+    "division": "Pacific",
+    "conference": "Western"
+  },
+  {
+    "id": "6",
+    "record": {
+      "regulationWin": 11,
+      "regulationLoss": 4,
+      "overtimeWin": 3,
+      "overtimeLoss": 0,
+      "shootoutWin": 0,
+      "shootoutLoss": 0,
+      "points": 39
+    },
+    "acronym": "BOS",
+    "name": "Bruins",
+    "fullName": "Boston Bruins",
+    "division": "Atlantic",
+    "conference": "Eastern"
+  },
+  {
+    "id": "54",
+    "record": {
+      "regulationWin": 10,
+      "regulationLoss": 4,
+      "overtimeWin": 3,
+      "overtimeLoss": 0,
+      "shootoutWin": 0,
+      "shootoutLoss": 1,
+      "points": 37
+    },
+    "acronym": "VGK",
+    "name": "Golden Knights",
+    "fullName": "Vegas Golden Knights",
+    "division": "Pacific",
+    "conference": "Western"
+  },
+  {
+    "id": "16",
+    "record": {
+      "regulationWin": 5,
+      "regulationLoss": 9,
+      "overtimeWin": 1,
+      "overtimeLoss": 2,
+      "shootoutWin": 2,
+      "shootoutLoss": 0,
+      "points": 23
+    },
+    "acronym": "CHI",
+    "name": "Blackhawks",
+    "fullName": "Chicago Blackhawks",
+    "division": "Central",
+    "conference": "Western"
+  },
+  {
+    "id": "14",
+    "record": {
+      "regulationWin": 9,
+      "regulationLoss": 6,
+      "overtimeWin": 3,
+      "overtimeLoss": 0,
+      "shootoutWin": 0,
+      "shootoutLoss": 1,
+      "points": 34
+    },
+    "acronym": "TBL",
+    "name": "Lightning",
+    "fullName": "Tampa Bay Lightning",
+    "division": "Atlantic",
+    "conference": "Eastern"
+  },
+  {
+    "id": "19",
+    "record": {
+      "regulationWin": 9,
+      "regulationLoss": 6,
+      "overtimeWin": 1,
+      "overtimeLoss": 2,
+      "shootoutWin": 1,
+      "shootoutLoss": 0,
+      "points": 33
+    },
+    "acronym": "STL",
+    "name": "Blues",
+    "fullName": "St. Louis Blues",
+    "division": "Central",
+    "conference": "Western"
+  },
+  {
+    "id": "2",
+    "record": {
+      "regulationWin": 5,
+      "regulationLoss": 8,
+      "overtimeWin": 1,
+      "overtimeLoss": 4,
+      "shootoutWin": 0,
+      "shootoutLoss": 1,
+      "points": 22
+    },
+    "acronym": "NYI",
+    "name": "Islanders",
+    "fullName": "New York Islanders",
+    "division": "Metropolitan",
+    "conference": "Eastern"
+  },
+  {
+    "id": "24",
+    "record": {
+      "regulationWin": 6,
+      "regulationLoss": 7,
+      "overtimeWin": 2,
+      "overtimeLoss": 4,
+      "shootoutWin": 1,
+      "shootoutLoss": 0,
+      "points": 28
+    },
+    "acronym": "ANA",
+    "name": "Ducks",
+    "fullName": "Anaheim Ducks",
+    "division": "Pacific",
+    "conference": "Western"
+  },
+  {
+    "id": "5",
+    "record": {
+      "regulationWin": 8,
+      "regulationLoss": 9,
+      "overtimeWin": 0,
+      "overtimeLoss": 1,
+      "shootoutWin": 0,
+      "shootoutLoss": 0,
+      "points": 25
+    },
+    "acronym": "PIT",
+    "name": "Penguins",
+    "fullName": "Pittsburgh Penguins",
+    "division": "Metropolitan",
+    "conference": "Eastern"
+  },
+  {
+    "id": "29",
+    "record": {
+      "regulationWin": 4,
+      "regulationLoss": 6,
+      "overtimeWin": 2,
+      "overtimeLoss": 5,
+      "shootoutWin": 0,
+      "shootoutLoss": 2,
+      "points": 23
+    },
+    "acronym": "CBJ",
+    "name": "Blue Jackets",
+    "fullName": "Columbus Blue Jackets",
+    "division": "Metropolitan",
+    "conference": "Eastern"
+  },
+  {
+    "id": "12",
+    "record": {
+      "regulationWin": 6,
+      "regulationLoss": 6,
+      "overtimeWin": 1,
+      "overtimeLoss": 2,
+      "shootoutWin": 2,
+      "shootoutLoss": 0,
+      "points": 26
+    },
+    "acronym": "CAR",
+    "name": "Hurricanes",
+    "fullName": "Carolina Hurricanes",
+    "division": "Metropolitan",
+    "conference": "Eastern"
+  },
+  {
+    "id": "21",
+    "record": {
+      "regulationWin": 12,
+      "regulationLoss": 5,
+      "overtimeWin": 1,
+      "overtimeLoss": 2,
+      "shootoutWin": 1,
+      "shootoutLoss": 0,
+      "points": 42
+    },
+    "acronym": "COL",
+    "name": "Avalanche",
+    "fullName": "Colorado Avalanche",
+    "division": "Central",
+    "conference": "Western"
+  },
+  {
+    "id": "15",
+    "record": {
+      "regulationWin": 5,
+      "regulationLoss": 8,
+      "overtimeWin": 0,
+      "overtimeLoss": 2,
+      "shootoutWin": 1,
+      "shootoutLoss": 1,
+      "points": 20
+    },
+    "acronym": "WSH",
+    "name": "Capitals",
+    "fullName": "Washington Capitals",
+    "division": "Metropolitan",
+    "conference": "Eastern"
+  },
+  {
+    "id": "18",
+    "record": {
+      "regulationWin": 8,
+      "regulationLoss": 7,
+      "overtimeWin": 2,
+      "overtimeLoss": 1,
+      "shootoutWin": 1,
+      "shootoutLoss": 0,
+      "points": 31
+    },
+    "acronym": "NSH",
+    "name": "Predators",
+    "fullName": "Nashville Predators",
+    "division": "Central",
+    "conference": "Western"
+  },
+  {
+    "id": "28",
+    "record": {
+      "regulationWin": 6,
+      "regulationLoss": 10,
+      "overtimeWin": 1,
+      "overtimeLoss": 1,
+      "shootoutWin": 0,
+      "shootoutLoss": 0,
+      "points": 21
+    },
+    "acronym": "SJS",
+    "name": "Sharks",
+    "fullName": "San Jose Sharks",
+    "division": "Pacific",
+    "conference": "Western"
+  },
+  {
+    "id": "30",
+    "record": {
+      "regulationWin": 9,
+      "regulationLoss": 6,
+      "overtimeWin": 2,
+      "overtimeLoss": 0,
+      "shootoutWin": 1,
+      "shootoutLoss": 1,
+      "points": 34
+    },
+    "acronym": "MIN",
+    "name": "Wild",
+    "fullName": "Minnesota Wild",
+    "division": "Central",
+    "conference": "Western"
+  },
+  {
+    "id": "53",
+    "record": {
+      "regulationWin": 7,
+      "regulationLoss": 8,
+      "overtimeWin": 0,
+      "overtimeLoss": 1,
+      "shootoutWin": 0,
+      "shootoutLoss": 1,
+      "points": 23
+    },
+    "acronym": "ARI",
+    "name": "Coyotes",
+    "fullName": "Arizona Coyotes",
+    "division": "Pacific",
+    "conference": "Western"
+  },
+  {
+    "id": "17",
+    "record": {
+      "regulationWin": 3,
+      "regulationLoss": 13,
+      "overtimeWin": 0,
+      "overtimeLoss": 0,
+      "shootoutWin": 2,
+      "shootoutLoss": 1,
+      "points": 14
+    },
+    "acronym": "DET",
+    "name": "Red Wings",
+    "fullName": "Detroit Red Wings",
+    "division": "Atlantic",
+    "conference": "Eastern"
+  },
+  {
+    "id": "20",
+    "record": {
+      "regulationWin": 8,
+      "regulationLoss": 8,
+      "overtimeWin": 1,
+      "overtimeLoss": 1,
+      "shootoutWin": 0,
+      "shootoutLoss": 0,
+      "points": 27
+    },
+    "acronym": "CGY",
+    "name": "Flames",
+    "fullName": "Calgary Flames",
+    "division": "Pacific",
+    "conference": "Western"
+  },
+  {
+    "id": "1",
+    "record": {
+      "regulationWin": 9,
+      "regulationLoss": 5,
+      "overtimeWin": 0,
+      "overtimeLoss": 3,
+      "shootoutWin": 1,
+      "shootoutLoss": 1,
+      "points": 33
+    },
+    "acronym": "NJD",
+    "name": "Devils",
+    "fullName": "New Jersey Devils",
+    "division": "Metropolitan",
+    "conference": "Eastern"
+  },
+  {
+    "id": "26",
+    "record": {
+      "regulationWin": 8,
+      "regulationLoss": 7,
+      "overtimeWin": 1,
+      "overtimeLoss": 0,
+      "shootoutWin": 1,
+      "shootoutLoss": 1,
+      "points": 29
+    },
+    "acronym": "LAK",
+    "name": "Kings",
+    "fullName": "Los Angeles Kings",
+    "division": "Pacific",
+    "conference": "Western"
+  },
+  {
+    "id": "9",
+    "record": {
+      "regulationWin": 4,
+      "regulationLoss": 10,
+      "overtimeWin": 2,
+      "overtimeLoss": 2,
+      "shootoutWin": 1,
+      "shootoutLoss": 1,
+      "points": 21
+    },
+    "acronym": "OTT",
+    "name": "Senators",
+    "fullName": "Ottawa Senators",
+    "division": "Atlantic",
+    "conference": "Eastern"
+  }
+]

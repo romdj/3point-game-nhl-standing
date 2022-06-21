@@ -4,8 +4,7 @@ import { LeagueRecord } from "./domain/leagueRecord";
 import { TeamInformation } from "./domain/teamInformation";
 import { ScheduleSeasonParser } from './model/scheduleSeasonParser';
 import moment = require('moment');
-const nhlAPIURL: string = "https://statsapi.web.nhl.com/api/v1/";
-
+export const nhlAPIURL: string = "https://statsapi.web.nhl.com/api/v1/";
 
 export const fetchNHLSchedule = async (season?: string) => {
   const seasonInUse: string = season ? season : getCurrentSeason();
