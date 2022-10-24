@@ -3,10 +3,11 @@
   "version": "0.1.0",
   "description": "--- ## About this Project",
   "scripts": {
+    "build": "tsc",
     "clean": "rm -rf dist",
-    "fetch": "npm run clean; tsc; node dist/fetch.js",
+    "complete-build": "npm run clean; npm i; npm run build; npm test",
+    "fetch": "npm run clean; npm ci; npm run build; node dist/fetch.js",
     "cfetch": "clear; npm run fetch",
-    "build": "npm run clean ; npm i; tsc; npm test",
     "test": "jest",
     "test2": "mocha --recursive -r ts-node/register test/unit/**/*.ts test/unit/**/**/*.ts",
     "coverage": "nyc npm run test",
