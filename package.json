@@ -29,7 +29,6 @@
   },
   "homepage": "https://github.com/romdj/3point-game-nhl-standing#readme",
   "dependencies": {
-    "aws-sdk": "^2.814.0",
     "moment": "^2.29.4"
   },
   "devDependencies": {
