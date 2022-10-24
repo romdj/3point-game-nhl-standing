@@ -1,8 +1,9 @@
-import 'mocha';
-import { expect } from 'chai';
+// import {describe, expect, it} from '@jest/globals';
+
+import {describe, expect, it} from '@jest/globals';
 
 describe('preSeasonRanking', () => {
     it('TODO', () => {
-        expect(false).to.be.false;
+        expect(false).toBeFalsy();
     });
 });

@@ -1,5 +1,4 @@
-import 'mocha';
-import { expect } from 'chai';
+import {describe, expect, it} from '@jest/globals';
 
 import { LeagueRecord } from "../../../../src/fetch/domain/leagueRecord";
 

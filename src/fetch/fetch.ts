@@ -1,9 +1,13 @@
-import * as rq from "request-promise-native";
+// import * as rq from "request-promise-native";
+// import * as got from 'got';
+import got from "got";
+const moment = require('moment');
+
+
 import { Game } from './domain/game';
 import { LeagueRecord } from "./domain/leagueRecord";
 import { TeamInformation } from "./domain/teamInformation";
 import { ScheduleSeasonParser } from './model/scheduleSeasonParser';
-import moment = require('moment');
 
 
 const fetchNHLSchedule = async () => {
@@ -17,7 +21,7 @@ const fetchNHLSchedule = async () => {
   const nhlCompleteScheduleURL: string = `${nhlAPIURL}schedule${from}${to}&expand=schedule.linescore&season=${season}`;
   const nhlStandingsURL: string = `${nhlAPIURL}standings?season=${season}`;
 
-  return await rq.get(nhlCompleteScheduleURL);
+  return await got.get(nhlCompleteScheduleURL);
 }
 
 const getGamesFromSchedule = async (schedule: any) => {
