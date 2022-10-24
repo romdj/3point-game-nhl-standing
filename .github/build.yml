@@ -8,6 +8,8 @@ on:
     branches:
       - main
       - releases/*
+      - dev
+      - feature/*
     paths-ignore:
       - '**.md'
 
@@ -28,4 +30,3 @@ jobs:
       # - run: npm run build
       # - run: npm run format-check
       - run: npm test
-      
