@@ -1,4 +1,5 @@
-import * as rq from "request-promise-native";
+import got from 'got';
+
 import { LeagueRecord } from "./leagueRecord";
 
 export class TeamInformation {
@@ -17,7 +18,9 @@ export class TeamInformation {
 
   async fillTeamInfo(): Promise<void> {
     const teamAPIURL = `https://statsapi.web.nhl.com/api/v1/teams/${this.id}`;
-    await rq.get(teamAPIURL)
+    await got({
+      url: teamAPIURL
+    })
       .then((teamResponseData: any) => {
         const teamInfo = JSON.parse(teamResponseData).teams[0];
         this.acronym = teamInfo.abbreviation;

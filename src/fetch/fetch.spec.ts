@@ -1,8 +1,7 @@
-import 'mocha';
-import { expect } from 'chai';
+import {describe, expect, it} from '@jest/globals';
 
 describe('Fetch/main', () => {
     it('TODO', () => {
-        expect(false).to.be.false;
+        expect(false).toBeFalsy();
     });
 });

@@ -1,8 +1,7 @@
-import 'mocha';
 // import sinon from 'sinon';
 import * as jest from 'jest';
 import * as request from "request-promise-native";
-import { expect } from 'chai';
+import {describe, expect, it} from '@jest/globals';
 
 import { TeamInformation } from "../../../../src/fetch/domain/TeamInformation";
 import { LeagueRecord } from '../../../../src/fetch/domain/leagueRecord';
