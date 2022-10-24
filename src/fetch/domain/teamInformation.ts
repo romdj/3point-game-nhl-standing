@@ -1,6 +1,5 @@
-import { LeagueRecord } from "./leagueRecord";
-
 import got from "got";
+import { LeagueRecord } from "./leagueRecord";
 
 export class TeamInformation {
   id: string;

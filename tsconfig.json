@@ -15,8 +15,11 @@
     "moduleResolution": "NodeNext",
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "skipLibCheck":true
+    "skipLibCheck": true
   },
+  "types": [
+    "jest"
+  ],
   "include": [
     "src/fetch"
   ],

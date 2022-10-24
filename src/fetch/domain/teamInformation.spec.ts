@@ -1,13 +1,13 @@
 import { beforeEach, describe, expect, it } from '@jest/globals';
+import got from 'got';
 
 import { LeagueRecord } from './leagueRecord';
 import { TeamInformation } from './teamInformation';
 
-// jest.mock('request-promise-native');
-
+jest.mock('got');
 
 beforeEach(() => {
-  require('request-promise-native').__setMockFiles();
+  require('got').__setMockFiles();
 });
 
 describe('Team Information', () => {
