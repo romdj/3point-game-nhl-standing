@@ -29,10 +29,10 @@
   },
   "homepage": "https://github.com/romdj/3point-game-nhl-standing#readme",
   "dependencies": {
-    "@types/got": "^9.6.12",
     "moment": "^2.29.4"
   },
   "devDependencies": {
+    "@types/got": "^9.6.12",
     "eslint": "^6.8.0",
     "jest": "^29.2.1",
     "ts-jest": "^29.0.3",

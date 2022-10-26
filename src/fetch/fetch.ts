@@ -86,7 +86,7 @@ const main = async () => {
   const teamsWithPoints = await get3PointStandings(teams, games);
   console.log(sortStandings(teamsWithPoints));
   // console.log(sortStandings(teamsWithPoints));
-  return sortStandings(teamsWithPoints);
+  // return sortStandings(teamsWithPoints);
 }
 // main();
 main().then(sortedStanding => console.log(sortedStanding));
