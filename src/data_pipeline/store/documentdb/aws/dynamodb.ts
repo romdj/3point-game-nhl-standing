@@ -1,6 +1,6 @@
 import { region, accessKeyId, secretAccessKey, tableName } from './config.js';
 import { Game, Match } from '../../../compute/domain/game.js';
-const dummyGame = require('../../../../.test/unit/data/dummy-game.json');
+const dummyGame = require('../../../../../.test/unit/data/dummy-game.json');
 import { TeamInformation } from '../../../compute/domain/teamInformation.js';
 
 import { DynamoDBClient, PutItemCommand, PutItemCommandInput, BatchWriteItemCommand, BatchWriteItemCommandInput } from "@aws-sdk/client-dynamodb";

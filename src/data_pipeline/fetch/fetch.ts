@@ -9,9 +9,12 @@ import { LeagueRecord } from "../compute/domain/leagueRecord.js";
 import { TeamInformation } from "../compute/domain/teamInformation.js";
 import { ScheduleSeasonParser } from '../compute/model/scheduleSeasonParser.js';
 
-export async function fetchNHLSchedule() {
+export async function fetchNHLSchedule(season?:string) {
+  season = season || getCurrentSeason();
+  
+  
+
   const intervalStartDate: string = '2022-09-01';
-  const season: string = getCurrentSeason();
   const intervalEndDate: string = moment().format("YYYY-MM-DD");
   // const intervalEndDate: string = '2020-03-01';
   const nhlAPIURL: string = "https://statsapi.web.nhl.com/api/v1/";
