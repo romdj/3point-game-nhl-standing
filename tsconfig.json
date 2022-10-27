@@ -21,8 +21,8 @@
     "jest"
   ],
   "include": [
-    "src/fetch"
-, "src/compute/domain"  ],
+    "src/data_pipeline"
+],
   "exclude": [
     "**/*.spec.ts",
     "**/*.old.ts"

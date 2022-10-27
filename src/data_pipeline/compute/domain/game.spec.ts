@@ -4,7 +4,7 @@ import { Game } from './game';
 
 describe('Game', () => {
     it('Creating Valid Regulation Game', () => {
-        const dummyGameData = require("../../../.test/unit/data/dummy-game.json");
+        const dummyGameData = require("../../../../.test/unit/data/dummy-game.json");
         const game: Game = new Game(dummyGameData);
         expect(game._id).toEqual('2019020001');
         expect(game.winnerId).toEqual('10');
@@ -15,7 +15,7 @@ describe('Game', () => {
     });
 
     it('Creating Valid Overtime Game', () => {
-        const dummyGameData = require("../../../.test/unit/data/dummy-ot-game.json");
+        const dummyGameData = require("../../../../.test/unit/data/dummy-ot-game.json");
         const game = new Game(dummyGameData);
         expect(game.winnerId).toEqual('15');
         expect(game.loserId).toEqual('19');
@@ -25,7 +25,7 @@ describe('Game', () => {
     });
 
     it('Creating Valid Shootout Game', () => {
-        const dummyGameData = require("../../../.test/unit/data/dummy-so-game.json");
+        const dummyGameData = require("../../../../.test/unit/data/dummy-so-game.json");
         const game = new Game(dummyGameData);
         expect(game.winType).toEqual('SHOOTOUT');
         expect(game.winnerId).toEqual('12');
