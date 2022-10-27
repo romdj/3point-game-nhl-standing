@@ -1,17 +1,17 @@
-// import * as rq from "request-promise-native";
-// import * as got from 'got';
-import got from "got";
+// import got from "got";
+// import {WritableStream} from "stream";
+// import https from "https";
+const axios = require('axios');
 const moment = require('moment');
 
-
-import { Game } from './domain/game';
-import { LeagueRecord } from "./domain/leagueRecord";
-import { TeamInformation } from "./domain/teamInformation";
-import { ScheduleSeasonParser } from './model/scheduleSeasonParser';
-
+import { Game, Match } from '../compute/domain/game.js';
+import { LeagueRecord } from "../compute/domain/leagueRecord.js";
+import { TeamInformation } from "../compute/domain/teamInformation.js";
+import { ScheduleSeasonParser } from '../compute/model/scheduleSeasonParser.js';
+import { storeMatch, storeTeam } from '../store/documentdb/aws/dynamodb.js';
 
 const fetchNHLSchedule = async () => {
-  const intervalStartDate: string = '2019-09-01';
+  const intervalStartDate: string = '2022-09-01';
   const season: string = getCurrentSeason();
   const intervalEndDate: string = moment().format("YYYY-MM-DD");
   // const intervalEndDate: string = '2020-03-01';
@@ -21,15 +21,20 @@ const fetchNHLSchedule = async () => {
   const nhlCompleteScheduleURL: string = `${nhlAPIURL}schedule${from}${to}&expand=schedule.linescore&season=${season}`;
   const nhlStandingsURL: string = `${nhlAPIURL}standings?season=${season}`;
 
-  return await got.get(nhlCompleteScheduleURL);
+  const completeSchedule = await axios.get(nhlCompleteScheduleURL);
+  // console.log(JSON.stringify(completeSchedule));
+  console.log(completeSchedule);
+  process.exit(456);
+  return completeSchedule;
 }
 
 const getGamesFromSchedule = async (schedule: any) => {
+  // console.log(schedule);
   const result = JSON.parse(schedule);
   const { dates } = result;
   const NHLDownstreamGames = dates.map((item: any) => item.games).flat();
   const regularSeasonGames = new ScheduleSeasonParser(NHLDownstreamGames).regularSeasonGames;
-  return regularSeasonGames.map((game: any) => new Game(game));
+  return regularSeasonGames.map((game: Match) => new Game(game));
 }
 
 const getTeamsFromSchedule = async (games: any) => {
@@ -56,6 +61,7 @@ const buildTeamInformation = async (team: any, games: any): Promise<TeamInformat
       currentGame.addRecord(team, record);
       points += currentGame.getPoint(team);
     });
+    console.log(games);
   const tInfo = new TeamInformation(team, record);
   await tInfo.fillTeamInfo();
   // console.log(JSON.stringify(tInfo));
@@ -81,9 +87,12 @@ exports.handler = async function (event: any, context: any) {
 }
 const main = async () => {
   const nhlSchedule = await fetchNHLSchedule();
+  
   const games = await getGamesFromSchedule(nhlSchedule);
   const teams = await getTeamsFromSchedule(games);
   const teamsWithPoints = await get3PointStandings(teams, games);
+  teamsWithPoints.map(async team => await storeTeam(team));
+  // games.map(async game => await storeMatch(game));
   console.log(sortStandings(teamsWithPoints));
   // console.log(sortStandings(teamsWithPoints));
   // return sortStandings(teamsWithPoints);

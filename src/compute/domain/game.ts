@@ -1,14 +1,26 @@
-import { LeagueRecord } from "./leagueRecord";
+import { LeagueRecord } from "./leagueRecord.js";
 import { WinType } from "./wintype";
 
+export interface Match {
+  _id: string;
+  winnerId: string;
+  loserId: string;
+  winType: WinType;
+  pointsW: Number;
+  pointsL: Number;
+}
 export class Game {
   readonly _id: string;
   readonly winnerId: string;
   readonly loserId: string;
   readonly winType: WinType;
+  readonly pointsW: Number;
+  readonly pointsL: Number;
 
   constructor(gameNHLSchedule: any) {
     this._id = `${gameNHLSchedule.gamePk}`;
+    this.pointsW = 0;
+    this.pointsL = 0;
     if (isPostponed(gameNHLSchedule)) {
       this.winnerId = '';
       this.loserId = '';
@@ -17,9 +29,21 @@ export class Game {
       this.winnerId = getWinner(gameNHLSchedule);
       this.loserId = getLoser(gameNHLSchedule);
       this.winType = WinType.UNDEFINED;
-      if (isRegulation(gameNHLSchedule)) this.winType = WinType.REGULATION;
-      if (isOvertime(gameNHLSchedule)) this.winType = WinType.OVERTIME;
-      if (isShootout(gameNHLSchedule)) this.winType = WinType.SHOOTOUT;
+      if (isRegulation(gameNHLSchedule)) {
+        this.winType = WinType.REGULATION;
+        this.pointsW = 3;
+        this.pointsL = 0;
+      };
+      if (isOvertime(gameNHLSchedule)) {
+        this.winType = WinType.OVERTIME;
+        this.pointsW = 2;
+        this.pointsL = 1;
+      }
+      if (isShootout(gameNHLSchedule)) {
+        this.winType = WinType.SHOOTOUT;
+        this.pointsW = 2;
+        this.pointsL = 1;
+      }
       if (this.winType == WinType.UNDEFINED) {
         throw new Error('Game has no winner');
       }

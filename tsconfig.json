@@ -22,7 +22,7 @@
   ],
   "include": [
     "src/fetch"
-  ],
+, "src/compute/domain"  ],
   "exclude": [
     "**/*.spec.ts",
     "**/*.old.ts"

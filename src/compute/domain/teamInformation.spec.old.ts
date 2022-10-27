@@ -1,10 +1,9 @@
 import { beforeEach, describe, expect, it } from '@jest/globals';
-import got from 'got';
 
-import { LeagueRecord } from './leagueRecord';
-import { TeamInformation } from './teamInformation';
+import { LeagueRecord } from './leagueRecord.js';
+import { TeamInformation } from './teamInformation.js';
 
-jest.mock('got');
+// jest.mock('got');
 
 beforeEach(() => {
   require('got').__setMockFiles();

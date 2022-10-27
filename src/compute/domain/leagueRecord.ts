@@ -1,4 +1,4 @@
-import { WinType } from "./wintype";
+import { WinType } from "./wintype.js";
 
 export class LeagueRecord {
     regulationWin: number;
