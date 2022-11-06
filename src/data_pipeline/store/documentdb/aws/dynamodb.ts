@@ -15,7 +15,6 @@ const client = new DynamoDBClient({
 export async function storeMatch(gameRecord: Game) {
     console.log('storing data into dynamodb');
     console.log('data to store: ', JSON.stringify(gameRecord));
-    // console.log('data to store: ', JSON.stringify(gameRecord));
 
     const input: PutItemCommandInput = {
         TableName: tableName,
