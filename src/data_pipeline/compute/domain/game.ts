@@ -1,26 +1,40 @@
+import { NhlGame } from "../model/NhlGame.js";
 import { LeagueRecord } from "./leagueRecord.js";
 import { WinType } from "./wintype";
 
 export interface Match {
   _id: string;
+  gameDate: string;
   winnerId: string;
   loserId: string;
+  // winnerTeamName: string;
+  // loserTeamName: string;
   winType: WinType;
   pointsW: Number;
   pointsL: Number;
+  season: Number;
 }
 export class Game {
   readonly _id: string;
+  readonly gameDate: string;
   readonly winnerId: string;
   readonly loserId: string;
+  // readonly winnerTeamName: string;
+  // readonly loserTeamName: string;
   readonly winType: WinType;
   readonly pointsW: Number;
   readonly pointsL: Number;
+  readonly season: string;
+  readonly verboseDescriptionUrl: string;
 
-  constructor(gameNHLSchedule: any) {
+  constructor(gameNHLSchedule: NhlGame) {
     this._id = `${gameNHLSchedule.gamePk}`;
+    this.gameDate = gameNHLSchedule.gameDate;
     this.pointsW = 0;
     this.pointsL = 0;
+    this.season = gameNHLSchedule.season;
+    this.verboseDescriptionUrl = `https://statsapi.web.nhl.com${gameNHLSchedule.content.link}`;
+
     if (isPostponed(gameNHLSchedule)) {
       this.winnerId = '';
       this.loserId = '';
@@ -45,6 +59,7 @@ export class Game {
         this.pointsL = 1;
       }
       if (this.winType == WinType.UNDEFINED) {
+        console.error(`incoming item: ${JSON.stringify(gameNHLSchedule)}`);
         throw new Error('Game has no winner');
       }
     }

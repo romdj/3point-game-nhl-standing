@@ -1,6 +1,6 @@
 import {describe, expect, it} from '@jest/globals';
 
-import { Game } from "../../../../src/fetch/domain/game";
+import { Game } from "../../../../src/data_pipeline/compute/domain/game";
 
 describe('Game', () => {
     it('Creating Valid Regulation Game', () => {

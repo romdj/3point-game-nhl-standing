@@ -2,6 +2,7 @@ import {describe, expect, it} from '@jest/globals';
 import dummyGameData from "../../../../.test/unit/data/dummy-game.json";
 import dummyOtGameData from "../../../../.test/unit/data/dummy-ot-game.json";
 import dummySoGameData from "../../../../.test/unit/data/dummy-so-game.json";
+import { NhlGame } from '../model/NhlGame';
 
 import { Game } from './game';
 

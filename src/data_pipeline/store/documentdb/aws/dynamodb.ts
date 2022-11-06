@@ -12,18 +12,23 @@ const client = new DynamoDBClient({
     }
 });
 
-export async function storeMatch(gameRecord: Match) {
+export async function storeMatch(gameRecord: Game) {
     console.log('storing data into dynamodb');
     console.log('data to store: ', JSON.stringify(gameRecord));
+    // console.log('data to store: ', JSON.stringify(gameRecord));
+
     const input: PutItemCommandInput = {
         TableName: tableName,
         Item: {
             _id: { "S": gameRecord._id },
+            gameDate: { "S": gameRecord.gameDate },
             gamePk: { "S": gameRecord._id },
             winnerId: { "S": gameRecord.winnerId },
             loserId: { "S": gameRecord.loserId },
             pointsW: { "N": gameRecord.pointsW.toString() },
             pointsL: { "N": gameRecord.pointsL.toString() },
+            season: { "S": gameRecord.season },
+            verboseDescriptionUrl: { "S": gameRecord.verboseDescriptionUrl },
             winType: { "S": gameRecord.winType },
         },
     }
@@ -85,8 +90,6 @@ export async function storeTeam(teamInformation: TeamInformation) {
     return await client.send(command);
 }
 
-
 const registeredGame = new Game(dummyGame);    
 console.log(registeredGame);
 storeMatch(registeredGame).then(response => console.log(JSON.stringify(response, null, 2)));
-
