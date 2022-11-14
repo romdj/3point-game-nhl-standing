@@ -1,7 +1,7 @@
 resource "aws_dynamodb_table" "nhl_match_points_table" {
-  dynamodb_table_name           = "<env>"
-  billing_mode                  = "PAY_PER_REQUEST"
-  hash_key                      = "gamePk"
+  name          = "<env>"
+  billing_mode  = "PAY_PER_REQUEST"
+  hash_key      = "gamePk"
   attribute {
     name = "gamePk"
     type = "S"
