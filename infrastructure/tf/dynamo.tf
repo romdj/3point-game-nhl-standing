@@ -1,12 +1,18 @@
 resource "aws_dynamodb_table" "nhl-standings" {
   dynamodb_table_name           = "<tableName>"
-  billing_mode                  = "ON-DEMAND"
+  billing_mode        = "PAY_PER_REQUEST"
   hash_key                      = "gamePk"
 
   attribute {
     name = "gamePk"
     type = "S"
   }
+}
+
+variable "dynamodb_table_name" {
+    type        = string
+    description = "DynamoDB Table Name from .env variable"
+}
 
 #   attribute {
 #     name = "GameTitle"
@@ -38,4 +44,4 @@ resource "aws_dynamodb_table" "nhl-standings" {
   #   Environment = "dev"
   #   # Service     = 
   # }
-}
+# }
