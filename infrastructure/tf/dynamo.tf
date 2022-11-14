@@ -1,21 +1,41 @@
-resource "aws_dynamodb_table" "example" {
-  dynamodb_table_name = "<table name>"
-  hash_key            = "TestTableHashKey"
-  billing_mode        = "PAY_PER_REQUEST"
-  stream_enabled      = true
-  stream_view_type    = "NEW_AND_OLD_IMAGES"
+resource "aws_dynamodb_table" "nhl-standings" {
+  dynamodb_table_name           = "<tableName>"
+  billing_mode                  = "ON-DEMAND"
+  hash_key                      = "gamePk"
 
   attribute {
-    name = "TestTableHashKey"
+    name = "gamePk"
     type = "S"
   }
 
-  replica {
-    region_name = "eu-north-1"
-  }
-}
+#   attribute {
+#     name = "GameTitle"
+#     type = "S"
+#   }
 
-variable "dynamodb_table_name" {
-    type        = string
-    description = "DynamoDB Table Name from .env variable"
+#   attribute {
+#     name = "TopScore"
+#     type = "N"
+#   }
+
+#   ttl {
+#     attribute_name = "TimeToExist"
+#     enabled        = false
+#   }
+
+#   global_secondary_index {
+#     name               = "GameTitleIndex"
+#     hash_key           = "GameTitle"
+#     range_key          = "TopScore"
+#     write_capacity     = 10
+#     read_capacity      = 10
+#     projection_type    = "INCLUDE"
+#     non_key_attributes = ["UserId"]
+#   }
+
+  # tags = {
+  #   Name        = "dynamodb-table-1"
+  #   Environment = "dev"
+  #   # Service     = 
+  # }
 }

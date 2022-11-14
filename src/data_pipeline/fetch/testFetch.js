@@ -10,10 +10,8 @@ async function fetch2(hostname) {
     await get(hostname, (res) => {
         console.log('statusCode:', res.statusCode);
         console.log('headers:', res.headers);
-
         res.on('data', (d) => {
             fullBody += d;
-            //   process.stdout.write(d);
         })
             .on('end', function () {
                 var body;
@@ -28,7 +26,6 @@ async function fetch2(hostname) {
                 console.error(e);
             });
     });
-    // return fullBody
 }
 
 function fetch(cb, hostname) {

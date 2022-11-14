@@ -1,0 +1,17 @@
+{
+  "projectName": "3pointgamenhlstandin",
+  "version": "3.1",
+  "frontend": "javascript",
+  "javascript": {
+    "framework": "react",
+    "config": {
+      "SourceDir": "src/web_page/front-end",
+      "DistributionDir": "dist",
+      "BuildCommand": "npm run-script build-front-end",
+      "StartCommand": "npm run-script front-end"
+    }
+  },
+  "providers": [
+    "awscloudformation"
+  ]
+}
