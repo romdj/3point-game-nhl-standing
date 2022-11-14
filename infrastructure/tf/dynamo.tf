@@ -8,11 +8,6 @@ resource "aws_dynamodb_table" "nhl_match_points_table" {
   }
 }
 
-variable "dynamodb_table_name" {
-    type        = string
-    description = "DynamoDB Table Name from .env variable"
-}
-
 #   attribute {
 #     name = "GameTitle"
 #     type = "S"
