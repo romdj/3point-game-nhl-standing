@@ -12,6 +12,12 @@ on:
       - feature/*
     paths-ignore:
       - '**.md'
+      - '**.tf'
+      - '**.json'
+      - '**.old.ts'
+      - '.gitignore'
+      - '.**.config.js'
+      - 'LICENSE'
 
 jobs:
   build:

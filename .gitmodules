@@ -1,0 +1,3 @@
+[submodule "src/web_page/front-end/nhl_insights_view"]
+	path = src/web_page/front-end/nhl_insights_view
+	url = https://github.com/romdj/nhl_insights_view
