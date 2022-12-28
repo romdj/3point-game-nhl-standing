@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
-    "target": "ES2020",
-    "module": "commonjs",
+    "target": "ESNext",
+    "module": "CommonJS",
     "lib": [
       "esnext"
     ],
@@ -12,14 +12,19 @@
     "removeComments": true,
     "strict": true,
     "alwaysStrict": true,
-    "moduleResolution": "node",
+    "moduleResolution": "NodeNext",
     "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true
   },
-  "include": [
-    "src/fetch"
+  "types": [
+    "jest"
   ],
+  "include": [
+    "src/data_pipeline"
+],
   "exclude": [
-    "**/*.spec.ts"
+    "**/*.old.ts"
   ]
 }
