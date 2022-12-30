@@ -9,7 +9,7 @@ This effort is purely to make it easier for stats nerds and the like to make and
 
 ## Roadmap
 
-So far, the back-end is done (fetching and organising data)
+So far, the back-end is done (fetching and organizing data)
 Here is what remains to be done:
 - Front-end development (Vue or Svelte TBD)
 - Deployment to AWS || GCP
