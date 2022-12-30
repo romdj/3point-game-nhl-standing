@@ -5,7 +5,7 @@
 ---
 ## About this Project
 
-This effort is purely to make it easier for stats nerds and the like to make and showcase what the NHL standings would be if the Games were worth 3 points, hence abiding to IIHF rules and not _artificially_ narrowing the gap between teams. 
+This effort is purely to make it easier for stats nerds and the like to make and showcase what the NHL standings would be if the Games were worth 3 points, hence abiding to IIHF rules and not _artificially_ narrowing the gap between teams.
 
 ## Roadmap
 
@@ -17,11 +17,11 @@ Here is what remains to be done:
 
 ## Stack Architecture
 Here is a very simple diagram of what the architecture looks like:
-![AWS Architecture diagram](./media/architecture_diagram.png)
+![AWS Architecture diagram](./media/ExtendedNhlStats.png)
 
 ## Contributing
 
-I am only one person so if you see something I have missed please feel free to 
+I am only one person so if you see something I have missed please feel free to
 open up a MR/PR and I will get it merged.  Generally speaking I get things done
 in a few days as time permits between work and other obligations.
 
@@ -37,4 +37,4 @@ By inheritance, I also have to thank the 2 following developer along with their 
 [Kevin Sidwar](https://www.kevinsidwar.com/) - First real source of documentation I found on the API and gave me
 a nice starting point for a project that eventually evolved into this repository
 
-[Jon Ursenbach](https://github.com/erunion) - Built out an [OpenAPI 3 spec](https://github.com/erunion/sport-api-specifications) for the NHL API 
+[Jon Ursenbach](https://github.com/erunion) - Built out an [OpenAPI 3 spec](https://github.com/erunion/sport-api-specifications) for the NHL API
