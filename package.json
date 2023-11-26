@@ -17,6 +17,7 @@
     "clean": "rm -rf dist node_modules",
     "complete-build": "clear; npm run clean; npm i; npm run build; npm test",
     "fetch": "npm run clean; npm i; npm run build; node dist/fetch.js",
+    "init": "npm run clean; npm i; npm run build; node dist/src/data_pipeline/init.js",
     "cfetch": "clear; npm run fetch",
     "test": "jest",
     "test2": "mocha --recursive -r ts-node/register test/unit/**/*.ts test/unit/**/**/*.ts",
@@ -29,6 +30,7 @@
   },
   "homepage": "https://github.com/romdj/3point-game-nhl-standing#readme",
   "dependencies": {
+    "@apollo/datasource-rest": "^6.2.2",
     "@aws-sdk/client-dynamodb": "^3.196.0",
     "axios": "^1.1.3",
     "commander": "^9.4.1",
