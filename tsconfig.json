@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "ESNext",
-    "module": "CommonJS",
+    "module": "NodeNext",
     "lib": [
       "esnext"
     ],
@@ -22,7 +22,7 @@
     "jest"
   ],
   "include": [
-    "src/data_pipeline"
+    "src/graphql"
 ],
   "exclude": [
     "**/*.old.ts"

@@ -1,17 +1,17 @@
-import { RESTDataSource, AugmentedRequest } from '@apollo/datasource-rest';
+import { RESTDataSource, AugmentedRequest } from "@apollo/datasource-rest";
 
 class NHLAPI extends RESTDataSource {
-  override baseURL = 'https://api-web.nhle.com/v1/';
+  override baseURL = "https://api-web.nhle.com/v1/";
 
-  async getScheduleFrom(dateFrom) {
+  async getScheduleFrom(dateFrom: string) {
     return this.get(`schedule/${dateFrom}`);
   }
 
-  async getScheduleDay(dateDay) {
+  async getScheduleDay(dateDay: string) {
     const scheduleCollection = await this.getScheduleFrom(dateDay);
-    return scheduleCollection.map(item => {
-        return item.gameweek.filter(gameCollection => gameCollection.date === dateDay).games
-  });
+    return scheduleCollection.map((item: any) => {
+      return item.gameweek.filter((gameCollection: any) => gameCollection.date === dateDay).games;
+    });
   }
   // async getMostViewedMovies(limit = 10) {
   //   const data = await this.get('movies', {
@@ -24,8 +24,10 @@ class NHLAPI extends RESTDataSource {
   // }
 }
 
-(() => async () => {
-    const nhlApi = new NHLAPI();
-    const dateFrom = await nhlApi.getScheduleFrom('2023-11-26');
-    const gamesOn = await nhlApi.getScheduleDay("2023-11-26");
-})
+() => async () => {
+  const nhlApi = new NHLAPI();
+  const dateFrom = await nhlApi.getScheduleFrom("2023-11-26");
+  const gamesOn = await nhlApi.getScheduleDay("2023-11-26");
+  console.log(dateFrom);
+  console.log(gamesOn);
+};
