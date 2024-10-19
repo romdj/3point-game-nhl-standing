@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "ESNext",
-    "module": "ESNext",
+    "module": "NodeNext",
     "lib": [
       "esnext"
     ],
@@ -15,16 +15,16 @@
     "moduleResolution": "NodeNext",
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "resolveJsonModule": true
   },
   "types": [
     "jest"
   ],
   "include": [
-    "src/fetch"
-  ],
+    "src/graphql"
+],
   "exclude": [
-    "**/*.spec.ts",
     "**/*.old.ts"
   ]
 }
