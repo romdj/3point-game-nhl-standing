@@ -21,10 +21,10 @@ jobs:
         os: [ubuntu-latest, windows-latest, macos-latest]
     steps:
       - uses: actions/checkout@v3
-      - name: Setup Node 16.x
+      - name: Setup Node 22.x
         uses: actions/setup-node@v3
         with:
-          node-version: 16.x
+          node-version: 22.x
           cache: npm
       - run: npm ci
       - run: npm run build

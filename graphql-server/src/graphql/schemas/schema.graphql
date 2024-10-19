@@ -1,0 +1,29 @@
+type Team {
+  conferenceAbbrev: String
+  conferenceName: String
+  conferenceSequence: Int
+  date: String
+  divisionName: String
+  divisionSequence: Int
+  gamesPlayed: Int
+  goalDifferential: Int
+  goalAgainst: Int
+  goalFor: Int
+  homePoints: Int
+  losses: Int
+  otLosses: Int
+  points: Int
+  regulationWins: Int
+  otWins: Int
+  roadPoints: Int
+  internationalSystemPoints: Int
+  teamName: String
+  teamAbbrev: String
+  teamLogo: String
+  winPercentage: Float
+  wins: Int
+}
+
+type Query {
+  standings(date: String): [Team]
+}
