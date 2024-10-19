@@ -1,9 +1,0 @@
-{
-  "name": "sandbox",
-  "version": "0.1.0",
-  "author": "romdj",
-  "license": "MIT",
-  "dependencies": {
-    "@apollo/datasource-rest": "^6.2.2"
-  }
-}
