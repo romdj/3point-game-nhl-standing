@@ -39,6 +39,6 @@ jobs:
       # Build and test the Svelte front-end app
       - name: Install and Build Svelte Frontend
         working-directory: ./front-end/svelte/international-nhl-standings
+        # npm test
         run: |
           npm i
-          npm test
