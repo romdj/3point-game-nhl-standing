@@ -33,14 +33,12 @@ jobs:
       - name: Install and Build GraphQL Server
         working-directory: ./graphql-server
         run: |
-          npm ci
-          npm run build
+          npm i
           npm test
 
       # Build and test the Svelte front-end app
       - name: Install and Build Svelte Frontend
         working-directory: ./front-end/svelte/international-nhl-standings
         run: |
-          npm ci
-          npm run build
+          npm i
           npm test
