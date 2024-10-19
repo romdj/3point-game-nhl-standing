@@ -21,11 +21,26 @@ jobs:
         os: [ubuntu-latest, windows-latest, macos-latest]
     steps:
       - uses: actions/checkout@v3
+
+      # Setup Node.js for both projects
       - name: Setup Node 22.x
         uses: actions/setup-node@v3
         with:
           node-version: 22.x
           cache: npm
-      - run: npm ci
-      - run: npm run build
-      - run: npm test
+
+      # Build and test the GraphQL server
+      - name: Install and Build GraphQL Server
+        working-directory: ./graphql-server
+        run: |
+          npm ci
+          npm run build
+          npm test
+
+      # Build and test the Svelte front-end app
+      - name: Install and Build Svelte Frontend
+        working-directory: ./front-end/svelte/international-nhl-standings
+        run: |
+          npm ci
+          npm run build
+          npm test
