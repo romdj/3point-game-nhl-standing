@@ -1,3 +1,4 @@
 import { writable } from 'svelte/store';
+import type { Standing } from '../domain/standing';
 
-export const standingsStore = writable([]);
+export let standingsStore = writable<Standing[]>([]);

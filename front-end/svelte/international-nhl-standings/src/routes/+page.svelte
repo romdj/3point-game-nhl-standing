@@ -1,12 +1,13 @@
-<script>
-  import Table from "../components/Table.svelte";
+<script lang="ts">
   import { onMount } from "svelte";
   import { fetchStandings } from "../api/standingsAPI";
+  import Table from "../components/Table.svelte";
   import { standingsStore } from "../stores/standingsStore";
 
+
   onMount(async () => {
-    const standings = await fetchStandings();
-    standingsStore.set(standings);
+    const fetchedStandings = await fetchStandings();
+    standingsStore.set(fetchedStandings);
   });
 </script>
 
