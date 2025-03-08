@@ -46,43 +46,52 @@
 
   {#each Object.entries(groupedStandings) as [groupName, groupTeams]}
     <div class="mb-8">
-      <h3 class="text-lg font-semibold mb-4 text-gray-700">{groupName}</h3>
-      <div class="overflow-x-auto bg-white rounded-lg shadow">
-        <table class="min-w-full table-auto">
-          <thead>
-            <tr class="bg-gray-50 border-b border-gray-200">
-              <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 w-12">#</th>
-              {#each columns as column}
-                <th 
-                  class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider cursor-pointer hover:bg-gray-100 {column.width}"
-                  on:click={() => handleSort(column.key)}
-                >
-                  <div class="flex items-center space-x-1">
-                    <span>{column.label}</span>
-                    {#if sortKey === column.key}
-                      <span class="text-blue-500">
-                        {sortOrder === 'desc' ? '↓' : '↑'}
-                      </span>
-                    {/if}
-                  </div>
-                </th>
-              {/each}
-            </tr>
-          </thead>
-          <tbody class="bg-white divide-y divide-gray-200">
-            {#each groupTeams as standing, index}
-              <tr class="hover:bg-gray-50 transition-colors duration-150">
-                <td class="px-4 py-3 text-sm text-center">{index + 1}</td>
+      <h3 class="text-lg font-semibold mb-4 text-gray-700 border-b pb-2">
+        {groupName}
+        {#if groupName.includes('Division Winners')}
+          <span class="text-sm font-normal text-gray-500 ml-2">(First Round Home Ice)</span>
+        {/if}
+      </h3>
+      {#if groupTeams.length > 0}
+        <div class="overflow-x-auto bg-white rounded-lg shadow">
+          <table class="min-w-full table-auto">
+            <thead>
+              <tr class="bg-gray-50 border-b border-gray-200">
+                <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 w-12">#</th>
                 {#each columns as column}
-                  <td class="px-4 py-3 text-sm {column.key === 'teamName' ? 'font-medium' : 'text-center'}">
-                    {standing[column.key]}
-                  </td>
+                  <th 
+                    class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider cursor-pointer hover:bg-gray-100 {column.width}"
+                    on:click={() => handleSort(column.key)}
+                  >
+                    <div class="flex items-center space-x-1">
+                      <span>{column.label}</span>
+                      {#if sortKey === column.key}
+                        <span class="text-blue-500">
+                          {sortOrder === 'desc' ? '↓' : '↑'}
+                        </span>
+                      {/if}
+                    </div>
+                  </th>
                 {/each}
               </tr>
-            {/each}
-          </tbody>
-        </table>
-      </div>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+              {#each groupTeams as standing, index}
+                <tr class="hover:bg-gray-50 transition-colors duration-150 {groupName.includes('Wild Card') ? 'bg-gray-50' : ''}">
+                  <td class="px-4 py-3 text-sm text-center">{index + 1}</td>
+                  {#each columns as column}
+                    <td class="px-4 py-3 text-sm {column.key === 'teamName' ? 'font-medium' : 'text-center'}">
+                      {standing[column.key]}
+                    </td>
+                  {/each}
+                </tr>
+              {/each}
+            </tbody>
+          </table>
+        </div>
+      {:else}
+        <p class="text-gray-500 italic">No teams in this group</p>
+      {/if}
     </div>
   {/each}
 </div>
