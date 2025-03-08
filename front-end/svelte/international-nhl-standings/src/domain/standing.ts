@@ -1,5 +1,5 @@
 export interface Standing {
-  gamesPlayed?: number;
+  gamesPlayed: number;
   otWins: number;
   internationalSystemPoints: number;
   teamName: string;
@@ -8,4 +8,22 @@ export interface Standing {
   regulationWins: number;
   losses: number;
   otLosses: number;
+  divisionName: string;
+  conferenceName: string;
 }
+
+export enum PointSystem {
+  International = 'International',
+  NHL = 'NHL',
+}
+export const CONFERENCES = {
+  Eastern: ['Atlantic', 'Metropolitan'],
+  Western: ['Pacific', 'Central']
+}
+
+export type TableColumn<T> = {
+  key: keyof T;
+  label: string;
+  // title: string;
+};
+

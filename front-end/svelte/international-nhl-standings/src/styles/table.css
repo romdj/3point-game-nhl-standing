@@ -1,0 +1,12 @@
+.table-header {
+  @apply py-2 px-4 border-b cursor-pointer;
+}
+
+.table-cell {
+  @apply py-2 px-4 border-b;
+}
+
+.table-row {
+  @apply hover:bg-gray-100;
+}
+
