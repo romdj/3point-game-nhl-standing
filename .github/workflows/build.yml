@@ -42,17 +42,17 @@ jobs:
       - name: Run Tests with Coverage
         run: npm run test:coverage
 
-      # Upload coverage reports
-      - name: Upload coverage reports to Codecov
-        if: matrix.os == 'ubuntu-latest'
-        uses: codecov/codecov-action@v4
-        with:
-          files: ./graphql-server/coverage/lcov.info,./front-end/svelte/international-nhl-standings/coverage/lcov.info
-          flags: unittests
-          name: codecov-umbrella
-          fail_ci_if_error: true
-        env:
-          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+      # # Upload coverage reports
+      # - name: Upload coverage reports to Codecov
+      # #  if : matrix.os == 'ubuntu-latest'
+      #   uses: codecov/codecov-action@v4
+      #   with:
+      #     files: ./graphql-server/coverage/lcov.info,./front-end/svelte/international-nhl-standings/coverage/lcov.info
+      #     flags: unittests
+      #     name: codecov-umbrella
+      #     fail_ci_if_error: true
+      #   env:
+      #     CODECOV_TOKEN: $ {{ secrets.CODECOV_TOKEN }}
 
       # Run linting for both projects using monorepo script
       - name: Run Linting
