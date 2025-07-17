@@ -9,7 +9,7 @@ on:
 jobs:
   coverage:
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -48,7 +48,7 @@ jobs:
         run: |
           echo "## Coverage Report" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          
+
           if [ -f graphql-server/coverage/coverage-summary.json ]; then
             echo "### GraphQL Server Coverage" >> $GITHUB_STEP_SUMMARY
             echo "\`\`\`json" >> $GITHUB_STEP_SUMMARY
@@ -56,7 +56,7 @@ jobs:
             echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
             echo "" >> $GITHUB_STEP_SUMMARY
           fi
-          
+
           if [ -f front-end/svelte/international-nhl-standings/coverage/coverage-summary.json ]; then
             echo "### Svelte Frontend Coverage" >> $GITHUB_STEP_SUMMARY
             echo "\`\`\`json" >> $GITHUB_STEP_SUMMARY
@@ -79,38 +79,42 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            const fs = require('fs');
-            let comment = '## 📊 Coverage Report\n\n';
-            
-            // GraphQL Server coverage
             try {
-              const serverCoverage = JSON.parse(fs.readFileSync('graphql-server/coverage/coverage-summary.json', 'utf8'));
-              const total = serverCoverage.total;
-              comment += `### GraphQL Server\n`;
-              comment += `- **Lines**: ${total.lines.pct}% (${total.lines.covered}/${total.lines.total})\n`;
-              comment += `- **Branches**: ${total.branches.pct}% (${total.branches.covered}/${total.branches.total})\n`;
-              comment += `- **Functions**: ${total.functions.pct}% (${total.functions.covered}/${total.functions.total})\n`;
-              comment += `- **Statements**: ${total.statements.pct}% (${total.statements.covered}/${total.statements.total})\n\n`;
+              const fs = require('fs');
+              let comment = '## 📊 Coverage Report\n\n';
+
+              // GraphQL Server coverage
+              try {
+                const serverCoverage = JSON.parse(fs.readFileSync('graphql-server/coverage/coverage-summary.json', 'utf8'));
+                const total = serverCoverage.total;
+                comment += `### GraphQL Server\n`;
+                comment += `- **Lines**: ${total.lines.pct}% (${total.lines.covered}/${total.lines.total})\n`;
+                comment += `- **Branches**: ${total.branches.pct}% (${total.branches.covered}/${total.branches.total})\n`;
+                comment += `- **Functions**: ${total.functions.pct}% (${total.functions.covered}/${total.functions.total})\n`;
+                comment += `- **Statements**: ${total.statements.pct}% (${total.statements.covered}/${total.statements.total})\n\n`;
+              } catch (error) {
+                comment += '### GraphQL Server\nCoverage data not available\n\n';
+              }
+
+              // Frontend coverage
+              try {
+                const frontendCoverage = JSON.parse(fs.readFileSync('front-end/svelte/international-nhl-standings/coverage/coverage-summary.json', 'utf8'));
+                const total = frontendCoverage.total;
+                comment += `### Svelte Frontend\n`;
+                comment += `- **Lines**: ${total.lines.pct}% (${total.lines.covered}/${total.lines.total})\n`;
+                comment += `- **Branches**: ${total.branches.pct}% (${total.branches.covered}/${total.branches.total})\n`;
+                comment += `- **Functions**: ${total.functions.pct}% (${total.functions.covered}/${total.functions.total})\n`;
+                comment += `- **Statements**: ${total.statements.pct}% (${total.statements.covered}/${total.statements.total})\n\n`;
+              } catch (error) {
+                comment += '### Svelte Frontend\nCoverage data not available\n\n';
+              }
+
+              github.rest.issues.createComment({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body: comment
+              });
             } catch (error) {
-              comment += '### GraphQL Server\nCoverage data not available\n\n';
+              console.error('Error commenting on PR:', error.message);
             }
-            
-            // Frontend coverage
-            try {
-              const frontendCoverage = JSON.parse(fs.readFileSync('front-end/svelte/international-nhl-standings/coverage/coverage-summary.json', 'utf8'));
-              const total = frontendCoverage.total;
-              comment += `### Svelte Frontend\n`;
-              comment += `- **Lines**: ${total.lines.pct}% (${total.lines.covered}/${total.lines.total})\n`;
-              comment += `- **Branches**: ${total.branches.pct}% (${total.branches.covered}/${total.branches.total})\n`;
-              comment += `- **Functions**: ${total.functions.pct}% (${total.functions.covered}/${total.functions.total})\n`;
-              comment += `- **Statements**: ${total.statements.pct}% (${total.statements.covered}/${total.statements.total})\n\n`;
-            } catch (error) {
-              comment += '### Svelte Frontend\nCoverage data not available\n\n';
-            }
-            
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: comment
-            });
