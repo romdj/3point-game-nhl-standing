@@ -40,6 +40,9 @@ export const fetchStandings = async () => {
     if (result.error) {
       console.error('Error fetching standings:', result.error);
     }
+    if (result?.data.length === 0) {
+      console.error('Retrieved empty standings');
+    }
     return result.data.standings;
   } catch (error) {
     console.error('Error fetching standings:', error);
