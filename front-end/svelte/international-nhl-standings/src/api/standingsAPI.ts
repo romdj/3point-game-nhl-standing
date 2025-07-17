@@ -19,6 +19,8 @@ const STANDINGS_QUERY = gql`
   }
 `;
 
+// Keeping this for future use
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const DATED_STANDINGS_QUERY = gql`
   query {
     standings(date: "2023-03-01") {

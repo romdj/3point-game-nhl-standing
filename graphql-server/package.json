@@ -6,9 +6,9 @@
     "start": "ts-node server.ts",
     "dev": "nodemon --exec npm start",
     "build": "tsc",
-    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
-    "test:coverage": "node --experimental-vm-modules node_modules/jest/bin/jest.js --coverage",
-    "test:watch": "node --experimental-vm-modules node_modules/jest/bin/jest.js --watch",
+    "test": "jest",
+    "test:coverage": "jest --coverage",
+    "test:watch": "jest --watch",
     "lint": "eslint 'src/**/*.ts' 'tests/**/*.ts'",
     "check": "tsc --noEmit"
   },
@@ -39,6 +39,5 @@
     "ts-jest": "^29.2.5",
     "ts-node": "^10.9.2",
     "typescript": "^5.6.2"
-  },
-  "type": "module"
+  }
 }

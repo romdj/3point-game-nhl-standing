@@ -1,7 +1,6 @@
-export default {
-  // Specifies the preset configuration for TypeScript ESM support
-  preset: 'ts-jest/presets/default-esm',
-  extensionsToTreatAsEsm: ['.ts'],
+module.exports = {
+  // Specifies the preset configuration for TypeScript support
+  preset: 'ts-jest',
   
   // Automatically clear mock calls and instances between every test
   clearMocks: true,

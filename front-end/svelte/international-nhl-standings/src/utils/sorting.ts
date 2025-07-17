@@ -21,7 +21,7 @@ export function setSort(
   standings: Standing[],
   sortKey: keyof Standing,
   sortOrder: 'asc' | 'desc',
-  newSortKey: keyof Standing
+  _newSortKey: keyof Standing
 ): { sortedStandings: Standing[], newSortOrder: 'asc' | 'desc' } {
   const sortedStandings = sortStandings(standings, sortKey, sortOrder);
   return { sortedStandings, newSortOrder: sortOrder };

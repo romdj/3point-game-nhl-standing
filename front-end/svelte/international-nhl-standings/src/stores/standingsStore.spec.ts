@@ -81,7 +81,7 @@ describe('standingsStore', () => {
       wins: 26
     };
 
-    standingsStore.update(standings => [updatedStanding]);
+    standingsStore.update(_standings => [updatedStanding]);
 
     const value = get(standingsStore);
     expect(value[0].points).toBe(65);

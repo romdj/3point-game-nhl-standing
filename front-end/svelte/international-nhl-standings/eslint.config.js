@@ -14,6 +14,16 @@ export default [
         ...globals.node,
       },
     },
+    rules: {
+      'no-unused-vars': [
+        'error',
+        { 
+          argsIgnorePattern: '^_',
+          varsIgnorePattern: '^_',
+          caughtErrorsIgnorePattern: '^_'
+        }
+      ],
+    },
   },
   {
     files: ['**/*.ts', '**/*.tsx'],
@@ -29,6 +39,14 @@ export default [
     },
     rules: {
       ...typescript.configs.recommended.rules,
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        { 
+          argsIgnorePattern: '^_',
+          varsIgnorePattern: '^_',
+          caughtErrorsIgnorePattern: '^_'
+        }
+      ],
     },
   },
   {
@@ -66,6 +84,6 @@ export default [
     },
   },
   {
-    ignores: ['build/', '.svelte-kit/', 'dist/', 'node_modules/'],
+    ignores: ['build/', '.svelte-kit/', 'dist/', 'node_modules/', 'coverage/'],
   },
 ];
