@@ -1,0 +1,99 @@
+repos:
+  # General hooks for all file types
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-json
+      - id: check-toml
+      - id: check-xml
+      - id: check-added-large-files
+        args: ['--maxkb=500']
+      - id: check-case-conflict
+      - id: check-merge-conflict
+      - id: check-executables-have-shebangs
+      - id: check-shebang-scripts-are-executable
+      - id: detect-private-key
+      - id: no-commit-to-branch
+        args: ['--branch', 'main', '--branch', 'master']
+
+  # TypeScript/JavaScript formatting and linting
+  - repo: https://github.com/pre-commit/mirrors-prettier
+    rev: v4.0.0-alpha.8
+    hooks:
+      - id: prettier
+        files: \.(js|jsx|ts|tsx|json|yaml|yml|md|css|scss|html|svelte)$
+        exclude: |
+          (?x)^(
+            .*\.spec\.(js|ts|jsx|tsx)$|
+            .*\.test\.(js|ts|jsx|tsx)$|
+            package-lock\.json$|
+            \.svelte-kit/.*$|
+            dist/.*$|
+            build/.*$|
+            node_modules/.*$
+          )
+
+  # GraphQL Server specific hooks
+  - repo: local
+    hooks:
+      - id: graphql-lint
+        name: GraphQL Server ESLint
+        entry: bash -c 'cd graphql-server && npm run lint'
+        language: system
+        files: ^graphql-server/.*\.(js|ts)$
+        pass_filenames: false
+
+      - id: graphql-typecheck
+        name: GraphQL Server TypeScript Check
+        entry: bash -c 'cd graphql-server && npm run check'
+        language: system
+        files: ^graphql-server/.*\.(js|ts)$
+        pass_filenames: false
+
+      - id: graphql-test
+        name: GraphQL Server Tests
+        entry: bash -c 'cd graphql-server && npm test'
+        language: system
+        files: ^graphql-server/.*\.(js|ts)$
+        pass_filenames: false
+
+  # Svelte Frontend specific hooks
+  - repo: local
+    hooks:
+      - id: svelte-lint
+        name: Svelte Frontend ESLint
+        entry: bash -c 'cd front-end/svelte/international-nhl-standings && npm run lint'
+        language: system
+        files: ^front-end/svelte/international-nhl-standings/.*\.(js|ts|svelte)$
+        pass_filenames: false
+
+      - id: svelte-typecheck
+        name: Svelte Frontend TypeScript Check
+        entry: bash -c 'cd front-end/svelte/international-nhl-standings && npm run check'
+        language: system
+        files: ^front-end/svelte/international-nhl-standings/.*\.(js|ts|svelte)$
+        pass_filenames: false
+
+      - id: svelte-test
+        name: Svelte Frontend Tests
+        entry: bash -c 'cd front-end/svelte/international-nhl-standings && npm test'
+        language: system
+        files: ^front-end/svelte/international-nhl-standings/.*\.(js|ts|svelte)$
+        pass_filenames: false
+
+  # Security scanning
+  - repo: https://github.com/Yelp/detect-secrets
+    rev: v1.5.0
+    hooks:
+      - id: detect-secrets
+        args: ['--baseline', '.secrets.baseline']
+
+  # Commit message formatting
+  - repo: https://github.com/compilerla/conventional-pre-commit
+    rev: v3.4.0
+    hooks:
+      - id: conventional-pre-commit
+        stages: [commit-msg]

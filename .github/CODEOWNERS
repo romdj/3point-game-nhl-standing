@@ -1,0 +1,13 @@
+# Global code owners
+* @romdj
+
+# GraphQL server code
+/graphql-server/ @romdj
+
+# Frontend code  
+/front-end/ @romdj
+
+# CI/CD and configuration
+/.github/ @romdj
+/.pre-commit-config.yaml @romdj
+/package.json @romdj

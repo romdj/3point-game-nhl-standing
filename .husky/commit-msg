@@ -1,0 +1,2 @@
+# Validate commit message follows conventional commits format
+echo "Commit message validation would go here"
