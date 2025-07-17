@@ -6,9 +6,9 @@
     "start": "ts-node server.ts",
     "dev": "nodemon --exec npm start",
     "build": "tsc",
-    "test": "jest",
-    "test:coverage": "jest --coverage",
-    "test:watch": "jest --watch",
+    "test": "node --experimental-vm-modules node_modules/.bin/jest",
+    "test:coverage": "node --experimental-vm-modules node_modules/.bin/jest --coverage --passWithNoTests",
+    "test:watch": "node --experimental-vm-modules node_modules/.bin/jest --watch",
     "lint": "eslint 'src/**/*.ts' 'tests/**/*.ts'",
     "check": "tsc --noEmit"
   },
@@ -26,6 +26,7 @@
     "mercurius": "^15.0.0"
   },
   "devDependencies": {
+    "@types/jest": "^30.0.0",
     "@types/node": "^22.7.4",
     "@typescript-eslint/eslint-plugin": "^8.0.0",
     "@typescript-eslint/parser": "^8.0.0",
@@ -39,5 +40,6 @@
     "ts-jest": "^29.2.5",
     "ts-node": "^10.9.2",
     "typescript": "^5.6.2"
-  }
+  },
+  "type": "module"
 }
