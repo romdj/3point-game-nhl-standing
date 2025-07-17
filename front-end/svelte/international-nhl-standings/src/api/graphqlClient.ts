@@ -1,5 +1,6 @@
-import { createClient } from '@urql/svelte';
+import { createClient, cacheExchange, fetchExchange} from '@urql/svelte';
 
 export const client = createClient({
-  url: 'https://your-api-endpoint.com/graphql', // Replace with your GraphQL API URL
+  url: 'http://localhost:4000/graphql',
+  exchanges: [cacheExchange, fetchExchange],
 });

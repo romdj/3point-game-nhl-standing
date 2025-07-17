@@ -5,10 +5,29 @@ import { config } from './src/config';
 
 const app = Fastify();
 
+// Add CORS headers
+app.addHook('onSend', (request, reply, payload, done) => {
+  reply.headers({
+    'Access-Control-Allow-Origin': '*', // Allow all origins
+    'Access-Control-Allow-Methods': 'GET, POST, OPTIONS', // Allow specific HTTP methods
+    'Access-Control-Allow-Headers': 'Content-Type, Authorization', // Allow specific headers
+  });
+  done();
+});
+
+// Handle OPTIONS requests
+app.options('*', (request, reply) => {
+  reply.headers({
+    'Access-Control-Allow-Origin': config.cors_origin,
+    'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+  }).send();
+});
+
 app.register(mercurius, {
   schema,
   resolvers,
-  graphiql: true,
+  graphiql: config.graphql_playground,
 });
 
 app.listen({ port: config.port }, (err, address) => {
