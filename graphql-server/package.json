@@ -9,7 +9,7 @@
     "test": "node --experimental-vm-modules node_modules/.bin/jest",
     "test:coverage": "node --experimental-vm-modules node_modules/.bin/jest --coverage --passWithNoTests",
     "test:watch": "node --experimental-vm-modules node_modules/.bin/jest --watch",
-    "lint": "eslint 'src/**/*.ts' 'tests/**/*.ts'",
+    "lint": "eslint \"src/**/*.ts\" \"tests/**/*.ts\"",
     "check": "tsc --noEmit"
   },
   "keywords": [],
