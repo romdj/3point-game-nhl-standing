@@ -1,0 +1,217 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Install All Dependencies",
+      "type": "shell",
+      "command": "npm",
+      "args": ["run", "install:all"],
+      "group": "build",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared"
+      },
+      "problemMatcher": [],
+      "detail": "Install dependencies for all sub-projects"
+    },
+    {
+      "label": "Build All Projects",
+      "type": "shell",
+      "command": "npm",
+      "args": ["run", "build"],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared"
+      },
+      "problemMatcher": ["$tsc"],
+      "detail": "Build both GraphQL server and Svelte frontend"
+    },
+    {
+      "label": "Test All Projects",
+      "type": "shell",
+      "command": "npm",
+      "args": ["test"],
+      "group": {
+        "kind": "test",
+        "isDefault": true
+      },
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared"
+      },
+      "problemMatcher": [],
+      "detail": "Run tests for both GraphQL server and Svelte frontend"
+    },
+    {
+      "label": "Lint All Projects",
+      "type": "shell",
+      "command": "npm",
+      "args": ["run", "lint"],
+      "group": "build",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared"
+      },
+      "problemMatcher": ["$eslint-stylish"],
+      "detail": "Run ESLint on all projects"
+    },
+    {
+      "label": "Type Check All Projects",
+      "type": "shell",
+      "command": "npm",
+      "args": ["run", "check"],
+      "group": "build",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared"
+      },
+      "problemMatcher": ["$tsc"],
+      "detail": "Run type checking on all projects"
+    },
+    {
+      "label": "Start GraphQL Server",
+      "type": "shell",
+      "command": "npm",
+      "args": ["run", "dev:server"],
+      "group": "build",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "dedicated"
+      },
+      "problemMatcher": [],
+      "detail": "Start GraphQL server in development mode",
+      "isBackground": true
+    },
+    {
+      "label": "Start Svelte Dev Server",
+      "type": "shell",
+      "command": "npm",
+      "args": ["run", "dev:frontend"],
+      "group": "build",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "dedicated"
+      },
+      "problemMatcher": [],
+      "detail": "Start Svelte development server",
+      "isBackground": true
+    },
+    {
+      "label": "Start Full Stack Development",
+      "dependsOrder": "parallel",
+      "dependsOn": [
+        "Start GraphQL Server",
+        "Start Svelte Dev Server"
+      ],
+      "group": "build",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared"
+      },
+      "problemMatcher": [],
+      "detail": "Start both GraphQL server and Svelte dev server"
+    },
+    {
+      "label": "Test GraphQL Server",
+      "type": "shell",
+      "command": "npm",
+      "args": ["run", "test:server"],
+      "group": "test",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared"
+      },
+      "problemMatcher": [],
+      "detail": "Run GraphQL server tests only"
+    },
+    {
+      "label": "Test Svelte Frontend",
+      "type": "shell",
+      "command": "npm",
+      "args": ["run", "test:frontend"],
+      "group": "test",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared"
+      },
+      "problemMatcher": [],
+      "detail": "Run Svelte frontend tests only"
+    },
+    {
+      "label": "Watch Frontend Tests",
+      "type": "shell",
+      "command": "npm",
+      "args": ["run", "test:frontend"],
+      "options": {
+        "cwd": "${workspaceFolder}/front-end/svelte/international-nhl-standings"
+      },
+      "group": "test",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "dedicated"
+      },
+      "problemMatcher": [],
+      "detail": "Watch Svelte frontend tests",
+      "isBackground": true,
+      "runOptions": {
+        "runOn": "folderOpen"
+      }
+    },
+    {
+      "label": "Clean All Projects",
+      "type": "shell",
+      "command": "npm",
+      "args": ["run", "clean"],
+      "group": "build",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared"
+      },
+      "problemMatcher": [],
+      "detail": "Clean all build artifacts and node_modules"
+    },
+    {
+      "label": "Complete Build",
+      "type": "shell",
+      "command": "npm",
+      "args": ["run", "complete-build"],
+      "group": "build",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared"
+      },
+      "problemMatcher": ["$tsc"],
+      "detail": "Clean, install, build, and test everything"
+    }
+  ]
+}

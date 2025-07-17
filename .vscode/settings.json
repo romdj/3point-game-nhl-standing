@@ -1,0 +1,11 @@
+{
+  "vitest.enable": true,
+  "vitest.workspaceConfig": "./front-end/svelte/international-nhl-standings/vite.config.ts",
+  "jest.enable": false,
+  "jest.disabledWorkspaceFolders": ["3point-game-nhl-standing"],
+  "testing.defaultGutter": true,
+  "testing.gutterEnabled": true,
+  "vitest.include": ["front-end/svelte/international-nhl-standings/src/**/*.{test,spec}.{js,ts,jsx,tsx}"],
+  "vitest.exclude": ["**/node_modules/**", "**/dist/**", "**/build/**"],
+  "typescript.preferences.includePackageJsonAutoImports": "auto"
+}

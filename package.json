@@ -27,6 +27,9 @@
     "test": "npm run test:server && npm run test:frontend",
     "test:server": "cd graphql-server && npm test",
     "test:frontend": "cd front-end/svelte/international-nhl-standings && npm test",
+    "test:coverage": "npm run test:coverage:server && npm run test:coverage:frontend",
+    "test:coverage:server": "cd graphql-server && npm run test:coverage",
+    "test:coverage:frontend": "cd front-end/svelte/international-nhl-standings && npm run test:coverage",
     "lint": "npm run lint:server && npm run lint:frontend",
     "lint:server": "cd graphql-server && npm run lint",
     "lint:frontend": "cd front-end/svelte/international-nhl-standings && npm run lint",
@@ -38,7 +41,9 @@
     "clean:frontend": "cd front-end/svelte/international-nhl-standings && rm -rf node_modules build .svelte-kit",
     "preview": "cd front-end/svelte/international-nhl-standings && npm run preview",
     "complete-build": "clear; npm run clean; npm run install:all; npm run build; npm test",
-    "semantic-release": "semantic-release"
+    "semantic-release": "semantic-release",
+    "prepare": "husky",
+    "pre-commit": "pre-commit run --all-files"
   },
   "repository": {
     "type": "git",
@@ -51,6 +56,8 @@
     "@semantic-release/git": "^10.0.1",
     "@semantic-release/github": "^11.0.3",
     "conventional-changelog-conventionalcommits": "^9.1.0",
-    "semantic-release": "^24.2.7"
+    "semantic-release": "^24.2.7",
+    "husky": "^9.0.0",
+    "pre-commit": "^1.2.2"
   }
 }

@@ -1,0 +1,13 @@
+{
+  "vitest.enable": true,
+  "vitest.workspaceConfig": "./vite.config.ts",
+  "jest.enable": false,
+  "testing.defaultGutter": true,
+  "testing.gutterEnabled": true,
+  "vitest.include": ["src/**/*.{test,spec}.{js,ts,jsx,tsx}"],
+  "vitest.exclude": ["**/node_modules/**", "**/dist/**", "**/build/**", "**/.svelte-kit/**"],
+  "typescript.preferences.includePackageJsonAutoImports": "auto",
+  "files.associations": {
+    "*.spec.ts": "typescript"
+  }
+}

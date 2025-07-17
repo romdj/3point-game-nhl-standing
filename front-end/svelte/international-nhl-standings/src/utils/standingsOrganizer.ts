@@ -29,7 +29,7 @@ function groupByConference(standings: Standing[]): GroupedStandings {
   };
 
   standings.forEach(team => {
-    const conference = Object.entries(CONFERENCES).find(([_, divisions]) => 
+    const conference = Object.entries(CONFERENCES).find(([_conf, divisions]) => 
       divisions.includes(team.divisionName)
     )?.[0];
     

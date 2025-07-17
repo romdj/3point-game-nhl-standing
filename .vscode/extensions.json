@@ -1,0 +1,39 @@
+{
+  "recommendations": [
+    // Testing
+    "zixuanchen.vitest-explorer",
+    
+    // Language Support
+    "ms-vscode.vscode-typescript-next",
+    "svelte.svelte-vscode",
+    "GraphQL.vscode-graphql",
+    "GraphQL.vscode-graphql-syntax",
+    
+    // Styling
+    "bradlc.vscode-tailwindcss",
+    "ms-vscode.vscode-css-peek",
+    
+    // Git & Version Control
+    "eamodio.gitlens",
+    "github.vscode-pull-request-github",
+    
+    // Code Quality
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    "ms-vscode.vscode-json",
+    
+    // Productivity
+    "christian-kohler.npm-intellisense",
+    "christian-kohler.path-intellisense",
+    "ms-vscode.vscode-npm-script",
+    "formulahendry.auto-rename-tag",
+    
+    // Debugging
+    "ms-vscode.js-debug",
+    "firefox-devtools.vscode-firefox-debug"
+  ],
+  "unwantedRecommendations": [
+    "orta.vscode-jest",
+    "ms-vscode.vscode-jest"
+  ]
+}

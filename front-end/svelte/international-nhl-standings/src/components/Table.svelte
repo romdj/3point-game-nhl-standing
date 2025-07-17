@@ -1,6 +1,5 @@
 <script lang="ts">
-  import { writable } from 'svelte/store';
-  import { PointSystem, type Standing } from '../domain/standing';
+  import type { Standing } from '../domain/standing';
   import { standingsStore } from '../stores/standingsStore';
   import { viewTypeStore } from '../stores/viewStore';
   import { setSort } from '../utils/sorting';
@@ -57,7 +56,7 @@
       return acc;
     }, [{}, {}] as Array<Record<string, Standing[]>>) : null;
 
-  const columns = [
+  const columns: Array<{ key: keyof Standing; label: string; width: string }> = [
     { key: 'teamName', label: 'Team', width: 'w-48' },
     { key: 'gamesPlayed', label: 'GP', width: 'w-16' },
     { key: 'wins', label: 'W', width: 'w-16' },
@@ -121,7 +120,7 @@
   }
   
   // Get position change indicator
-  function getPositionChange(teamName: string, currentIndex: number, groupName: string): { icon: string, class: string } {
+  function getPositionChange(teamName: string, currentIndex: number, _groupName: string): { icon: string, class: string } {
     if (!previousStandings[teamName]) {
       return { icon: '-', class: 'text-gray-400' };
     }
