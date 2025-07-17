@@ -1,0 +1,97 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Debug GraphQL Server",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/graphql-server/server.ts",
+      "cwd": "${workspaceFolder}/graphql-server",
+      "runtimeArgs": ["--loader", "ts-node/esm"],
+      "env": {
+        "NODE_ENV": "development"
+      },
+      "console": "integratedTerminal",
+      "sourceMaps": true,
+      "restart": true,
+      "protocol": "inspector",
+      "outFiles": ["${workspaceFolder}/graphql-server/dist/**/*.js"]
+    },
+    {
+      "name": "Debug GraphQL Tests",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/graphql-server/node_modules/.bin/jest",
+      "cwd": "${workspaceFolder}/graphql-server",
+      "args": ["--runInBand", "--no-cache"],
+      "env": {
+        "NODE_ENV": "test"
+      },
+      "console": "integratedTerminal",
+      "sourceMaps": true
+    },
+    {
+      "name": "Debug Svelte Dev Server",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/front-end/svelte/international-nhl-standings/node_modules/.bin/vite",
+      "cwd": "${workspaceFolder}/front-end/svelte/international-nhl-standings",
+      "args": ["dev"],
+      "env": {
+        "NODE_ENV": "development"
+      },
+      "console": "integratedTerminal",
+      "sourceMaps": true
+    },
+    {
+      "name": "Debug Svelte Tests (Vitest)",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/front-end/svelte/international-nhl-standings/node_modules/.bin/vitest",
+      "cwd": "${workspaceFolder}/front-end/svelte/international-nhl-standings",
+      "args": ["run"],
+      "env": {
+        "NODE_ENV": "test"
+      },
+      "console": "integratedTerminal",
+      "sourceMaps": true
+    },
+    {
+      "name": "Debug Current Test File",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/front-end/svelte/international-nhl-standings/node_modules/.bin/vitest",
+      "cwd": "${workspaceFolder}/front-end/svelte/international-nhl-standings",
+      "args": ["run", "${relativeFile}"],
+      "env": {
+        "NODE_ENV": "test"
+      },
+      "console": "integratedTerminal",
+      "sourceMaps": true
+    },
+    {
+      "name": "Debug Firefox (Svelte App)",
+      "type": "firefox",
+      "request": "launch",
+      "url": "http://localhost:5173",
+      "webRoot": "${workspaceFolder}/front-end/svelte/international-nhl-standings/src",
+      "pathMappings": [
+        {
+          "url": "http://localhost:5173",
+          "path": "${workspaceFolder}/front-end/svelte/international-nhl-standings"
+        }
+      ]
+    }
+  ],
+  "compounds": [
+    {
+      "name": "Debug Full Stack",
+      "configurations": ["Debug GraphQL Server", "Debug Svelte Dev Server"],
+      "presentation": {
+        "hidden": false,
+        "group": "fullstack",
+        "order": 1
+      }
+    }
+  ]
+}
