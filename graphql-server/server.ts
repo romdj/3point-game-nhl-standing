@@ -1,7 +1,6 @@
 import Fastify from 'fastify';
 import mercurius from 'mercurius';
 import { schema, resolvers } from './src/graphql';
-import { config as oldConfig } from './src/config';
 import { config } from './src/config/env.js';
 import { logger } from './src/utils/logger.js';
 
@@ -65,7 +64,7 @@ app.options('*', (request, reply) => {
 app.register(mercurius, {
   schema,
   resolvers,
-  graphiql: oldConfig.graphql_playground,
+  graphiql: config.GRAPHQL_PLAYGROUND,
 });
 
 app.listen({ port: config.PORT, host: '0.0.0.0' }, (err, address) => {
