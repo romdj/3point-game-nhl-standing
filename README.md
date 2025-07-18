@@ -383,9 +383,29 @@ chore: update dependencies
 ### Development Setup
 1. Fork the repository
 2. Create a feature branch: `git checkout -b feat/your-feature`
-3. Make changes with conventional commits
-4. Run tests: `npm test`
-5. Submit pull request
+3. Set up environment variables:
+   ```bash
+   # GraphQL Server
+   cp graphql-server/.env.example graphql-server/.env
+   
+   # Frontend (optional)
+   cp front-end/svelte/international-nhl-standings/.env.example front-end/svelte/international-nhl-standings/.env
+   ```
+4. Make changes with conventional commits
+5. Run tests: `npm test`
+6. Submit pull request
+
+### Environment Variables
+
+#### GraphQL Server (`graphql-server/.env`)
+- `NHL_API_BASE_URL`: NHL API base URL (default: https://api-web.nhle.com/v1)
+- `PORT`: Server port (default: 4000)
+- `NODE_ENV`: Environment (development/production/test)
+- `CORS_ORIGIN`: Allowed CORS origin (default: http://localhost:5173)
+
+#### Frontend (`front-end/svelte/international-nhl-standings/.env`)
+- `VITE_GRAPHQL_URL`: GraphQL server URL (default: http://localhost:4000/graphql)
+- `VITE_DEV_MODE`: Development mode flag (default: true)
 
 ### Code Style
 - **TypeScript**: Strict typing throughout

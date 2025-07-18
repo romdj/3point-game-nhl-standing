@@ -2,8 +2,10 @@
  * Application constants and configuration values
  */
 
+import config from '../config/env.js';
+
 export const API_ENDPOINTS = {
-  NHL_STANDINGS: 'https://api-web.nhle.com/v1/standings',
+  NHL_STANDINGS: `${config.NHL_API_BASE_URL}/standings`,
 } as const;
 
 export const POINT_SYSTEMS = {
