@@ -1,0 +1,41 @@
+# Server-only Dockerfile for development
+FROM node:20-alpine AS build
+WORKDIR /app
+
+# Copy workspace files
+COPY package*.json ./
+COPY shared/ ./shared/
+COPY graphql-server/package*.json ./graphql-server/
+RUN npm ci
+
+# Copy source and build
+COPY graphql-server/ ./graphql-server/
+RUN cd graphql-server && npm run build
+
+# Production stage
+FROM node:20-alpine AS production
+WORKDIR /app
+
+# Install production dependencies
+COPY package*.json ./
+COPY shared/ ./shared/
+COPY graphql-server/package*.json ./graphql-server/
+RUN npm ci --only=production
+
+# Copy built application
+COPY --from=build /app/graphql-server/dist ./graphql-server/dist
+COPY --from=build /app/graphql-server/src/graphql/schemas/schema.graphql ./graphql-server/src/graphql/schemas/
+COPY graphql-server/server.ts ./graphql-server/
+
+# Create non-root user
+RUN addgroup -g 1001 -S nodejs && \
+    adduser -S nhlapp -u 1001
+USER nhlapp
+
+EXPOSE 4000
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
+  CMD wget --no-verbose --tries=1 --spider http://localhost:4000/graphql || exit 1
+
+CMD ["node", "--import", "tsx", "graphql-server/server.ts"]

@@ -1,0 +1,53 @@
+version: '3.8'
+
+services:
+  # Development GraphQL Server with hot reload
+  graphql-server:
+    build:
+      context: .
+      dockerfile: Dockerfile.server
+      target: build
+    ports:
+      - "4000:4000"
+    environment:
+      - NODE_ENV=development
+      - PORT=4000
+    volumes:
+      - ./graphql-server/src:/app/graphql-server/src:cached
+      - ./graphql-server/tests:/app/graphql-server/tests:cached
+      - ./shared:/app/shared:cached
+      - node_modules_server:/app/graphql-server/node_modules
+    command: ["npm", "run", "dev"]
+    networks:
+      - nhl-network
+
+  # Development Frontend with hot reload
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+      target: build
+    ports:
+      - "5173:5173"
+    environment:
+      - PUBLIC_GRAPHQL_ENDPOINT=http://localhost:4000/graphql
+      - VITE_HOST=0.0.0.0
+    volumes:
+      - ./frontend/src:/app/frontend/src:cached
+      - ./frontend/static:/app/frontend/static:cached
+      - ./shared:/app/shared:cached
+      - node_modules_frontend:/app/frontend/node_modules
+    command: ["npm", "run", "dev", "--", "--host", "0.0.0.0"]
+    working_dir: /app/frontend
+    depends_on:
+      - graphql-server
+    networks:
+      - nhl-network
+
+networks:
+  nhl-network:
+    driver: bridge
+
+volumes:
+  node_modules_server:
+  node_modules_frontend:
