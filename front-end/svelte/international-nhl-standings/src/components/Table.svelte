@@ -45,13 +45,27 @@
   // Fix the conferencePairs definition
   $: conferencePairs = ($viewTypeStore === 'conference' || $viewTypeStore === 'wildcard' || $viewTypeStore === 'division') ? 
     Object.entries(groupedStandings).reduce((acc, [name, teams]) => {
+      // Handle conference view (names include "Western" or "Eastern")
       if (name.includes('Western')) {
         if (!acc[0]) acc[0] = {};
         acc[0][name] = teams;
       }
-      if (name.includes('Eastern')) {
+      else if (name.includes('Eastern')) {
         if (!acc[1]) acc[1] = {};
         acc[1][name] = teams;
+      }
+      // Handle division view (division names: Atlantic, Metropolitan, Pacific, Central)
+      else if ($viewTypeStore === 'division') {
+        // Western Conference divisions: Pacific, Central
+        if (name === 'Pacific' || name === 'Central') {
+          if (!acc[0]) acc[0] = {};
+          acc[0][name] = teams;
+        }
+        // Eastern Conference divisions: Atlantic, Metropolitan
+        else if (name === 'Atlantic' || name === 'Metropolitan') {
+          if (!acc[1]) acc[1] = {};
+          acc[1][name] = teams;
+        }
       }
       return acc;
     }, [{}, {}] as Array<Record<string, Standing[]>>) : null;
