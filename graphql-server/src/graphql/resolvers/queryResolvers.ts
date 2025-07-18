@@ -1,4 +1,4 @@
-import axios from 'axios';
+import got from 'got';
 import type { NHLApiStandingsResponse, NHLApiTeam, StandingsQueryArgs, TransformedTeam } from '../../types/nhl-api.types.js';
 import { API_ENDPOINTS, POINT_SYSTEMS, ERROR_MESSAGES } from '../../constants/index.js';
 import { logger, PerformanceLogger } from '../../utils/logger.js';
@@ -13,8 +13,17 @@ export const teamsStandings = {
       
       return await PerformanceLogger.measureAsync('nhl-api-request', async () => {
         try {
-          const response = await axios.get<NHLApiStandingsResponse>(url);
-          const teams = response.data.standings;
+          const response = await got.get(url, {
+            responseType: 'json',
+            timeout: {
+              request: 10000 // 10 seconds
+            },
+            retry: {
+              limit: 2,
+              methods: ['GET']
+            }
+          }).json<NHLApiStandingsResponse>();
+          const teams = response.standings;
           
           logger.info({ 
             date: requestDate, 
