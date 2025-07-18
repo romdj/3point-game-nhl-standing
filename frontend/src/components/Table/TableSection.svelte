@@ -59,38 +59,36 @@
   // Get position change indicator
   function getPositionChange(teamName: string, currentIndex: number): { icon: string, class: string } {
     if (!previousStandings[teamName]) {
-      return { icon: '-', class: 'text-gray-400' };
+      return { icon: '-', class: 'text-base-content/40' };
     }
     
     const prevIndex = previousStandings[teamName];
     if (prevIndex < currentIndex) {
-      return { icon: '↓', class: 'text-red-500' };
+      return { icon: '↓', class: 'text-error' };
     } else if (prevIndex > currentIndex) {
-      return { icon: '↑', class: 'text-green-500' };
+      return { icon: '↑', class: 'text-success' };
     } else {
-      return { icon: '-', class: 'text-gray-400' };
+      return { icon: '-', class: 'text-base-content/40' };
     }
   }
 
   $: sectionInfo = getSectionInfo(groupName);
 </script>
 
-<div class="p-4 {showSectionTitle ? 'border-b' : ''}" transition:slide={{ duration: 300 }}>
+<div class="p-4 {showSectionTitle ? 'border-b border-base-200' : ''}" transition:slide={{ duration: 300 }}>
   {#if showSectionTitle}
-    <h4 class="text-md font-semibold mb-3 text-gray-700 flex items-center group relative">
-      <span class="mr-2">{sectionInfo.icon}</span>
-      <span>{sectionInfo.title}</span>
-      <!-- Tooltip on hover -->
-      <span class="invisible group-hover:visible absolute left-0 top-full mt-1 bg-gray-800 text-white text-xs rounded py-1 px-2 z-10 w-48">
-        {sectionInfo.description}
-      </span>
-    </h4>
+    <div class="tooltip tooltip-bottom" data-tip={sectionInfo.description}>
+      <h4 class="text-md font-semibold mb-3 text-base-content flex items-center cursor-help">
+        <span class="mr-2">{sectionInfo.icon}</span>
+        <span>{sectionInfo.title}</span>
+      </h4>
+    </div>
   {/if}
   
-  <div class="overflow-x-auto rounded-lg">
-    <table class="min-w-full table-auto">
+  <div class="overflow-x-auto">
+    <table class="table table-zebra w-full">
       <TableHeader {columns} {sortKey} {sortOrder} {onSort} />
-      <tbody class="divide-y divide-gray-200">
+      <tbody>
         {#each teams as standing, index}
           {@const playoffStatus = getPlayoffStatus(groupName, index)}
           {@const positionChange = getPositionChange(standing.teamName, index)}
@@ -107,9 +105,3 @@
   </div>
 </div>
 
-<style>
-  /* Tooltip positioning */
-  .group {
-    position: relative;
-  }
-</style>

@@ -10,27 +10,35 @@
   // Get team row background color based on status
   function getRowBackground(status: string): string {
     switch (status) {
-      case 'division-leader': return 'bg-blue-50 hover:bg-blue-100';
-      case 'wildcard': return 'bg-green-50 hover:bg-green-100';
-      case 'race': return 'bg-yellow-50 hover:bg-yellow-100';
-      default: return 'hover:bg-gray-50';
+      case 'division-leader': return 'bg-primary/10 hover:bg-primary/20';
+      case 'wildcard': return 'bg-success/10 hover:bg-success/20';
+      case 'race': return 'bg-warning/10 hover:bg-warning/20';
+      default: return 'hover:bg-base-200';
+    }
+  }
+
+  // Get text color based on status
+  function getTextColor(status: string, isTeamName: boolean): string {
+    if (!isTeamName) return 'text-base-content';
+    
+    switch (status) {
+      case 'division-leader': return 'text-primary font-semibold';
+      case 'wildcard': return 'text-success font-semibold';
+      case 'race': return 'text-warning font-semibold';
+      default: return 'text-base-content';
     }
   }
 </script>
 
 <tr class="transition-all duration-150 {getRowBackground(playoffStatus)}">
-  <td class="px-3 py-3 text-sm font-medium {playoffStatus === 'division-leader' ? 'text-blue-700' : 'text-gray-700'}">
+  <td class="text-sm font-medium text-base-content">
     <div class="flex items-center">
       <span class="mr-2">{index + 1}</span>
       <span class="{positionChange.class}">{positionChange.icon}</span>
     </div>
   </td>
   {#each columns as column}
-    <td class="px-3 py-3 text-sm 
-      {column.key === 'teamName' ? 'font-medium' : 'text-center'}
-      {playoffStatus === 'division-leader' && column.key === 'teamName' ? 'text-blue-700' : ''}
-      {playoffStatus === 'wildcard' && column.key === 'teamName' ? 'text-green-700' : ''}
-      {playoffStatus === 'race' && column.key === 'teamName' ? 'text-yellow-700' : ''}">
+    <td class="text-sm {column.key === 'teamName' ? 'font-medium' : 'text-center'} {getTextColor(playoffStatus, column.key === 'teamName')}">
       {standing[column.key]}
     </td>
   {/each}

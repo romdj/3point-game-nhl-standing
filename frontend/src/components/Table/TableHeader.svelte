@@ -12,17 +12,17 @@
 </script>
 
 <thead>
-  <tr class="bg-gray-50">
-    <th class="px-3 py-3 text-left text-xs font-semibold text-gray-600 w-16 border-b">Pos</th>
+  <tr>
+    <th class="text-left font-semibold text-base-content w-16">Pos</th>
     {#each columns as column}
       <th 
-        class="px-3 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider cursor-pointer hover:bg-gray-100 border-b transition-colors duration-150"
+        class="text-left font-semibold text-base-content cursor-pointer hover:bg-base-200 transition-colors duration-150 select-none"
         on:click={() => handleSort(column.key)}
       >
         <div class="flex items-center space-x-1">
           <span>{column.label}</span>
           {#if sortKey === column.key}
-            <span class="text-blue-500">
+            <span class="text-primary text-sm">
               {sortOrder === 'desc' ? '↓' : '↑'}
             </span>
           {/if}
