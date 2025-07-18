@@ -67,21 +67,21 @@ repos:
         name: Svelte Frontend ESLint
         entry: bash -c 'cd front-end && npm run lint'
         language: system
-        files: ^front-end/.*\.(js|ts|svelte)$
+        files: ^frontend/.*\.(js|ts|svelte)$
         pass_filenames: false
 
       - id: svelte-typecheck
         name: Svelte Frontend TypeScript Check
         entry: bash -c 'cd front-end && npm run check'
         language: system
-        files: ^front-end/.*\.(js|ts|svelte)$
+        files: ^frontend/.*\.(js|ts|svelte)$
         pass_filenames: false
 
       - id: svelte-test
         name: Svelte Frontend Tests
         entry: bash -c 'cd front-end && npm test'
         language: system
-        files: ^front-end/.*\.(js|ts|svelte)$
+        files: ^frontend/.*\.(js|ts|svelte)$
         pass_filenames: false
 
   # Security scanning

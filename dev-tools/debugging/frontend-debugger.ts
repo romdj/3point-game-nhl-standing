@@ -74,7 +74,7 @@ export class FrontendDebugger {
       logger.info('Testing season utils import...');
 
       // Dynamic import to avoid build issues
-      const seasonUtils = await import('../../front-end/src/utils/seasonUtils.js');
+      const seasonUtils = await import('../../frontend/src/utils/seasonUtils.js');
 
       logger.success('Season utils imported successfully');
 
@@ -97,7 +97,7 @@ export class FrontendDebugger {
     try {
       logger.info('Testing GraphQL client import...');
 
-      const { client } = await import('../../front-end/src/api/graphqlClient.js');
+      const { client } = await import('../../frontend/src/api/graphqlClient.js');
 
       logger.success('GraphQL client imported successfully');
       logger.info('GraphQL client URL:', client.url);

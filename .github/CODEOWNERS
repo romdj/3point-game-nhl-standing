@@ -4,8 +4,8 @@
 # GraphQL server code
 /graphql-server/ @romdj
 
-# Frontend code  
-/front-end/ @romdj
+# Frontend code
+/frontend/ @romdj
 
 # CI/CD and configuration
 /.github/ @romdj
