@@ -37,6 +37,8 @@ jobs:
 
       - name: Check Svelte Frontend Coverage Thresholds
         run: |
+          pwd
+          ls .
           cd front-end
           npm run test:coverage
           if [ $? -ne 0 ]; then
