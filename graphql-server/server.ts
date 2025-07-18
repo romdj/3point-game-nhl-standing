@@ -2,9 +2,20 @@ import Fastify from 'fastify';
 import mercurius from 'mercurius';
 import { schema, resolvers } from './src/graphql';
 import { config as oldConfig } from './src/config';
-import config from './src/config/env.js';
+import { config } from './src/config/env.js';
+import { logger } from './src/utils/logger.js';
 
-const app = Fastify();
+const app = Fastify({
+  logger: config.NODE_ENV === 'development' ? {
+    transport: {
+      target: 'pino-pretty',
+      options: {
+        translateTime: 'HH:MM:ss Z',
+        ignore: 'pid,hostname',
+      },
+    },
+  } : true,
+});
 
 // Add CORS headers
 app.addHook('onSend', (request, reply, payload, done) => {
@@ -31,10 +42,10 @@ app.register(mercurius, {
   graphiql: oldConfig.graphql_playground,
 });
 
-app.listen({ port: config.PORT }, (err, address) => {
+app.listen({ port: config.PORT, host: '0.0.0.0' }, (err, address) => {
   if (err) {
-    console.error(err);
+    logger.error('Failed to start server', err);
     process.exit(1);
   }
-  console.log(`Server is running at ${address}`);
+  logger.info(`Server is running at ${address}`);
 });

@@ -3,6 +3,19 @@
   import { errorStore } from '../stores/errorStore';
   import type { AppError } from '../stores/errorStore';
 
+  // Simple UUID generator fallback
+  function generateUUID(): string {
+    if (typeof crypto !== 'undefined' && crypto.randomUUID) {
+      return crypto.randomUUID();
+    }
+    // Fallback UUID generator
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+      const r = Math.random() * 16 | 0;
+      const v = c === 'x' ? r : (r & 0x3 | 0x8);
+      return v.toString(16);
+    });
+  }
+
   export let fallback: string = 'Something went wrong. Please try again.';
   export let showDetails: boolean = false;
   export let retryAction: (() => void) | null = null;
@@ -27,7 +40,7 @@
     
     hasError = true;
     errorDetails = {
-      id: crypto.randomUUID(),
+      id: generateUUID(),
       message: event.reason?.message || 'Unhandled promise rejection',
       type: 'runtime',
       timestamp: new Date(),
@@ -54,7 +67,7 @@
     
     hasError = true;
     errorDetails = {
-      id: crypto.randomUUID(),
+      id: generateUUID(),
       message: event.error?.message || event.message,
       type: 'runtime',
       timestamp: new Date(),
