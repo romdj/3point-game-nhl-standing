@@ -37,7 +37,7 @@ jobs:
 
       - name: Check Svelte Frontend Coverage Thresholds
         run: |
-          cd front-end/svelte/international-nhl-standings
+          cd front-end/
           npm run test:coverage
           if [ $? -ne 0 ]; then
             echo "::error::Svelte Frontend coverage thresholds not met"
@@ -57,17 +57,17 @@ jobs:
             echo "" >> $GITHUB_STEP_SUMMARY
           fi
 
-          if [ -f front-end/svelte/international-nhl-standings/coverage/coverage-summary.json ]; then
+          if [ -f front-end/coverage/coverage-summary.json ]; then
             echo "### Svelte Frontend Coverage" >> $GITHUB_STEP_SUMMARY
             echo "\`\`\`json" >> $GITHUB_STEP_SUMMARY
-            cat front-end/svelte/international-nhl-standings/coverage/coverage-summary.json >> $GITHUB_STEP_SUMMARY
+            cat front-end/coverage/coverage-summary.json >> $GITHUB_STEP_SUMMARY
             echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
           fi
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v4
         with:
-          files: ./graphql-server/coverage/lcov.info,./front-end/svelte/international-nhl-standings/coverage/lcov.info
+          files: ./graphql-server/coverage/lcov.info,./front-end/coverage/lcov.info
           flags: unittests
           name: codecov-umbrella
           fail_ci_if_error: false
@@ -83,7 +83,7 @@ jobs:
               const fs = require('fs');
               let comment = '## 📊 Coverage Report\n\n';
 
-              // GraphQL Server coverage
+              / GraphQL Server coverage
               try {
                 const serverCoverage = JSON.parse(fs.readFileSync('graphql-server/coverage/coverage-summary.json', 'utf8'));
                 const total = serverCoverage.total;
@@ -96,9 +96,9 @@ jobs:
                 comment += '### GraphQL Server\nCoverage data not available\n\n';
               }
 
-              // Frontend coverage
+              / Frontend coverage
               try {
-                const frontendCoverage = JSON.parse(fs.readFileSync('front-end/svelte/international-nhl-standings/coverage/coverage-summary.json', 'utf8'));
+                const frontendCoverage = JSON.parse(fs.readFileSync('front-end/coverage/coverage-summary.json', 'utf8'));
                 const total = frontendCoverage.total;
                 comment += `### Svelte Frontend\n`;
                 comment += `- **Lines**: ${total.lines.pct}% (${total.lines.covered}/${total.lines.total})\n`;
