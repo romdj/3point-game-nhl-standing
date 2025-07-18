@@ -13,7 +13,7 @@ This project demonstrates the impact of alternative scoring systems on NHL stand
 The current NHL system awards 2 points for any win and 1 point for overtime/shootout losses, creating an imbalance where some games are worth 3 points total while others are worth only 2. The IIHF 3-point system addresses this by:
 
 - **Regulation Wins**: 3 points
-- **Overtime/Shootout Wins**: 2 points  
+- **Overtime/Shootout Wins**: 2 points
 - **Overtime/Shootout Losses**: 1 point
 - **Regulation Losses**: 0 points
 
@@ -60,7 +60,7 @@ This creates a more balanced competitive environment where every game is worth t
 
 ```
 3point-game-nhl-standing/
-├── front-end/svelte/international-nhl-standings/  # SvelteKit frontend
+├── front-end/  # SvelteKit frontend
 │   ├── src/
 │   │   ├── api/                 # GraphQL client and API calls
 │   │   ├── components/          # Svelte components
@@ -112,7 +112,7 @@ This creates a more balanced competitive environment where every game is worth t
 
 4. **Start the frontend (in a new terminal)**
    ```bash
-   cd front-end/svelte/international-nhl-standings
+   cd front-end
    npm install
    npm run dev
    ```
@@ -142,7 +142,7 @@ npm test               # Run GraphQL server tests
 
 #### Frontend
 ```bash
-cd front-end/svelte/international-nhl-standings
+cd front-end
 npm run dev            # Start Vite development server
 npm run build          # Build for production
 npm run preview        # Preview production build
@@ -266,8 +266,8 @@ query {
 **Data Transformation**
 ```typescript
 // Example: Converting NHL points to 3-point system
-internationalSystemPoints: team.otLosses * 1 + 
-                          (team.wins - team.regulationWins) * 2 + 
+internationalSystemPoints: team.otLosses * 1 +
+                          (team.wins - team.regulationWins) * 2 +
                           team.regulationWins * 3
 ```
 
@@ -280,7 +280,7 @@ internationalSystemPoints: team.otLosses * 1 +
 │   │   ├── resolvers/          # GraphQL resolver tests
 │   │   └── schemas/            # Schema validation tests
 │   └── utils/                  # Utility function tests
-└── front-end/svelte/international-nhl-standings/
+└── front-end/
     └── src/                    # Component and utility tests
 ```
 
@@ -293,7 +293,7 @@ npm test
 cd graphql-server && npm test
 
 # Run frontend tests
-cd front-end/svelte/international-nhl-standings && npm test
+cd front-end && npm test
 
 # Run tests with coverage
 npm run coverage
@@ -313,7 +313,7 @@ cd graphql-server
 npm run build
 
 # Build frontend
-cd front-end/svelte/international-nhl-standings
+cd front-end
 npm run build
 ```
 
@@ -387,9 +387,9 @@ chore: update dependencies
    ```bash
    # GraphQL Server
    cp graphql-server/.env.example graphql-server/.env
-   
+
    # Frontend (optional)
-   cp front-end/svelte/international-nhl-standings/.env.example front-end/svelte/international-nhl-standings/.env
+   cp front-end/.env.example front-end/.env
    ```
 4. Make changes with conventional commits
 5. Run tests: `npm test`
@@ -403,7 +403,7 @@ chore: update dependencies
 - `NODE_ENV`: Environment (development/production/test)
 - `CORS_ORIGIN`: Allowed CORS origin (default: http://localhost:5173)
 
-#### Frontend (`front-end/svelte/international-nhl-standings/.env`)
+#### Frontend (`front-end/.env`)
 - `VITE_GRAPHQL_URL`: GraphQL server URL (default: http://localhost:4000/graphql)
 - `VITE_DEV_MODE`: Development mode flag (default: true)
 

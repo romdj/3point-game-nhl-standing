@@ -8,20 +8,20 @@ import { createNHLGraphQLTester } from '../api/graphql-tester.js';
 
 async function testCurrentIssue(): Promise<void> {
   logger.section('Testing Current Issue: No Data on Frontend');
-  
+
   // Step 1: Test GraphQL server
   logger.subsection('Step 1: Test GraphQL Server');
   const graphqlTester = createNHLGraphQLTester();
   await graphqlTester.runFullTest();
-  
+
   // Step 2: Test season logic
   logger.subsection('Step 2: Test Season Logic');
   await testSeasonLogic();
-  
+
   // Step 3: Test the exact API call the frontend makes
   logger.subsection('Step 3: Test Frontend API Call');
   await testFrontendAPICall();
-  
+
   // Step 4: Provide debugging recommendations
   logger.subsection('Step 4: Debugging Recommendations');
   provideBrowserDebuggingSteps();
@@ -30,26 +30,26 @@ async function testCurrentIssue(): Promise<void> {
 async function testSeasonLogic(): Promise<void> {
   try {
     // Import season utils dynamically
-    const seasonUtils = await import('../../front-end/svelte/international-nhl-standings/src/utils/seasonUtils.js');
-    
+    const seasonUtils = await import('../../front-end/src/utils/seasonUtils.js');
+
     const currentDate = new Date();
     const seasonYear = seasonUtils.getCurrentNHLSeasonYear(currentDate);
     const defaultDate = seasonUtils.getDefaultStandingsDate(currentDate);
     const hasData = seasonUtils.hasSeasonData(seasonYear);
-    
+
     logger.info('Season Logic Results:', {
       currentDate: currentDate.toISOString().split('T')[0],
       seasonYear,
       defaultDate,
       hasData,
     });
-    
+
     if (hasData) {
       logger.success('Season logic indicates data should be available');
     } else {
       logger.warn('Season logic indicates no data for current season, using fallback');
     }
-    
+
   } catch (error) {
     logger.error('Cannot test season logic:', error);
   }
@@ -58,16 +58,16 @@ async function testSeasonLogic(): Promise<void> {
 async function testFrontendAPICall(): Promise<void> {
   try {
     // Import the actual frontend API
-    const { fetchStandings } = await import('../../front-end/svelte/international-nhl-standings/src/api/standingsAPI.js');
-    
+    const { fetchStandings } = await import('../../front-end/src/api/standingsAPI.js');
+
     logger.info('Testing fetchStandings() function...');
-    
+
     const startTime = Date.now();
     const standings = await fetchStandings();
     const endTime = Date.now();
-    
+
     logger.info(`API call completed in ${endTime - startTime}ms`);
-    
+
     if (standings && standings.length > 0) {
       logger.success(`✅ fetchStandings() returned ${standings.length} teams`);
       logger.info('Sample team:', standings[0]);
@@ -75,7 +75,7 @@ async function testFrontendAPICall(): Promise<void> {
       logger.error('❌ fetchStandings() returned no data');
       logger.debug('Full response:', standings);
     }
-    
+
   } catch (error) {
     logger.error('Cannot test frontend API call:', error);
   }
@@ -93,7 +93,7 @@ function provideBrowserDebuggingSteps(): void {
 
 🔍 Console Commands to try:
 - Check if data is in store: window.location.reload()
-- Manual API test: 
+- Manual API test:
   fetch('http://localhost:4000/graphql', {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},

@@ -65,23 +65,23 @@ repos:
     hooks:
       - id: svelte-lint
         name: Svelte Frontend ESLint
-        entry: bash -c 'cd front-end/svelte/international-nhl-standings && npm run lint'
+        entry: bash -c 'cd front-end && npm run lint'
         language: system
-        files: ^front-end/svelte/international-nhl-standings/.*\.(js|ts|svelte)$
+        files: ^front-end/.*\.(js|ts|svelte)$
         pass_filenames: false
 
       - id: svelte-typecheck
         name: Svelte Frontend TypeScript Check
-        entry: bash -c 'cd front-end/svelte/international-nhl-standings && npm run check'
+        entry: bash -c 'cd front-end && npm run check'
         language: system
-        files: ^front-end/svelte/international-nhl-standings/.*\.(js|ts|svelte)$
+        files: ^front-end/.*\.(js|ts|svelte)$
         pass_filenames: false
 
       - id: svelte-test
         name: Svelte Frontend Tests
-        entry: bash -c 'cd front-end/svelte/international-nhl-standings && npm test'
+        entry: bash -c 'cd front-end && npm test'
         language: system
-        files: ^front-end/svelte/international-nhl-standings/.*\.(js|ts|svelte)$
+        files: ^front-end/.*\.(js|ts|svelte)$
         pass_filenames: false
 
   # Security scanning

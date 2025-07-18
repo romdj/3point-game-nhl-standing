@@ -18,7 +18,7 @@ export interface DebugInfo {
 }
 
 export class FrontendDebugger {
-  
+
   /**
    * Gather general frontend debug information
    */
@@ -68,40 +68,40 @@ export class FrontendDebugger {
    */
   static async testNHLFrontend(): Promise<void> {
     logger.section('NHL Frontend Debug Test');
-    
+
     // Test if we can import season utils
     try {
       logger.info('Testing season utils import...');
-      
+
       // Dynamic import to avoid build issues
-      const seasonUtils = await import('../../front-end/svelte/international-nhl-standings/src/utils/seasonUtils.js');
-      
+      const seasonUtils = await import('../../front-end/src/utils/seasonUtils.js');
+
       logger.success('Season utils imported successfully');
-      
+
       // Test season logic
       const currentDate = new Date();
       const seasonYear = seasonUtils.getCurrentNHLSeasonYear(currentDate);
       const defaultDate = seasonUtils.getDefaultStandingsDate(currentDate);
-      
+
       logger.info('Season logic test:', {
         currentDate: currentDate.toISOString().split('T')[0],
         seasonYear,
         defaultDate,
       });
-      
+
     } catch (error) {
       logger.error('Cannot import season utils:', error);
     }
-    
+
     // Test GraphQL client configuration
     try {
       logger.info('Testing GraphQL client import...');
-      
-      const { client } = await import('../../front-end/svelte/international-nhl-standings/src/api/graphqlClient.js');
-      
+
+      const { client } = await import('../../front-end/src/api/graphqlClient.js');
+
       logger.success('GraphQL client imported successfully');
       logger.info('GraphQL client URL:', client.url);
-      
+
     } catch (error) {
       logger.error('Cannot import GraphQL client:', error);
     }
@@ -128,17 +128,17 @@ export class FrontendDebugger {
    */
   static async runDebugSession(): Promise<void> {
     logger.section('NHL Frontend Debug Session');
-    
+
     // Gather basic info
     const debugInfo = FrontendDebugger.gatherDebugInfo();
     logger.info('Debug info gathered:', debugInfo);
-    
+
     // Test NHL frontend
     await FrontendDebugger.testNHLFrontend();
-    
+
     // Attach to window for further debugging
     FrontendDebugger.attachToWindow();
-    
+
     logger.success('Debug session completed');
   }
 }

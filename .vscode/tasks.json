@@ -167,7 +167,7 @@
       "command": "npm",
       "args": ["run", "test:frontend"],
       "options": {
-        "cwd": "${workspaceFolder}/front-end/svelte/international-nhl-standings"
+        "cwd": "${workspaceFolder}/front-end"
       },
       "group": "test",
       "presentation": {
