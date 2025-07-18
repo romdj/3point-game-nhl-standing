@@ -8,21 +8,29 @@ interface GroupedStandings {
   [key: string]: Standing[];
 }
 
-export function organizeStandings(standings: Standing[], viewType: 'conference' | 'division' | 'wildcard' | 'league'): GroupedStandings {
+type SortKey = keyof Standing;
+type SortOrder = 'asc' | 'desc';
+
+export function organizeStandings(
+  standings: Standing[], 
+  viewType: 'conference' | 'division' | 'wildcard' | 'league',
+  sortKey: SortKey = 'internationalSystemPoints',
+  sortOrder: SortOrder = 'desc'
+): GroupedStandings {
   switch (viewType) {
     case 'conference':
-      return groupByConference(standings);
+      return groupByConference(standings, sortKey, sortOrder);
     case 'division':
-      return groupByDivision(standings);
+      return groupByDivision(standings, sortKey, sortOrder);
     case 'wildcard':
-      return organizeWildCard(standings);
+      return organizeWildCard(standings, sortKey, sortOrder);
     case 'league':
     default:
       return { 'NHL': standings };
   }
 }
 
-function groupByConference(standings: Standing[]): GroupedStandings {
+function groupByConference(standings: Standing[], sortKey: SortKey, sortOrder: SortOrder): GroupedStandings {
   const grouped: GroupedStandings = {
     Eastern: [],
     Western: []
@@ -38,15 +46,26 @@ function groupByConference(standings: Standing[]): GroupedStandings {
     }
   });
 
-  // Sort each conference by points
+  // Sort each conference by the specified key and order
   Object.keys(grouped).forEach(conference => {
-    grouped[conference].sort((a, b) => b.internationalSystemPoints - a.internationalSystemPoints);
+    grouped[conference].sort((a, b) => {
+      const aVal = a[sortKey] as number | string;
+      const bVal = b[sortKey] as number | string;
+      
+      if (typeof aVal === 'number' && typeof bVal === 'number') {
+        return sortOrder === 'desc' ? bVal - aVal : aVal - bVal;
+      } else {
+        const aStr = String(aVal);
+        const bStr = String(bVal);
+        return sortOrder === 'desc' ? bStr.localeCompare(aStr) : aStr.localeCompare(bStr);
+      }
+    });
   });
 
   return grouped;
 }
 
-function groupByDivision(standings: Standing[]): GroupedStandings {
+function groupByDivision(standings: Standing[], sortKey: SortKey, sortOrder: SortOrder): GroupedStandings {
   const grouped: GroupedStandings = {};
 
   standings.forEach(team => {
@@ -56,19 +75,30 @@ function groupByDivision(standings: Standing[]): GroupedStandings {
     grouped[team.divisionName].push(team);
   });
 
-  // Sort each division by points
+  // Sort each division by the specified key and order
   Object.keys(grouped).forEach(division => {
-    grouped[division].sort((a, b) => b.internationalSystemPoints - a.internationalSystemPoints);
+    grouped[division].sort((a, b) => {
+      const aVal = a[sortKey] as number | string;
+      const bVal = b[sortKey] as number | string;
+      
+      if (typeof aVal === 'number' && typeof bVal === 'number') {
+        return sortOrder === 'desc' ? bVal - aVal : aVal - bVal;
+      } else {
+        const aStr = String(aVal);
+        const bStr = String(bVal);
+        return sortOrder === 'desc' ? bStr.localeCompare(aStr) : aStr.localeCompare(bStr);
+      }
+    });
   });
 
   return grouped;
 }
 
-function organizeWildCard(standings: Standing[]): GroupedStandings {
+function organizeWildCard(standings: Standing[], sortKey: SortKey, sortOrder: SortOrder): GroupedStandings {
   const grouped: GroupedStandings = {};
   
-  // First, group by division
-  const byDivision = groupByDivision(standings);
+  // First, group by division with sorting
+  const byDivision = groupByDivision(standings, sortKey, sortOrder);
   
   // Process each conference separately
   Object.entries(CONFERENCES).forEach(([conference, divisions]) => {
@@ -84,12 +114,11 @@ function organizeWildCard(standings: Standing[]): GroupedStandings {
     const divisionTopTeams: Standing[] = [];
     const remainingTeams: Standing[] = [];
     
-    // Extract top 3 from each division
+    // Extract top 3 from each division (already sorted by groupByDivision)
     divisions.forEach(division => {
       const divisionTeams = [...(byDivision[division] || [])];
-      divisionTeams.sort((a, b) => b.internationalSystemPoints - a.internationalSystemPoints);
       
-      // Get top 3 teams
+      // Get top 3 teams (already sorted)
       const topThree = divisionTeams.slice(0, 3);
       const rest = divisionTeams.slice(3);
       
@@ -103,8 +132,19 @@ function organizeWildCard(standings: Standing[]): GroupedStandings {
       remainingTeams.push(...rest);
     });
     
-    // Sort remaining conference teams by points
-    remainingTeams.sort((a, b) => b.internationalSystemPoints - a.internationalSystemPoints);
+    // Sort remaining conference teams by the specified key and order
+    remainingTeams.sort((a, b) => {
+      const aVal = a[sortKey] as number | string;
+      const bVal = b[sortKey] as number | string;
+      
+      if (typeof aVal === 'number' && typeof bVal === 'number') {
+        return sortOrder === 'desc' ? bVal - aVal : aVal - bVal;
+      } else {
+        const aStr = String(aVal);
+        const bStr = String(bVal);
+        return sortOrder === 'desc' ? bStr.localeCompare(aStr) : aStr.localeCompare(bStr);
+      }
+    });
     
     // Take top 2 for wild card
     const wildCardTeams = remainingTeams.slice(0, 2);

@@ -40,7 +40,7 @@
     sortOrder = result.newSortOrder;
   }
 
-  $: groupedStandings = organizeStandings(standings, $viewTypeStore);
+  $: groupedStandings = organizeStandings(standings, $viewTypeStore, sortKey, sortOrder);
 
   // Fix the conferencePairs definition
   $: conferencePairs = ($viewTypeStore === 'conference' || $viewTypeStore === 'wildcard' || $viewTypeStore === 'division') ? 
