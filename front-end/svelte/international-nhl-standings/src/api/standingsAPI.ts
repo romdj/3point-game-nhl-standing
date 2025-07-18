@@ -1,6 +1,7 @@
 import { client } from './graphqlClient';
 import { gql } from '@urql/svelte';
 import { getDefaultStandingsDate } from '../utils/seasonUtils';
+import { AppErrorHandler } from '../utils/errorHandler';
 
 const STANDINGS_QUERY = gql`
   query GetStandings($date: String!) {
@@ -21,20 +22,29 @@ const STANDINGS_QUERY = gql`
 `;
 
 export const fetchStandings = async () => {
-  try {
-    const date = getDefaultStandingsDate();
-    console.log(`Fetching standings for date: ${date}`);
-    
-    const result = await client.query(STANDINGS_QUERY, { date });
-    if (result.error) {
-      console.error('Error fetching standings:', result.error);
-    }
-    if (result?.data?.standings?.length === 0) {
-      console.error('Retrieved empty standings for date:', date);
-    }
-    return result.data.standings;
-  } catch (error) {
-    console.error('Error fetching standings:', error);
-    return [];
-  }
+  const date = getDefaultStandingsDate();
+  
+  const result = await AppErrorHandler.withErrorHandling(
+    async () => {
+      const queryResult = await client.query(STANDINGS_QUERY, { date });
+      
+      if (queryResult.error) {
+        throw new Error(`GraphQL Error: ${queryResult.error.message}`);
+      }
+      
+      if (!queryResult.data?.standings || queryResult.data.standings.length === 0) {
+        AppErrorHandler.handleValidationError(
+          `No standings data available for date: ${date}`,
+          { date, queryResult: queryResult.data }
+        );
+        return [];
+      }
+      
+      return queryResult.data.standings;
+    },
+    'api',
+    { operation: 'fetchStandings', date }
+  );
+  
+  return result || [];
 };
