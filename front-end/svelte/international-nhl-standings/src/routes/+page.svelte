@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import { fetchStandings } from "../api/standingsAPI";
-  import Table from "../components/Table.svelte";
+  import { StandingsTable } from "../components/Table";
   import ViewSelector from "../components/ViewSelector.svelte";
   import { standingsStore } from "../stores/standingsStore";
 
@@ -15,7 +15,7 @@
   <div class="container mx-auto">
     <h1 class="text-3xl font-bold text-center mb-8">NHL Standings</h1>
     <ViewSelector />
-    <Table />
+    <StandingsTable />
   </div>
 </main>
 
