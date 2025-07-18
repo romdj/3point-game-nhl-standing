@@ -1,10 +1,12 @@
-# GitHub Actions Workflows
+# NHL Standings GitHub Actions Workflows
 
-This directory contains GitHub Actions workflows for the 3-point NHL standings monorepo project.
+This directory contains GitHub Actions workflows for the NHL Standings application with both traditional and Docker-based CI/CD pipelines.
 
 ## Workflows Overview
 
-### 1. **ci.yml** - Main CI Pipeline
+### Core CI/CD Workflows
+
+#### 1. **ci.yml** - Traditional CI Pipeline
 - **Triggers**: Pull requests and pushes to main branches
 - **Jobs**: 
   - Install dependencies with caching
@@ -12,29 +14,51 @@ This directory contains GitHub Actions workflows for the 3-point NHL standings m
   - Cross-platform testing (Ubuntu, macOS, Windows)
   - Build verification
   - Security audit
+  - Docker validation (PRs only)
 - **Features**: Optimized for monorepo with dependency caching
 
-### 2. **build.yml** - Cross-Platform Build & Test
+#### 2. **docker-ci.yml** - Container CI Pipeline ⭐ **NEW**
+- **Triggers**: Pull requests and pushes to main, dev branches
+- **Jobs**:
+  - Multi-stage Docker builds for frontend and server
+  - Container security scanning with Trivy
+  - Push to GitHub Container Registry (ghcr.io)
+  - Docker Compose testing (production and development)
+  - Consistency testing in containerized environments
+- **Features**: Multi-architecture builds, SARIF security reporting
+
+#### 3. **build.yml** - Cross-Platform Build & Test
 - **Triggers**: Pull requests and pushes to all branches
 - **Jobs**: Build and test across multiple operating systems
 - **Features**: Matrix builds with coverage reporting on Ubuntu
 
-### 3. **coverage.yml** - Coverage Reporting
+#### 4. **coverage.yml** - Coverage Reporting
 - **Triggers**: Pull requests and pushes to main branches
 - **Jobs**: Generate and report test coverage for both GraphQL server and frontend
 - **Features**: PR comments with coverage reports, Codecov integration
 
-### 4. **release.yml** - Automated Releases
+#### 5. **release.yml** - Automated Releases
 - **Triggers**: Pushes to main branch
 - **Jobs**: Build, test, and create semantic releases
 - **Features**: Automated versioning and changelog generation
 
-### 5. **deploy.yml** - Deployment Pipeline
+### Deployment Workflows
+
+#### 6. **deploy.yml** - Traditional Deployment
 - **Triggers**: Pushes to main branch or manual dispatch
 - **Jobs**: Deploy to staging/production environments
-- **Features**: Environment-specific deployments with health checks
+- **Features**: Environment-specific deployments with Docker deployment examples
 
-### 6. **dependency-review.yml** - Dependency Management
+#### 7. **docker-deploy.yml** - Container Deployment ⭐ **NEW**
+- **Triggers**: Pushes to main branch or manual dispatch
+- **Jobs**:
+  - Production container builds and pushes
+  - Environment-specific container deployments
+  - Health checks and smoke tests
+  - Automated rollback on failure
+- **Features**: Blue-green deployment, Kubernetes examples, notification system
+
+#### 8. **dependency-review.yml** - Dependency Management
 - **Triggers**: Changes to package.json files
 - **Jobs**: Review dependencies, audit for vulnerabilities, check licenses
 - **Features**: Automated dependency security and compliance checks

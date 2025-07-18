@@ -93,6 +93,15 @@ jobs:
           # Add your deployment commands here
           # Example: rsync, docker build/push, serverless deploy, etc.
           
+          # Option 1: Traditional deployment
+          # rsync -avz --delete graphql-server/dist/ user@server:/app/
+          
+          # Option 2: Docker deployment (recommended)
+          # docker build -f Dockerfile.server -t nhl-standings-server .
+          # docker save nhl-standings-server | ssh user@server 'docker load'
+          # ssh user@server 'docker stop nhl-standings-server || true'
+          # ssh user@server 'docker run -d --name nhl-standings-server -p 4000:4000 nhl-standings-server'
+          
   # Deploy Frontend
   deploy-frontend:
     runs-on: ubuntu-latest
@@ -111,6 +120,19 @@ jobs:
           echo "Deploying frontend to ${{ needs.setup.outputs.environment }}"
           # Add your deployment commands here
           # Example: aws s3 sync, vercel deploy, netlify deploy, etc.
+          
+          # Option 1: Static hosting (Vercel, Netlify, S3)
+          # aws s3 sync frontend/build/ s3://your-bucket/ --delete
+          
+          # Option 2: Docker deployment with Nginx
+          # docker build -f Dockerfile.frontend -t nhl-standings-frontend .
+          # docker save nhl-standings-frontend | ssh user@server 'docker load'
+          # ssh user@server 'docker stop nhl-standings-frontend || true'
+          # ssh user@server 'docker run -d --name nhl-standings-frontend -p 3000:80 nhl-standings-frontend'
+          
+          # Option 3: Container registry + cloud deployment
+          # docker build -f Dockerfile.frontend -t registry.example.com/nhl-standings-frontend:latest .
+          # docker push registry.example.com/nhl-standings-frontend:latest
 
   # Health check after deployment
   health-check:

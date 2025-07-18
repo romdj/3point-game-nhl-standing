@@ -1,0 +1,176 @@
+name: Docker CI
+
+on:
+  pull_request:
+    branches: [ main, dev ]
+    paths-ignore:
+      - '**.md'
+      - 'docs/**'
+  push:
+    branches: [ main, dev ]
+    paths-ignore:
+      - '**.md'
+      - 'docs/**'
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  # Build and test using Docker
+  docker-build-and-test:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    strategy:
+      matrix:
+        service: [frontend, server]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to Container Registry
+        if: github.event_name != 'pull_request'
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-${{ matrix.service }}
+          tags: |
+            type=ref,event=branch
+            type=ref,event=pr
+            type=sha,prefix={{branch}}-
+            type=raw,value=latest,enable={{is_default_branch}}
+
+      - name: Build Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./Dockerfile.${{ matrix.service }}
+          push: false
+          load: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Test Docker image
+        run: |
+          if [ "${{ matrix.service }}" = "server" ]; then
+            # Test GraphQL server
+            docker run --rm -d --name test-server -p 4000:4000 ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-${{ matrix.service }}:${{ github.sha }}
+            sleep 10
+            curl -f http://localhost:4000/graphql || exit 1
+            docker stop test-server
+          else
+            # Test frontend builds correctly
+            docker run --rm ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-${{ matrix.service }}:${{ github.sha }} nginx -t
+          fi
+
+      - name: Push Docker image
+        if: github.event_name != 'pull_request'
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./Dockerfile.${{ matrix.service }}
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+  # Run security scanning on Docker images
+  security-scan:
+    runs-on: ubuntu-latest
+    needs: docker-build-and-test
+    if: github.event_name != 'pull_request'
+    strategy:
+      matrix:
+        service: [frontend, server]
+    steps:
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-${{ matrix.service }}:${{ github.sha }}
+          format: 'sarif'
+          output: 'trivy-${{ matrix.service }}-results.sarif'
+
+      - name: Upload Trivy scan results to GitHub Security tab
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: 'trivy-${{ matrix.service }}-results.sarif'
+
+  # Test Docker Compose setup
+  docker-compose-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Test Docker Compose (Production)
+        run: |
+          docker-compose build
+          docker-compose up -d
+          sleep 30
+          
+          # Test GraphQL server
+          curl -f http://localhost:4000/graphql || exit 1
+          
+          # Test frontend
+          curl -f http://localhost:3000 || exit 1
+          
+          docker-compose down
+
+      - name: Test Docker Compose (Development)
+        run: |
+          docker-compose -f docker-compose.dev.yml build
+          docker-compose -f docker-compose.dev.yml up -d
+          sleep 30
+          
+          # Test GraphQL server
+          curl -f http://localhost:4000/graphql || exit 1
+          
+          # Test frontend dev server
+          curl -f http://localhost:5173 || exit 1
+          
+          docker-compose -f docker-compose.dev.yml down
+
+  # Run npm scripts in Docker containers for consistency
+  test-in-docker:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Run tests in Docker
+        run: |
+          # Build test image
+          docker build -f Dockerfile.server --target build -t test-env .
+          
+          # Run frontend tests
+          docker run --rm -v $(pwd):/app -w /app/frontend test-env npm test
+          
+          # Run backend tests
+          docker run --rm -v $(pwd):/app -w /app/graphql-server test-env npm test
+          
+          # Run linting
+          docker run --rm -v $(pwd):/app -w /app test-env npm run lint
+          
+          # Run type checking
+          docker run --rm -v $(pwd):/app -w /app test-env npm run check

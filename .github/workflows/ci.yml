@@ -183,3 +183,42 @@ jobs:
         
       - name: Check for outdated dependencies
         run: npm outdated || true
+
+  # Docker validation (optional, runs in parallel)
+  docker-validation:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+        
+      - name: Validate Dockerfiles
+        run: |
+          echo "🔍 Validating Dockerfiles..."
+          
+          # Check Dockerfile syntax
+          docker run --rm -i hadolint/hadolint < Dockerfile || echo "Dockerfile issues found"
+          docker run --rm -i hadolint/hadolint < Dockerfile.frontend || echo "Dockerfile.frontend issues found"
+          docker run --rm -i hadolint/hadolint < Dockerfile.server || echo "Dockerfile.server issues found"
+          
+      - name: Test Docker builds
+        run: |
+          echo "🏗️ Testing Docker builds..."
+          
+          # Test that images build successfully
+          docker build -f Dockerfile.frontend --target build -t test-frontend .
+          docker build -f Dockerfile.server --target build -t test-server .
+          
+          echo "✅ Docker builds successful"
+          
+      - name: Test Docker Compose
+        run: |
+          echo "🧪 Testing Docker Compose configuration..."
+          
+          # Validate docker-compose files
+          docker-compose config -q
+          docker-compose -f docker-compose.dev.yml config -q
+          
+          echo "✅ Docker Compose validation successful"
