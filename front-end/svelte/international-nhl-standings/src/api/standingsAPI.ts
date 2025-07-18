@@ -1,9 +1,10 @@
 import { client } from './graphqlClient';
 import { gql } from '@urql/svelte';
+import { getDefaultStandingsDate } from '../utils/seasonUtils';
 
 const STANDINGS_QUERY = gql`
-  query {
-    standings {
+  query GetStandings($date: String!) {
+    standings(date: $date) {
       gamesPlayed
       otWins
       internationalSystemPoints
@@ -19,31 +20,17 @@ const STANDINGS_QUERY = gql`
   }
 `;
 
-// Keeping this for future use
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const DATED_STANDINGS_QUERY = gql`
-  query {
-    standings(date: "2023-03-01") {
-      otWins
-      internationalSystemPoints
-      teamName
-      points
-      wins
-      regulationWins
-      losses
-      otLosses
-    }
-  }
-`;
-
 export const fetchStandings = async () => {
   try {
-    const result = await client.query(STANDINGS_QUERY, {});
+    const date = getDefaultStandingsDate();
+    console.log(`Fetching standings for date: ${date}`);
+    
+    const result = await client.query(STANDINGS_QUERY, { date });
     if (result.error) {
       console.error('Error fetching standings:', result.error);
     }
-    if (result?.data.length === 0) {
-      console.error('Retrieved empty standings');
+    if (result?.data?.standings?.length === 0) {
+      console.error('Retrieved empty standings for date:', date);
     }
     return result.data.standings;
   } catch (error) {
