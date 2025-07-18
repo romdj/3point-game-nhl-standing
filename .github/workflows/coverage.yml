@@ -39,7 +39,7 @@ jobs:
         run: |
           pwd
           ls .
-          cd front-end
+          cd frontend
           npm run test:coverage
           if [ $? -ne 0 ]; then
             echo "::error::Svelte Frontend coverage thresholds not met"
@@ -59,17 +59,17 @@ jobs:
             echo "" >> $GITHUB_STEP_SUMMARY
           fi
 
-          if [ -f front-end/coverage/coverage-summary.json ]; then
+          if [ -f frontend/coverage/coverage-summary.json ]; then
             echo "### Svelte Frontend Coverage" >> $GITHUB_STEP_SUMMARY
             echo "\`\`\`json" >> $GITHUB_STEP_SUMMARY
-            cat front-end/coverage/coverage-summary.json >> $GITHUB_STEP_SUMMARY
+            cat frontend/coverage/coverage-summary.json >> $GITHUB_STEP_SUMMARY
             echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
           fi
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v4
         with:
-          files: ./graphql-server/coverage/lcov.info,./front-end/coverage/lcov.info
+          files: ./graphql-server/coverage/lcov.info,./frontend/coverage/lcov.info
           flags: unittests
           name: codecov-umbrella
           fail_ci_if_error: false
@@ -100,7 +100,7 @@ jobs:
 
               / Frontend coverage
               try {
-                const frontendCoverage = JSON.parse(fs.readFileSync('front-end/coverage/coverage-summary.json', 'utf8'));
+                const frontendCoverage = JSON.parse(fs.readFileSync('frontend/coverage/coverage-summary.json', 'utf8'));
                 const total = frontendCoverage.total;
                 comment += `### Svelte Frontend\n`;
                 comment += `- **Lines**: ${total.lines.pct}% (${total.lines.covered}/${total.lines.total})\n`;

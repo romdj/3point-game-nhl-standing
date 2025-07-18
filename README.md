@@ -112,7 +112,7 @@ This creates a more balanced competitive environment where every game is worth t
 
 4. **Start the frontend (in a new terminal)**
    ```bash
-   cd front-end
+   cd frontend
    npm install
    npm run dev
    ```
@@ -142,7 +142,7 @@ npm test               # Run GraphQL server tests
 
 #### Frontend
 ```bash
-cd front-end
+cd frontend
 npm run dev            # Start Vite development server
 npm run build          # Build for production
 npm run preview        # Preview production build
@@ -293,7 +293,7 @@ npm test
 cd graphql-server && npm test
 
 # Run frontend tests
-cd front-end && npm test
+cd frontend && npm test
 
 # Run tests with coverage
 npm run coverage
@@ -313,7 +313,7 @@ cd graphql-server
 npm run build
 
 # Build frontend
-cd front-end
+cd frontend
 npm run build
 ```
 

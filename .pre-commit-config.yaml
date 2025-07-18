@@ -65,21 +65,21 @@ repos:
     hooks:
       - id: svelte-lint
         name: Svelte Frontend ESLint
-        entry: bash -c 'cd front-end && npm run lint'
+        entry: bash -c 'cd frontend && npm run lint'
         language: system
         files: ^frontend/.*\.(js|ts|svelte)$
         pass_filenames: false
 
       - id: svelte-typecheck
         name: Svelte Frontend TypeScript Check
-        entry: bash -c 'cd front-end && npm run check'
+        entry: bash -c 'cd frontend && npm run check'
         language: system
         files: ^frontend/.*\.(js|ts|svelte)$
         pass_filenames: false
 
       - id: svelte-test
         name: Svelte Frontend Tests
-        entry: bash -c 'cd front-end && npm test'
+        entry: bash -c 'cd frontend && npm test'
         language: system
         files: ^frontend/.*\.(js|ts|svelte)$
         pass_filenames: false

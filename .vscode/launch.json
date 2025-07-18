@@ -35,7 +35,7 @@
       "type": "node",
       "request": "launch",
       "program": "${workspaceFolder}/frontend/node_modules/.bin/vite",
-      "cwd": "${workspaceFolder}/front-end",
+      "cwd": "${workspaceFolder}/frontend",
       "args": ["dev"],
       "env": {
         "NODE_ENV": "development"
@@ -48,7 +48,7 @@
       "type": "node",
       "request": "launch",
       "program": "${workspaceFolder}/frontend/node_modules/.bin/vitest",
-      "cwd": "${workspaceFolder}/front-end",
+      "cwd": "${workspaceFolder}/frontend",
       "args": ["run"],
       "env": {
         "NODE_ENV": "test"
@@ -61,7 +61,7 @@
       "type": "node",
       "request": "launch",
       "program": "${workspaceFolder}/frontend/node_modules/.bin/vitest",
-      "cwd": "${workspaceFolder}/front-end",
+      "cwd": "${workspaceFolder}/frontend",
       "args": ["run", "${relativeFile}"],
       "env": {
         "NODE_ENV": "test"
@@ -78,7 +78,7 @@
       "pathMappings": [
         {
           "url": "http://localhost:5173",
-          "path": "${workspaceFolder}/front-end"
+          "path": "${workspaceFolder}/frontend"
         }
       ]
     }
