@@ -1,9 +1,10 @@
-name: build-test
+name: Cross-Platform Build & Test
 
 on:
   pull_request:
     paths-ignore:
       - '**.md'
+      - 'docs/**'
   push:
     branches:
       - main
@@ -13,52 +14,67 @@ on:
       - release/*
     paths-ignore:
       - '**.md'
+      - 'docs/**'
+
+env:
+  NODE_VERSION: 22.x
 
 jobs:
-  build:
+  build-and-test:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
+        include:
+          - os: ubuntu-latest
+            coverage: true
     steps:
       - uses: actions/checkout@v4
 
-      # Setup Node.js with caching
-      - name: Setup Node 22.x
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 22.x
+          node-version: ${{ env.NODE_VERSION }}
           cache: npm
 
-      # Install all dependencies using monorepo script
-      - name: Install Dependencies
-        run: npm run install:all
+      - name: Install dependencies
+        run: npm install
 
-      # Build both projects using monorepo script
-      - name: Build Projects
-        run: npm run build
-
-      # Run tests with coverage for both projects using monorepo script
-      - name: Run Tests with Coverage
-        if: matrix.os != 'windows-latest'
-        run: npm run test:coverage
-
-      # # Upload coverage reports
-      # - name: Upload coverage reports to Codecov
-      # #  if : matrix.os == 'ubuntu-latest'
-      #   uses: codecov/codecov-action@v4
-      #   with:
-      #     files: ./graphql-server/coverage/lcov.info,./frontend/coverage/lcov.info
-      #     flags: unittests
-      #     name: codecov-umbrella
-      #     fail_ci_if_error: true
-      #   env:
-      #     CODECOV_TOKEN: $ {{ secrets.CODECOV_TOKEN }}
-
-      # Run linting for both projects using monorepo script
-      - name: Run Linting
+      - name: Run linting
         run: npm run lint
 
-      # Run type checking for both projects using monorepo script
-      - name: Run Type Checking
+      - name: Run type checking
         run: npm run check
+
+      - name: Build projects
+        run: npm run build
+
+      - name: Run tests with coverage
+        if: matrix.coverage
+        run: npm run test:coverage
+
+      - name: Run tests
+        if: '!matrix.coverage'
+        run: npm test
+
+      - name: Upload coverage reports
+        if: matrix.coverage
+        uses: codecov/codecov-action@v4
+        with:
+          files: ./graphql-server/coverage/lcov.info,./frontend/coverage/lcov.info
+          flags: unittests
+          name: codecov-umbrella
+          fail_ci_if_error: false
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+
+      - name: Upload build artifacts
+        if: matrix.os == 'ubuntu-latest'
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-artifacts
+          path: |
+            graphql-server/dist
+            frontend/build
+            frontend/.svelte-kit/output
+          retention-days: 1

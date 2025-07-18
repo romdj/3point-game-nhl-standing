@@ -21,7 +21,7 @@ jobs:
           cache: npm
 
       - name: Install dependencies
-        run: npm run install:all
+        run: npm install
 
       - name: Run tests with coverage
         run: npm run test:coverage
@@ -85,7 +85,7 @@ jobs:
               const fs = require('fs');
               let comment = '## 📊 Coverage Report\n\n';
 
-              / GraphQL Server coverage
+              // GraphQL Server coverage
               try {
                 const serverCoverage = JSON.parse(fs.readFileSync('graphql-server/coverage/coverage-summary.json', 'utf8'));
                 const total = serverCoverage.total;
@@ -98,7 +98,7 @@ jobs:
                 comment += '### GraphQL Server\nCoverage data not available\n\n';
               }
 
-              / Frontend coverage
+              // Frontend coverage
               try {
                 const frontendCoverage = JSON.parse(fs.readFileSync('frontend/coverage/coverage-summary.json', 'utf8'));
                 const total = frontendCoverage.total;
