@@ -167,7 +167,7 @@
       "command": "npm",
       "args": ["run", "test:frontend"],
       "options": {
-        "cwd": "${workspaceFolder}/front-end"
+        "cwd": "${workspaceFolder}/frontend"
       },
       "group": "test",
       "presentation": {

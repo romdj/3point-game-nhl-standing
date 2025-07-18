@@ -34,8 +34,8 @@
       "name": "Debug Svelte Dev Server",
       "type": "node",
       "request": "launch",
-      "program": "${workspaceFolder}/front-end/node_modules/.bin/vite",
-      "cwd": "${workspaceFolder}/front-end",
+      "program": "${workspaceFolder}/frontend/node_modules/.bin/vite",
+      "cwd": "${workspaceFolder}/frontend",
       "args": ["dev"],
       "env": {
         "NODE_ENV": "development"
@@ -47,8 +47,8 @@
       "name": "Debug Svelte Tests (Vitest)",
       "type": "node",
       "request": "launch",
-      "program": "${workspaceFolder}/front-end/node_modules/.bin/vitest",
-      "cwd": "${workspaceFolder}/front-end",
+      "program": "${workspaceFolder}/frontend/node_modules/.bin/vitest",
+      "cwd": "${workspaceFolder}/frontend",
       "args": ["run"],
       "env": {
         "NODE_ENV": "test"
@@ -60,8 +60,8 @@
       "name": "Debug Current Test File",
       "type": "node",
       "request": "launch",
-      "program": "${workspaceFolder}/front-end/node_modules/.bin/vitest",
-      "cwd": "${workspaceFolder}/front-end",
+      "program": "${workspaceFolder}/frontend/node_modules/.bin/vitest",
+      "cwd": "${workspaceFolder}/frontend",
       "args": ["run", "${relativeFile}"],
       "env": {
         "NODE_ENV": "test"
@@ -74,11 +74,11 @@
       "type": "firefox",
       "request": "launch",
       "url": "http://localhost:5173",
-      "webRoot": "${workspaceFolder}/front-end/src",
+      "webRoot": "${workspaceFolder}/frontend/src",
       "pathMappings": [
         {
           "url": "http://localhost:5173",
-          "path": "${workspaceFolder}/front-end"
+          "path": "${workspaceFolder}/frontend"
         }
       ]
     }

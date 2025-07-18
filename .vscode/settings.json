@@ -1,11 +1,11 @@
 {
   "vitest.enable": true,
-  "vitest.workspaceConfig": "./front-end/vite.config.ts",
+  "vitest.workspaceConfig": "./frontend/vite.config.ts",
   "jest.enable": false,
   "jest.disabledWorkspaceFolders": ["3point-game-nhl-standing"],
   "testing.defaultGutter": true,
   "testing.gutterEnabled": true,
-  "vitest.include": ["front-end/src/**/*.{test,spec}.{js,ts,jsx,tsx}"],
+  "vitest.include": ["frontend/src/**/*.{test,spec}.{js,ts,jsx,tsx}"],
   "vitest.exclude": ["**/node_modules/**", "**/dist/**", "**/build/**"],
   "typescript.preferences.includePackageJsonAutoImports": "auto"
 }

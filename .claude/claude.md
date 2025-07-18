@@ -26,14 +26,14 @@ This project showcases what NHL standings would look like using a 3-point system
 - `npm run dev`: Start with nodemon for development
 - `npm test`: Run GraphQL server tests
 
-### Frontend (`front-end/`)
+### Frontend (`frontend/`)
 - `npm run dev`: Start Vite development server
 - `npm run build`: Build for production
 - `npm run check`: Run svelte-check with TypeScript
 
 ## Directory Structure
 - `graphql-server/`: GraphQL API server (Fastify + Mercurius)
-- `front-end/`: SvelteKit frontend
+- `frontend/`: SvelteKit frontend
 - `doc/`: NHL API documentation and OpenAPI specs
 - `dist/`: Compiled TypeScript output
 
@@ -58,7 +58,7 @@ This project showcases what NHL standings would look like using a 3-point system
 
 ## Current Branch Status
 Working on GraphQL branch with recent changes to:
-- `front-end/src/api/standingsAPI.ts`
+- `frontend/src/api/standingsAPI.ts`
 - `graphql-server/src/config.ts`
 
 ## API Resources

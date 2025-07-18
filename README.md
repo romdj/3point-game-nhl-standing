@@ -60,7 +60,7 @@ This creates a more balanced competitive environment where every game is worth t
 
 ```
 3point-game-nhl-standing/
-├── front-end/  # SvelteKit frontend
+├── frontend/  # SvelteKit frontend
 │   ├── src/
 │   │   ├── api/                 # GraphQL client and API calls
 │   │   ├── components/          # Svelte components
@@ -112,7 +112,7 @@ This creates a more balanced competitive environment where every game is worth t
 
 4. **Start the frontend (in a new terminal)**
    ```bash
-   cd front-end
+   cd frontend
    npm install
    npm run dev
    ```
@@ -142,7 +142,7 @@ npm test               # Run GraphQL server tests
 
 #### Frontend
 ```bash
-cd front-end
+cd frontend
 npm run dev            # Start Vite development server
 npm run build          # Build for production
 npm run preview        # Preview production build
@@ -280,7 +280,7 @@ internationalSystemPoints: team.otLosses * 1 +
 │   │   ├── resolvers/          # GraphQL resolver tests
 │   │   └── schemas/            # Schema validation tests
 │   └── utils/                  # Utility function tests
-└── front-end/
+└── frontend/
     └── src/                    # Component and utility tests
 ```
 
@@ -293,7 +293,7 @@ npm test
 cd graphql-server && npm test
 
 # Run frontend tests
-cd front-end && npm test
+cd frontend && npm test
 
 # Run tests with coverage
 npm run coverage
@@ -313,7 +313,7 @@ cd graphql-server
 npm run build
 
 # Build frontend
-cd front-end
+cd frontend
 npm run build
 ```
 
@@ -389,7 +389,7 @@ chore: update dependencies
    cp graphql-server/.env.example graphql-server/.env
 
    # Frontend (optional)
-   cp front-end/.env.example front-end/.env
+   cp frontend/.env.example frontend/.env
    ```
 4. Make changes with conventional commits
 5. Run tests: `npm test`
@@ -403,7 +403,7 @@ chore: update dependencies
 - `NODE_ENV`: Environment (development/production/test)
 - `CORS_ORIGIN`: Allowed CORS origin (default: http://localhost:5173)
 
-#### Frontend (`front-end/.env`)
+#### Frontend (`frontend/.env`)
 - `VITE_GRAPHQL_URL`: GraphQL server URL (default: http://localhost:4000/graphql)
 - `VITE_DEV_MODE`: Development mode flag (default: true)
 

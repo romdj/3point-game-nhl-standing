@@ -30,7 +30,7 @@ async function testCurrentIssue(): Promise<void> {
 async function testSeasonLogic(): Promise<void> {
   try {
     // Import season utils dynamically
-    const seasonUtils = await import('../../front-end/src/utils/seasonUtils.js');
+    const seasonUtils = await import('../../frontend/src/utils/seasonUtils.js');
 
     const currentDate = new Date();
     const seasonYear = seasonUtils.getCurrentNHLSeasonYear(currentDate);
@@ -58,7 +58,7 @@ async function testSeasonLogic(): Promise<void> {
 async function testFrontendAPICall(): Promise<void> {
   try {
     // Import the actual frontend API
-    const { fetchStandings } = await import('../../front-end/src/api/standingsAPI.js');
+    const { fetchStandings } = await import('../../frontend/src/api/standingsAPI.js');
 
     logger.info('Testing fetchStandings() function...');
 
