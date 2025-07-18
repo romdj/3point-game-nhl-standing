@@ -1,17 +1,56 @@
-import js from '@eslint/js';
+import { 
+  baseEslintConfig, 
+  baseTypeScriptConfig, 
+  baseTestConfig, 
+  baseIgnoreConfig,
+  browserGlobals, 
+  nodeGlobals 
+} from '../shared/eslint.config.base.js';
 import svelte from 'eslint-plugin-svelte';
-import globals from 'globals';
-import typescript from '@typescript-eslint/eslint-plugin';
 import typescriptParser from '@typescript-eslint/parser';
 
 export default [
-  js.configs.recommended,
+  baseEslintConfig,
   ...svelte.configs['flat/recommended'],
   {
+    ...baseTypeScriptConfig,
     languageOptions: {
+      ...baseTypeScriptConfig.languageOptions,
       globals: {
-        ...globals.browser,
-        ...globals.node,
+        ...browserGlobals,
+        ...nodeGlobals,
+      },
+    },
+    rules: {
+      ...baseTypeScriptConfig.rules,
+      'no-unused-vars': [
+        'error',
+        { 
+          argsIgnorePattern: '^_',
+          varsIgnorePattern: '^_',
+          caughtErrorsIgnorePattern: '^_'
+        }
+      ],
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        { 
+          argsIgnorePattern: '^_',
+          varsIgnorePattern: '^_',
+          caughtErrorsIgnorePattern: '^_'
+        }
+      ],
+      'no-console': ['warn', { allow: ['error', 'warn', 'info', 'debug', 'trace'] }],
+    },
+  },
+  {
+    files: ['**/*.svelte'],
+    languageOptions: {
+      parserOptions: {
+        parser: typescriptParser,
+      },
+      globals: {
+        ...browserGlobals,
+        ...nodeGlobals,
       },
     },
     rules: {
@@ -26,44 +65,12 @@ export default [
     },
   },
   {
-    files: ['**/*.ts', '**/*.tsx'],
-    languageOptions: {
-      parser: typescriptParser,
-      parserOptions: {
-        ecmaVersion: 'latest',
-        sourceType: 'module',
-      },
-    },
-    plugins: {
-      '@typescript-eslint': typescript,
-    },
-    rules: {
-      ...typescript.configs.recommended.rules,
-      '@typescript-eslint/no-unused-vars': [
-        'error',
-        { 
-          argsIgnorePattern: '^_',
-          varsIgnorePattern: '^_',
-          caughtErrorsIgnorePattern: '^_'
-        }
-      ],
-    },
-  },
-  {
-    files: ['**/*.svelte'],
-    languageOptions: {
-      parserOptions: {
-        parser: typescriptParser,
-      },
-    },
-  },
-  {
-    files: ['**/*.spec.ts', '**/*.test.ts'],
+    ...baseTestConfig,
     languageOptions: {
       parser: typescriptParser,
       globals: {
-        ...globals.browser,
-        ...globals.node,
+        ...browserGlobals,
+        ...nodeGlobals,
         vi: 'readonly',
         describe: 'readonly',
         it: 'readonly',
@@ -75,15 +82,6 @@ export default [
         afterAll: 'readonly',
       },
     },
-    plugins: {
-      '@typescript-eslint': typescript,
-    },
-    rules: {
-      'no-console': 'off',
-      '@typescript-eslint/no-explicit-any': 'off',
-    },
   },
-  {
-    ignores: ['build/', '.svelte-kit/', 'dist/', 'node_modules/', 'coverage/'],
-  },
+  baseIgnoreConfig,
 ];

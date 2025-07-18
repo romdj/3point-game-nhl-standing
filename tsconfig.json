@@ -1,29 +1,18 @@
 {
+  "extends": "./shared/tsconfig.base.json",
   "compilerOptions": {
     "target": "ESNext",
     "module": "NodeNext",
-    "lib": [
-      "esnext"
-    ],
-    "declaration": true,
-    "declarationMap": true,
-    "sourceMap": true,
-    "outDir": "./dist",
-    "removeComments": true,
-    "strict": true,
-    "alwaysStrict": true,
+    "lib": ["esnext"],
     "moduleResolution": "NodeNext",
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "skipLibCheck": true,
-    "resolveJsonModule": true
+    "outDir": "./dist"
   },
   "types": [
     "jest"
   ],
   "include": [
     "src/graphql"
-],
+  ],
   "exclude": [
     "**/*.old.ts"
   ]
