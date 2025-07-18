@@ -3,13 +3,5 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "Shared configuration files for the 3point-game-nhl-standing project",
-  "dependencies": {
-    "@eslint/js": "^9.12.0",
-    "@typescript-eslint/eslint-plugin": "^8.0.0",
-    "@typescript-eslint/parser": "^8.0.0",
-    "eslint": "^9.12.0",
-    "globals": "^15.0.0",
-    "typescript": "^5.6.2"
-  }
+  "description": "Shared configuration files for the 3point-game-nhl-standing project"
 }
