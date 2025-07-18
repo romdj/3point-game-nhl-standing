@@ -42,34 +42,49 @@ describe('seasonUtils', () => {
   });
 
   describe('getDefaultStandingsDate', () => {
-    it('should return today\'s date if within available season data range', () => {
-      const validDate = new Date('2023-01-15');
+    it('should return today\'s date if within available season data range during season', () => {
+      const validDate = new Date('2023-01-15'); // In season
       expect(getDefaultStandingsDate(validDate)).toBe('2023-01-15');
     });
 
     it('should return season start date for dates before season', () => {
-      const earlyDate = new Date('2022-09-01');
+      const earlyDate = new Date('2022-09-01'); // Before season start
       expect(getDefaultStandingsDate(earlyDate)).toBe('2022-10-01');
     });
 
-    it('should return season end date for dates after season', () => {
-      const lateDate = new Date('2023-05-01');
-      expect(getDefaultStandingsDate(lateDate)).toBe('2023-04-05');
+    it('should return season end date for post-season (edge case)', () => {
+      const postSeasonDate = new Date('2025-07-15'); // July 2025 - post-season
+      expect(getDefaultStandingsDate(postSeasonDate)).toBe('2025-04-05'); // Should use 2024-2025 season end
     });
 
-    it('should fallback to most recent available season for unavailable seasons', () => {
-      const futureDate = new Date('2025-01-15');
-      expect(getDefaultStandingsDate(futureDate)).toBe('2023-04-05');
+    it('should return season end date for May (post-season)', () => {
+      const mayDate = new Date('2025-05-15'); // May 2025 - post-season
+      expect(getDefaultStandingsDate(mayDate)).toBe('2025-04-05'); // Should use 2024-2025 season end
+    });
+
+    it('should return today\'s date during season for 2024-2025 season', () => {
+      const inSeasonDate = new Date('2025-01-15'); // January 2025 - in 2024-2025 season
+      expect(getDefaultStandingsDate(inSeasonDate)).toBe('2025-01-15');
     });
 
     it('should use specific season when provided', () => {
       const currentDate = new Date('2025-01-15');
-      expect(getDefaultStandingsDate(currentDate, 2022)).toBe('2023-04-05');
+      expect(getDefaultStandingsDate(currentDate, 2022)).toBe('2023-04-05'); // Use 2022 season end date
     });
 
-    it('should handle dates within specific season range', () => {
-      const validDate = new Date('2023-01-15');
-      expect(getDefaultStandingsDate(validDate, 2022)).toBe('2023-01-15');
+    it('should handle post-season for specific season', () => {
+      const postSeasonDate = new Date('2025-07-15');
+      expect(getDefaultStandingsDate(postSeasonDate, 2024)).toBe('2025-04-05'); // Post-season, use end date
+    });
+
+    it('should fallback to most recent available season for unavailable seasons', () => {
+      const futureDate = new Date('2027-01-15'); // Far future with no season data
+      expect(getDefaultStandingsDate(futureDate)).toBe('2025-04-05'); // Most recent available
+    });
+
+    it('should handle current edge case: July 2025 should show 2024-2025 final standings', () => {
+      const currentEdgeCase = new Date('2025-07-18'); // Today's date
+      expect(getDefaultStandingsDate(currentEdgeCase)).toBe('2025-04-05'); // 2024-2025 season end
     });
   });
 
@@ -115,16 +130,17 @@ describe('seasonUtils', () => {
   describe('hasSeasonData', () => {
     it('should return true for seasons with data', () => {
       expect(hasSeasonData(2022)).toBe(true);
+      expect(hasSeasonData(2024)).toBe(true);
     });
 
     it('should return false for seasons without data', () => {
-      expect(hasSeasonData(2024)).toBe(false);
+      expect(hasSeasonData(2023)).toBe(false);
     });
   });
 
   describe('getAvailableSeasons', () => {
-    it('should return array of available seasons', () => {
-      expect(getAvailableSeasons()).toEqual([2022]);
+    it('should return array of available seasons sorted by most recent first', () => {
+      expect(getAvailableSeasons()).toEqual([2024, 2022]);
     });
   });
 });

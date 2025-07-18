@@ -4,13 +4,16 @@
  * Each season has different data availability windows
  */
 
-// Define known seasons and their data availability
-const SEASON_DATA_RANGES: Record<number, { start: string; end: string }> = {
-  2022: { start: '2022-10-01', end: '2023-04-05' },
-  // Add more seasons as data becomes available
-  // 2023: { start: '2023-10-01', end: '2024-04-05' },
-  // 2024: { start: '2024-10-01', end: '2025-04-05' },
-};
+import seasonsConfig from '../config/seasons.json';
+
+// Import season data from configuration
+const SEASON_DATA_RANGES: Record<number, { start: string; end: string }> = 
+  Object.fromEntries(
+    Object.entries(seasonsConfig.seasons).map(([key, value]) => [
+      parseInt(key), 
+      { start: value.start, end: value.end }
+    ])
+  );
 
 /**
  * Determines the appropriate NHL season year based on the current date
@@ -50,15 +53,20 @@ export function getDefaultStandingsDate(currentDate: Date = new Date(), seasonYe
   const seasonData = SEASON_DATA_RANGES[targetSeason];
   
   if (seasonData) {
-    // If we have data for this season, use appropriate date within range
-    if (currentDateStr >= seasonData.start && currentDateStr <= seasonData.end) {
-      return currentDateStr;
+    // If we're in season (September through April), use appropriate date
+    if (isInSeason(currentDate)) {
+      // If current date is within the season data range, use it
+      if (currentDateStr >= seasonData.start && currentDateStr <= seasonData.end) {
+        return currentDateStr;
+      }
+      // If before season start, use start date
+      if (currentDateStr < seasonData.start) {
+        return seasonData.start;
+      }
     }
-    // If before season start, use start date
-    if (currentDateStr < seasonData.start) {
-      return seasonData.start;
-    }
-    // If after season end, use end date
+    
+    // If we're in post-season (May through August), use the end date of the season
+    // This handles the edge case where we're in July 2025 and want 2024-2025 season final standings
     return seasonData.end;
   }
   

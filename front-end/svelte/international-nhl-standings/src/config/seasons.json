@@ -1,0 +1,23 @@
+{
+  "seasons": {
+    "2022": {
+      "start": "2022-10-01",
+      "end": "2023-04-05",
+      "description": "2022-2023 NHL Season"
+    },
+    "2024": {
+      "start": "2024-10-01",
+      "end": "2025-04-05",
+      "description": "2024-2025 NHL Season"
+    }
+  },
+  "metadata": {
+    "lastUpdated": "2025-07-18",
+    "notes": [
+      "Season keys represent the starting year of the season",
+      "2024 = 2024-2025 season",
+      "Dates are in ISO format (YYYY-MM-DD)",
+      "End dates are approximate and may need adjustment based on actual season length"
+    ]
+  }
+}
