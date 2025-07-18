@@ -13,8 +13,8 @@ export interface Standing {
 }
 
 export enum PointSystem {
-  International = 'International',
-  NHL = 'NHL',
+  _International = 'International',
+  _NHL = 'NHL',
 }
 export const CONFERENCES = {
   Eastern: ['Atlantic', 'Metropolitan'],

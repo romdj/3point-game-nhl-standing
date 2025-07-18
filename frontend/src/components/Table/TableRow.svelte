@@ -1,11 +1,13 @@
 <script lang="ts">
   import type { Standing } from '../../domain/standing';
+  import PlayoffStatusIndicator from './PlayoffStatusIndicator.svelte';
+  import PositionChangeIndicator from './PositionChangeIndicator.svelte';
 
   export let standing: Standing;
   export let index: number;
   export let columns: Array<{ key: keyof Standing; label: string; width: string }>;
-  export let playoffStatus: string = 'non-playoff';
-  export let positionChange: { icon: string; class: string } = { icon: '-', class: 'text-gray-400' };
+  export let playoffStatus: 'division-leader' | 'wildcard' | 'race' | 'non-playoff' = 'non-playoff';
+  export let previousStandings: Record<string, number> = {};
 
   // Get team row background color based on status
   function getRowBackground(status: string): string {
@@ -20,9 +22,14 @@
 
 <tr class="transition-all duration-150 {getRowBackground(playoffStatus)}">
   <td class="px-3 py-3 text-sm font-medium {playoffStatus === 'division-leader' ? 'text-blue-700' : 'text-gray-700'}">
-    <div class="flex items-center">
-      <span class="mr-2">{index + 1}</span>
-      <span class="{positionChange.class}">{positionChange.icon}</span>
+    <div class="flex items-center space-x-2">
+      <span class="mr-1">{index + 1}</span>
+      <PositionChangeIndicator 
+        teamName={standing.teamName} 
+        currentPosition={index} 
+        {previousStandings} 
+      />
+      <PlayoffStatusIndicator status={playoffStatus} position={index} />
     </div>
   </td>
   {#each columns as column}
