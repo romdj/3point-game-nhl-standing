@@ -1,11 +1,17 @@
 import { errorStore } from '../stores/errorStore';
 import type { AppError } from '../stores/errorStore';
+import { logger } from './logger';
 
 export type ErrorContext = Record<string, unknown>;
 
 export class AppErrorHandler {
   static handleApiError(error: unknown, context?: ErrorContext) {
     const message = error instanceof Error ? error.message : 'API request failed';
+    
+    logger.error(`API Error: ${message}`, {
+      ...context,
+      originalError: error instanceof Error ? error.stack : String(error)
+    }, 'ErrorHandler', 'handleApiError');
     
     errorStore.addError({
       message,
@@ -20,6 +26,11 @@ export class AppErrorHandler {
   static handleNetworkError(error: unknown, context?: ErrorContext) {
     const message = error instanceof Error ? error.message : 'Network request failed';
     
+    logger.error(`Network Error: ${message}`, {
+      ...context,
+      originalError: error instanceof Error ? error.stack : String(error)
+    }, 'ErrorHandler', 'handleNetworkError');
+    
     errorStore.addError({
       message,
       type: 'network',
@@ -31,6 +42,8 @@ export class AppErrorHandler {
   }
 
   static handleValidationError(message: string, context?: ErrorContext) {
+    logger.warn(`Validation Error: ${message}`, context, 'ErrorHandler', 'handleValidationError');
+    
     errorStore.addError({
       message,
       type: 'validation',
@@ -40,6 +53,11 @@ export class AppErrorHandler {
 
   static handleRuntimeError(error: unknown, context?: ErrorContext) {
     const message = error instanceof Error ? error.message : 'An unexpected error occurred';
+    
+    logger.error(`Runtime Error: ${message}`, {
+      ...context,
+      originalError: error instanceof Error ? error.stack : String(error)
+    }, 'ErrorHandler', 'handleRuntimeError');
     
     errorStore.addError({
       message,

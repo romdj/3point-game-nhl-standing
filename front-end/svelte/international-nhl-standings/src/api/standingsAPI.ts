@@ -2,6 +2,7 @@ import { client } from './graphqlClient';
 import { gql } from '@urql/svelte';
 import { getDefaultStandingsDate } from '../utils/seasonUtils';
 import { AppErrorHandler } from '../utils/errorHandler';
+import { logger, PerformanceLogger } from '../utils/logger';
 
 const STANDINGS_QUERY = gql`
   query GetStandings($date: String!) {
@@ -24,27 +25,39 @@ const STANDINGS_QUERY = gql`
 export const fetchStandings = async () => {
   const date = getDefaultStandingsDate();
   
-  const result = await AppErrorHandler.withErrorHandling(
-    async () => {
-      const queryResult = await client.query(STANDINGS_QUERY, { date });
-      
-      if (queryResult.error) {
-        throw new Error(`GraphQL Error: ${queryResult.error.message}`);
-      }
-      
-      if (!queryResult.data?.standings || queryResult.data.standings.length === 0) {
-        AppErrorHandler.handleValidationError(
-          `No standings data available for date: ${date}`,
-          { date, queryResult: queryResult.data }
+  logger.info(`Fetching standings for date: ${date}`, { date }, 'StandingsAPI', 'fetchStandings');
+  
+  const result = await PerformanceLogger.measureAsync('fetchStandings', async () => {
+    return await AppErrorHandler.withErrorHandling(
+      async () => {
+        logger.debug('Executing GraphQL query', { date }, 'StandingsAPI', 'fetchStandings');
+        const queryResult = await client.query(STANDINGS_QUERY, { date });
+        
+        if (queryResult.error) {
+          throw new Error(`GraphQL Error: ${queryResult.error.message}`);
+        }
+        
+        if (!queryResult.data?.standings || queryResult.data.standings.length === 0) {
+          logger.warn(`No standings data available for date: ${date}`, { date }, 'StandingsAPI', 'fetchStandings');
+          AppErrorHandler.handleValidationError(
+            `No standings data available for date: ${date}`,
+            { date, queryResult: queryResult.data }
+          );
+          return [];
+        }
+        
+        logger.info(`Successfully fetched ${queryResult.data.standings.length} team standings`, 
+          { date, teamCount: queryResult.data.standings.length }, 
+          'StandingsAPI', 
+          'fetchStandings'
         );
-        return [];
-      }
-      
-      return queryResult.data.standings;
-    },
-    'api',
-    { operation: 'fetchStandings', date }
-  );
+        
+        return queryResult.data.standings;
+      },
+      'api',
+      { operation: 'fetchStandings', date }
+    );
+  }, 'StandingsAPI');
   
   return result || [];
 };

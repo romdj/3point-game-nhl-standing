@@ -7,19 +7,31 @@
   import ErrorDisplay from "../components/ErrorDisplay.svelte";
   import { standingsStore } from "../stores/standingsStore";
   import { AppErrorHandler } from "../utils/errorHandler";
+  import { logger } from "../utils/logger";
 
   let isLoading = true;
   let hasInitialError = false;
 
   const loadStandings = async () => {
+    logger.info('Starting standings load', {}, 'Page', 'loadStandings');
     isLoading = true;
     hasInitialError = false;
     
     try {
       const fetchedStandings = await fetchStandings();
       standingsStore.set(fetchedStandings);
+      logger.info('Successfully loaded standings', 
+        { standingsCount: fetchedStandings.length }, 
+        'Page', 
+        'loadStandings'
+      );
       isLoading = false;
     } catch (error) {
+      logger.error('Failed to load standings', 
+        { error: error instanceof Error ? error.message : String(error) }, 
+        'Page', 
+        'loadStandings'
+      );
       AppErrorHandler.handleRuntimeError(error, { 
         operation: 'initial-load',
         component: 'page' 
