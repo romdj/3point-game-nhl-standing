@@ -1,5 +1,6 @@
 import type { Standing } from '../domain/standing';
 import { CONFERENCES } from '../domain/standing';
+import { WILDCARD_CONSTANTS } from '../constants/index.js';
 
 export type Conference = keyof typeof CONFERENCES;
 export type Division = (typeof CONFERENCES)[Conference][number];
@@ -118,9 +119,9 @@ function organizeWildCard(standings: Standing[], sortKey: SortKey, sortOrder: So
     divisions.forEach(division => {
       const divisionTeams = [...(byDivision[division] || [])];
       
-      // Get top 3 teams (already sorted)
-      const topThree = divisionTeams.slice(0, 3);
-      const rest = divisionTeams.slice(3);
+      // Get top teams (already sorted)
+      const topThree = divisionTeams.slice(0, WILDCARD_CONSTANTS.DIVISION_AUTOMATIC_QUALIFIERS);
+      const rest = divisionTeams.slice(WILDCARD_CONSTANTS.DIVISION_AUTOMATIC_QUALIFIERS);
       
       // Add top 3 to their division group
       grouped[`${conference} - ${division}`] = topThree;
@@ -147,11 +148,11 @@ function organizeWildCard(standings: Standing[], sortKey: SortKey, sortOrder: So
     });
     
     // Take top 2 for wild card
-    const wildCardTeams = remainingTeams.slice(0, 2);
+    const wildCardTeams = remainingTeams.slice(0, WILDCARD_CONSTANTS.WILDCARD_SPOTS_PER_CONFERENCE);
     
-    // Find the cutoff point for the playoff race (teams within 7 points of the last wildcard spot)
+    // Find the cutoff point for the playoff race (teams within threshold points of the last wildcard spot)
     const wildCardCutoff = wildCardTeams.length > 0 
-      ? wildCardTeams[wildCardTeams.length - 1].internationalSystemPoints - 7 
+      ? wildCardTeams[wildCardTeams.length - 1].internationalSystemPoints - WILDCARD_CONSTANTS.PLAYOFF_RACE_POINT_THRESHOLD
       : 0;
     
     // Separate teams in the race from the rest

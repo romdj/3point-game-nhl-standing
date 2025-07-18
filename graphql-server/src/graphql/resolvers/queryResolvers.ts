@@ -1,12 +1,13 @@
 import axios from 'axios';
 import type { NHLApiStandingsResponse, NHLApiTeam, StandingsQueryArgs, TransformedTeam } from '../../types/nhl-api.types.js';
+import { API_ENDPOINTS, POINT_SYSTEMS, ERROR_MESSAGES } from '../../constants/index.js';
 
 export const teamsStandings = {
   Query: {
     standings: async (_: unknown, { date }: StandingsQueryArgs): Promise<TransformedTeam[]> => {
       try {
         date = date || new Date().toISOString().split('T')[0];
-        const url = `https://api-web.nhle.com/v1/standings/${date}`;
+        const url = `${API_ENDPOINTS.NHL_STANDINGS}/${date}`;
         const response = await axios.get<NHLApiStandingsResponse>(url);
         const teams = response.data.standings;
 
@@ -27,7 +28,10 @@ export const teamsStandings = {
           otWins: team.wins - team.regulationWins,
           otLosses: team.otLosses,
           points: team.points,
-          internationalSystemPoints: team.otLosses * 1 + (team.wins - team.regulationWins) * 2 + team.regulationWins * 3,
+          internationalSystemPoints: 
+            team.otLosses * POINT_SYSTEMS.INTERNATIONAL.OT_LOSS + 
+            (team.wins - team.regulationWins) * POINT_SYSTEMS.INTERNATIONAL.OT_WIN + 
+            team.regulationWins * POINT_SYSTEMS.INTERNATIONAL.REGULATION_WIN,
           regulationWins: team.regulationWins,
           roadPoints: team.roadPoints,
           teamName: team.teamName.default,  // English team name
@@ -37,8 +41,8 @@ export const teamsStandings = {
           wins: team.wins
         }));
       } catch (error) {
-        console.error('Failed to fetch standings data:', error);
-        throw new Error('Failed to fetch standings data');
+        console.error(ERROR_MESSAGES.FETCH_STANDINGS_FAILED, error);
+        throw new Error(ERROR_MESSAGES.FETCH_STANDINGS_FAILED);
       }
     }
   }

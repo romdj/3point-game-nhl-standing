@@ -6,10 +6,11 @@
   import { organizeStandings } from '../utils/standingsOrganizer';
   import { fade, slide } from 'svelte/transition';
   import { quintOut } from 'svelte/easing';
+  import { DEFAULT_SORT_KEY, DEFAULT_SORT_ORDER, ANIMATION_DURATIONS, TABLE_COLUMN_WIDTHS } from '../constants/index.js';
 
-  let sortOrder: 'desc' | 'asc' = 'desc';
+  let sortOrder: 'desc' | 'asc' = DEFAULT_SORT_ORDER;
   let standings: Standing[] = [];
-  let sortKey: keyof Standing = 'internationalSystemPoints';
+  let sortKey: keyof Standing = DEFAULT_SORT_KEY;
   
   // Track previous standings for position changes
   let previousStandings: Record<string, number> = {};
@@ -25,7 +26,7 @@
     
     standings = value;
     // Initial sort by points
-    standings = setSort(standings, 'internationalSystemPoints', 'desc', 'internationalSystemPoints').sortedStandings;
+    standings = setSort(standings, DEFAULT_SORT_KEY, DEFAULT_SORT_ORDER, DEFAULT_SORT_KEY).sortedStandings;
   });
 
   function handleSort(key: keyof Standing) {
@@ -71,13 +72,13 @@
     }, [{}, {}] as Array<Record<string, Standing[]>>) : null;
 
   const columns: Array<{ key: keyof Standing; label: string; width: string }> = [
-    { key: 'teamName', label: 'Team', width: 'w-48' },
-    { key: 'gamesPlayed', label: 'GP', width: 'w-16' },
-    { key: 'wins', label: 'W', width: 'w-16' },
-    { key: 'losses', label: 'L', width: 'w-16' },
-    { key: 'otLosses', label: 'OTL', width: 'w-16' },
-    { key: 'points', label: 'PTS', width: 'w-16' },
-    { key: 'internationalSystemPoints', label: 'IIHF PTS', width: 'w-20' },
+    { key: 'teamName', label: 'Team', width: TABLE_COLUMN_WIDTHS.TEAM_NAME },
+    { key: 'gamesPlayed', label: 'GP', width: TABLE_COLUMN_WIDTHS.SMALL_STAT },
+    { key: 'wins', label: 'W', width: TABLE_COLUMN_WIDTHS.SMALL_STAT },
+    { key: 'losses', label: 'L', width: TABLE_COLUMN_WIDTHS.SMALL_STAT },
+    { key: 'otLosses', label: 'OTL', width: TABLE_COLUMN_WIDTHS.SMALL_STAT },
+    { key: 'points', label: 'PTS', width: TABLE_COLUMN_WIDTHS.SMALL_STAT },
+    { key: 'internationalSystemPoints', label: 'IIHF PTS', width: TABLE_COLUMN_WIDTHS.MEDIUM_STAT },
   ];
 
   // Helper function to get section title and description
@@ -150,7 +151,7 @@
   }
 </script>
 
-<div class="w-full max-w-7xl mx-auto px-4" in:fade={{ duration: 300, easing: quintOut }}>
+<div class="w-full max-w-7xl mx-auto px-4" in:fade={{ duration: ANIMATION_DURATIONS.FADE, easing: quintOut }}>
   <div class="mb-6 flex flex-col sm:flex-row justify-between items-center bg-white rounded-lg shadow-sm p-4">
     <h2 class="text-2xl font-bold text-gray-800 mb-3 sm:mb-0">
       {$viewTypeStore.charAt(0).toUpperCase() + $viewTypeStore.slice(1)} Standings
@@ -159,7 +160,7 @@
 
   <!-- All views now use the side-by-side layout for conferences -->
   {#if ($viewTypeStore === 'wildcard' || $viewTypeStore === 'conference' || $viewTypeStore === 'division') && conferencePairs}
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8" in:slide={{ duration: 400, easing: quintOut }}>
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8" in:slide={{ duration: ANIMATION_DURATIONS.SLIDE, easing: quintOut }}>
       {#each conferencePairs as conferenceGroups, i}
         <div class="mb-8">
           <div class="bg-white rounded-xl shadow-md overflow-hidden mb-6">
@@ -500,7 +501,7 @@
     </div>
   {:else}
     <!-- League View - Full Width -->
-    <div class="space-y-8" in:slide={{ duration: 400, easing: quintOut }}>
+    <div class="space-y-8" in:slide={{ duration: ANIMATION_DURATIONS.SLIDE, easing: quintOut }}>
       {#each Object.entries(groupedStandings) as [groupName, groupTeams]}
         <div class="bg-white rounded-xl shadow-md overflow-hidden">
           <div class="bg-gradient-to-r from-gray-700 to-gray-900 text-white p-4">
