@@ -19,20 +19,46 @@ const app = Fastify({
 
 // Add CORS headers
 app.addHook('onSend', (request, reply, payload, done) => {
+  const origin = request.headers.origin;
+  const allowedOrigins = [
+    'http://localhost:5173',
+    'http://localhost:3000',
+    'http://127.0.0.1:5173',
+    'http://127.0.0.1:3000'
+  ];
+  
+  const corsOrigin = config.CORS_ORIGIN === '*' || (origin && allowedOrigins.includes(origin)) 
+    ? (origin || config.CORS_ORIGIN) 
+    : config.CORS_ORIGIN;
+  
   reply.headers({
-    'Access-Control-Allow-Origin': config.CORS_ORIGIN, // Allow configured origins
-    'Access-Control-Allow-Methods': 'GET, POST, OPTIONS', // Allow specific HTTP methods
-    'Access-Control-Allow-Headers': 'Content-Type, Authorization', // Allow specific headers
+    'Access-Control-Allow-Origin': corsOrigin,
+    'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+    'Access-Control-Allow-Credentials': 'true'
   });
   done();
 });
 
 // Handle OPTIONS requests
 app.options('*', (request, reply) => {
+  const origin = request.headers.origin;
+  const allowedOrigins = [
+    'http://localhost:5173',
+    'http://localhost:3000',
+    'http://127.0.0.1:5173',
+    'http://127.0.0.1:3000'
+  ];
+  
+  const corsOrigin = config.CORS_ORIGIN === '*' || (origin && allowedOrigins.includes(origin)) 
+    ? (origin || config.CORS_ORIGIN) 
+    : config.CORS_ORIGIN;
+  
   reply.headers({
-    'Access-Control-Allow-Origin': config.CORS_ORIGIN,
+    'Access-Control-Allow-Origin': corsOrigin,
     'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
     'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+    'Access-Control-Allow-Credentials': 'true'
   }).send();
 });
 
