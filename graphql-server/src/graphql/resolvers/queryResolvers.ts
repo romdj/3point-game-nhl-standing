@@ -1,16 +1,17 @@
 import axios from 'axios';
+import type { NHLApiStandingsResponse, NHLApiTeam, StandingsQueryArgs, TransformedTeam } from '../../types/nhl-api.types.js';
 
 export const teamsStandings = {
   Query: {
-    standings: async (_: any, { date }: { date : string } ) => {
+    standings: async (_: unknown, { date }: StandingsQueryArgs): Promise<TransformedTeam[]> => {
       try {
         date = date || new Date().toISOString().split('T')[0];
         const url = `https://api-web.nhle.com/v1/standings/${date}`;
-        const response = await axios.get(url);
+        const response = await axios.get<NHLApiStandingsResponse>(url);
         const teams = response.data.standings;
 
         // Return the transformed team data to match the GraphQL schema
-        return teams.map((team: any) => ({
+        return teams.map((team: NHLApiTeam): TransformedTeam => ({
           conferenceAbbrev: team.conferenceAbbrev,
           conferenceName: team.conferenceName,
           conferenceSequence: team.conferenceSequence,
