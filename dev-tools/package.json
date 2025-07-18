@@ -1,0 +1,16 @@
+{
+  "name": "nhl-standings-dev-tools",
+  "version": "0.1.0",
+  "description": "Development tools for NHL standings application",
+  "type": "module",
+  "scripts": {
+    "test-graphql": "tsx api/graphql-tester.ts",
+    "debug-frontend": "tsx debugging/frontend-debugger.ts",
+    "test-current-issue": "tsx scripts/test-current-issue.ts",
+    "help": "echo 'Available commands: test-graphql, debug-frontend, test-current-issue'"
+  },
+  "devDependencies": {
+    "tsx": "^4.20.3",
+    "typescript": "^5.6.2"
+  }
+}
