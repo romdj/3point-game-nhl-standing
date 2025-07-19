@@ -1,6 +1,25 @@
-# Run linting and type checking
+#!/bin/sh
+set -e
+
+echo "🚀 Running pre-commit checks (fast local validation)..."
+
+# 1. Run linting and type checking (fast)
+echo "📝 Running linting..."
 npm run lint
+
+echo "🔍 Running type checking..."
 npm run check
 
-# Run tests to ensure they pass
+# 2. Run unit tests only (fast)
+echo "🧪 Running unit tests..."
 npm test
+
+# 3. Security audit (high severity only)
+echo "🔒 Running security audit..."
+npm audit --audit-level=high || {
+  echo "⚠️  High severity security vulnerabilities found!"
+  echo "Run 'npm audit' for details or 'npm audit fix' to fix automatically"
+  exit 1
+}
+
+echo "✅ Pre-commit checks passed! (Docker validation and deployment tests run in CI)"

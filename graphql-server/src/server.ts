@@ -1,8 +1,9 @@
 import Fastify from 'fastify';
 import mercurius from 'mercurius';
-import { schema, resolvers } from './src/graphql';
-import { config } from './src/config/env.js';
-import { logger } from './src/utils/logger.js';
+import { schema, resolvers } from './graphql/index.js';
+import { config } from './config/env.js';
+import { logger } from './utils/logger.js';
+import { CORS_ORIGINS, HTTP_HEADERS } from './constants/shared.js';
 
 const app = Fastify({
   logger: config.NODE_ENV === 'development' ? {
@@ -19,12 +20,9 @@ const app = Fastify({
 // Add CORS headers
 app.addHook('onSend', (request, reply, payload, done) => {
   const origin = request.headers.origin;
-  const allowedOrigins = [
-    'http://localhost:5173',
-    'http://localhost:3000',
-    'http://127.0.0.1:5173',
-    'http://127.0.0.1:3000'
-  ];
+  const allowedOrigins = config.NODE_ENV === 'production' 
+    ? CORS_ORIGINS.PRODUCTION 
+    : CORS_ORIGINS.DEVELOPMENT;
   
   const corsOrigin = config.CORS_ORIGIN === '*' || (origin && allowedOrigins.includes(origin)) 
     ? (origin || config.CORS_ORIGIN) 
@@ -32,8 +30,8 @@ app.addHook('onSend', (request, reply, payload, done) => {
   
   reply.headers({
     'Access-Control-Allow-Origin': corsOrigin,
-    'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-    'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+    'Access-Control-Allow-Methods': HTTP_HEADERS.CORS_METHODS,
+    'Access-Control-Allow-Headers': HTTP_HEADERS.CORS_HEADERS,
     'Access-Control-Allow-Credentials': 'true'
   });
   done();
@@ -42,12 +40,9 @@ app.addHook('onSend', (request, reply, payload, done) => {
 // Handle OPTIONS requests
 app.options('*', (request, reply) => {
   const origin = request.headers.origin;
-  const allowedOrigins = [
-    'http://localhost:5173',
-    'http://localhost:3000',
-    'http://127.0.0.1:5173',
-    'http://127.0.0.1:3000'
-  ];
+  const allowedOrigins = config.NODE_ENV === 'production' 
+    ? CORS_ORIGINS.PRODUCTION 
+    : CORS_ORIGINS.DEVELOPMENT;
   
   const corsOrigin = config.CORS_ORIGIN === '*' || (origin && allowedOrigins.includes(origin)) 
     ? (origin || config.CORS_ORIGIN) 
@@ -55,8 +50,8 @@ app.options('*', (request, reply) => {
   
   reply.headers({
     'Access-Control-Allow-Origin': corsOrigin,
-    'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-    'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+    'Access-Control-Allow-Methods': HTTP_HEADERS.CORS_METHODS,
+    'Access-Control-Allow-Headers': HTTP_HEADERS.CORS_HEADERS,
     'Access-Control-Allow-Credentials': 'true'
   }).send();
 });
@@ -67,10 +62,15 @@ app.register(mercurius, {
   graphiql: config.GRAPHQL_PLAYGROUND,
 });
 
-app.listen({ port: config.PORT, host: '0.0.0.0' }, (err, address) => {
-  if (err) {
-    logger.error('Failed to start server', err);
+// Health check endpoint
+app.get('/health', async () => {
+  return { status: 'ok', timestamp: new Date().toISOString() };
+});
+
+app.listen({ port: config.PORT, host: '0.0.0.0' }, (error, serverAddress) => {
+  if (error) {
+    logger.error('Failed to start server', error);
     process.exit(1);
   }
-  logger.info(`Server is running at ${address}`);
+  logger.info(`Server is running at ${serverAddress}`);
 });

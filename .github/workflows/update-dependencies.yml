@@ -2,7 +2,7 @@ name: Update Dependencies
 
 on:
   schedule:
-    # Run every Monday at 9 AM UTC
+    # Run every Monday at 9 AM UTC (only on main branch)
     - cron: '0 9 * * 1'
   workflow_dispatch:
     inputs:
@@ -23,6 +23,8 @@ permissions:
 jobs:
   update-dependencies:
     runs-on: ubuntu-latest
+    # Only run on main branch
+    if: github.ref == 'refs/heads/main'
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -109,7 +111,7 @@ jobs:
             - Updated dependencies to latest ${{ github.event.inputs.update_type || 'minor' }} versions
             - All tests passing
             - Lint and type checks passing
-          title: 'chore: update dependencies (${{ github.event.inputs.update_type || 'minor' }})'
+          title: "chore: update dependencies (${{ github.event.inputs.update_type || 'minor' }})"
           body: |
             ## Dependency Updates
             

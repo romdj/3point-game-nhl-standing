@@ -1,0 +1,75 @@
+#!/bin/sh
+set -e
+
+echo "🚀 Running pre-push checks (comprehensive local validation)..."
+
+# 1. Clean environment to ensure fresh build
+echo "🧹 Cleaning build artifacts and dependencies..."
+npm run clean
+npm install
+
+# 2. Run full build to ensure everything compiles
+echo "🏗️  Running full build..."
+npm run build
+
+# 3. Run comprehensive tests with coverage
+echo "🧪 Running tests with coverage..."
+npm run test:coverage
+
+# 4. Check for outdated dependencies (warning only)
+echo "📦 Checking for outdated dependencies..."
+npm outdated || echo "ℹ️  Some dependencies may be outdated (non-blocking)"
+
+# 5. Run Docker integration tests (if Docker is available)
+if command -v docker >/dev/null 2>&1 && docker info >/dev/null 2>&1; then
+  echo "🐳 Running Docker integration tests..."
+  
+  # Test Docker Compose setup
+  if [ -f "docker-compose.yml" ]; then
+    echo "🧪 Testing Docker Compose (quick smoke test)..."
+    
+    # Build images
+    docker compose build
+    
+    # Start services
+    docker compose up -d
+    
+    # Wait for services to be ready
+    echo "⏳ Waiting for services to start..."
+    sleep 15
+    
+    # Test GraphQL server
+    if curl -f http://localhost:4000/health >/dev/null 2>&1; then
+      echo "✅ GraphQL server is responding"
+    else
+      echo "❌ GraphQL server not responding"
+      docker compose down
+      exit 1
+    fi
+    
+    # Test frontend
+    if curl -f http://localhost:3000 >/dev/null 2>&1; then
+      echo "✅ Frontend is responding"
+    else
+      echo "❌ Frontend not responding"
+      docker compose down
+      exit 1
+    fi
+    
+    # Cleanup
+    docker compose down
+    echo "✅ Docker integration tests passed"
+  fi
+else
+  echo "ℹ️  Docker not available - skipping Docker integration tests (will run in CI)"
+fi
+
+# 6. Final security check
+echo "🔒 Final security audit..."
+npm audit --audit-level=high || {
+  echo "❌ High severity security vulnerabilities must be fixed before push!"
+  exit 1
+}
+
+echo "✅ All pre-push checks passed! Ready to push 🎉"
+echo "ℹ️  CI will handle: Production builds, Container registry, CodeQL analysis, Trivy security scans"

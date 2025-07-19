@@ -3,57 +3,27 @@
   import { slide } from 'svelte/transition';
   import TableHeader from './TableHeader.svelte';
   import TableRow from './TableRow.svelte';
+  import SectionHeader from './SectionHeader.svelte';
+  import { StandingsGroupingService, type SortKey, type SortOrder } from '../../business';
 
   export let groupName: string;
   export let teams: Standing[];
   export let columns: Array<{ key: keyof Standing; label: string; width: string }>;
-  export let sortKey: keyof Standing;
-  export let sortOrder: 'asc' | 'desc';
-  export let onSort: (_key: keyof Standing) => void;
+  export let sortKey: SortKey;
+  export let sortOrder: SortOrder;
+  export let onSort: (_key: SortKey) => void;
   export let previousStandings: Record<string, number> = {};
   export let showSectionTitle: boolean = false;
 
-  // Helper function to get section title and description
-  function getSectionInfo(groupName: string) {
-    if (groupName.includes('Wild Card')) {
-      return {
-        title: 'Wild Card',
-        description: 'Current playoff qualifiers via wild card spots',
-        icon: '🌟'
-      };
-    } else if (groupName.includes('Race')) {
-      return {
-        title: 'Playoff Race',
-        description: 'Teams within 7 points of the final wild card spot',
-        icon: '🏁'
-      };
-    } else if (groupName.includes('Rest')) {
-      return {
-        title: 'Rest of Conference',
-        description: 'Teams more than 7 points out of a playoff spot',
-        icon: '📊'
-      };
-    } else {
-      // Division
-      const divisionName = groupName.split(' - ')[1] || groupName;
-      return {
-        title: divisionName,
-        description: 'Top 3 teams qualify for playoffs',
-        icon: '🏆'
-      };
-    }
-  }
+  // Business logic service
+  const groupingService = new StandingsGroupingService();
+
+  // Get section info using business logic
+  $: _sectionInfo = groupingService.getSectionInfo(groupName);
 
   // Get playoff status for styling
-  function getPlayoffStatus(groupName: string, index: number): string {
-    if (groupName.includes('Wild Card')) {
-      return 'wildcard';
-    } else if (!groupName.includes('Race') && !groupName.includes('Rest') && index < 3) {
-      return 'division-leader';
-    } else if (groupName.includes('Race')) {
-      return 'race';
-    }
-    return 'non-playoff';
+  function getPlayoffStatus(groupName: string, index: number): 'division-leader' | 'wildcard' | 'race' | 'non-playoff' {
+    return groupingService.getPlayoffStatus(groupName, index);
   }
 
   // Get position change indicator
@@ -72,16 +42,12 @@
     }
   }
 
-  $: sectionInfo = getSectionInfo(groupName);
 </script>
 
 <div class="p-4 {showSectionTitle ? 'border-b border-base-200' : ''}" transition:slide={{ duration: 300 }}>
   {#if showSectionTitle}
-    <div class="tooltip tooltip-bottom" data-tip={sectionInfo.description}>
-      <h4 class="text-md font-semibold mb-3 text-base-content flex items-center cursor-help">
-        <span class="mr-2">{sectionInfo.icon}</span>
-        <span>{sectionInfo.title}</span>
-      </h4>
+    <div class="text-md mb-3">
+      <SectionHeader {groupName} showDescription={true} />
     </div>
   {/if}
   
@@ -91,13 +57,13 @@
       <tbody>
         {#each teams as standing, index}
           {@const playoffStatus = getPlayoffStatus(groupName, index)}
-          {@const positionChange = getPositionChange(standing.teamName, index)}
+          {@const _positionChange = getPositionChange(standing.teamName, index)}
           <TableRow 
             {standing} 
             {index} 
             {columns} 
             {playoffStatus} 
-            {positionChange}
+            {previousStandings}
           />
         {/each}
       </tbody>

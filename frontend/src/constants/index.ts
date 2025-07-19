@@ -1,7 +1,9 @@
 /**
  * Frontend application constants
+ * @deprecated Use AppConfig for centralized configuration management
  */
 
+// NHL-specific constants
 export const NHL_CONFERENCES = {
   EASTERN: 'Eastern',
   WESTERN: 'Western',
@@ -30,6 +32,7 @@ export const SORT_ORDERS = {
   DESC: 'desc',
 } as const;
 
+// Static fallback constants (use appConfig directly for new code)
 export const DEFAULT_SORT_KEY = 'internationalSystemPoints';
 export const DEFAULT_SORT_ORDER = SORT_ORDERS.DESC;
 
@@ -40,8 +43,8 @@ export const WILDCARD_CONSTANTS = {
 } as const;
 
 export const ANIMATION_DURATIONS = {
-  FADE: 300,
-  SLIDE: 400,
+  FADE: 500,
+  SLIDE: 300,
 } as const;
 
 export const TABLE_COLUMN_WIDTHS = {

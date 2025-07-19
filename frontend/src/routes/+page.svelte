@@ -1,13 +1,14 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import { fetchStandings } from "../api/standingsAPI";
   import { StandingsTable } from "../components/Table";
   import ViewSelector from "../components/ViewSelector.svelte";
   import ErrorBoundary from "../components/ErrorBoundary.svelte";
   import ErrorDisplay from "../components/ErrorDisplay.svelte";
+  import { LoadingSpinner, ErrorMessage } from "../components/UI";
   import { standingsStore } from "../stores/standingsStore";
   import { AppErrorHandler } from "../utils/errorHandler";
   import { logger } from "../utils/logger";
+  import { StandingsService } from "../business";
 
   let isLoading = true;
   let hasInitialError = false;
@@ -18,7 +19,8 @@
     hasInitialError = false;
     
     try {
-      const fetchedStandings = await fetchStandings();
+      const standingsService = StandingsService.getInstance();
+      const fetchedStandings = await standingsService.getStandings();
       standingsStore.set(fetchedStandings);
       logger.info('Successfully loaded standings', 
         { standingsCount: fetchedStandings.length }, 
@@ -55,31 +57,14 @@
     </div>
     
     {#if isLoading}
-      <div class="flex justify-center items-center py-12">
-        <div class="loading loading-spinner loading-lg text-primary"></div>
-        <span class="ml-3 text-lg text-base-content">Loading standings...</span>
-      </div>
+      <LoadingSpinner size="lg" text="Loading NHL standings..." />
     {:else if hasInitialError}
-      <div class="text-center py-12">
-        <div class="alert alert-error max-w-lg mx-auto">
-          <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.732-.833-2.5 0L4.268 19.5c-.77.833.192 2.5 1.732 2.5z" />
-          </svg>
-          <div>
-            <h3 class="font-bold">Failed to Load Standings</h3>
-            <div class="text-xs">We couldn't load the NHL standings. Please try again.</div>
-          </div>
-        </div>
-        <button
-          on:click={loadStandings}
-          class="btn btn-primary mt-6"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-          </svg>
-          Retry
-        </button>
-      </div>
+      <ErrorMessage 
+        title="Failed to Load Standings"
+        message="We couldn't load the NHL standings. Please try again."
+        retryAction={loadStandings}
+        retryText="Retry"
+      />
     {:else}
       <ErrorBoundary fallback="An error occurred while displaying the standings">
         <div class="space-y-6">

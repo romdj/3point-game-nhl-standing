@@ -1,116 +1,78 @@
-# GitHub Actions Workflows
+# Simplified CI/CD Pipeline Documentation
 
-This directory contains GitHub Actions workflows for the 3-point NHL standings monorepo project.
+## Philosophy: Local First, CI for Deployment
 
-## Workflows Overview
+This project uses a **"Local First"** approach to avoid redundant work between local development and CI pipelines.
 
-### 1. **ci.yml** - Main CI Pipeline
-- **Triggers**: Pull requests and pushes to main branches
-- **Jobs**: 
-  - Install dependencies with caching
-  - Lint and type checking
-  - Cross-platform testing (Ubuntu, macOS, Windows)
-  - Build verification
-  - Security audit
-- **Features**: Optimized for monorepo with dependency caching
+## Responsibility Separation
 
-### 2. **build.yml** - Cross-Platform Build & Test
-- **Triggers**: Pull requests and pushes to all branches
-- **Jobs**: Build and test across multiple operating systems
-- **Features**: Matrix builds with coverage reporting on Ubuntu
+### 🏠 Local Git Hooks (Fast Feedback - 30-60s)
 
-### 3. **coverage.yml** - Coverage Reporting
-- **Triggers**: Pull requests and pushes to main branches
-- **Jobs**: Generate and report test coverage for both GraphQL server and frontend
-- **Features**: PR comments with coverage reports, Codecov integration
+**Pre-commit** - Fast validation before each commit:
+- ✅ Linting (ESLint) 
+- ✅ Type checking (TypeScript, Svelte)
+- ✅ Unit tests (Jest + Vitest)
+- ✅ High severity security audit
 
-### 4. **release.yml** - Automated Releases
-- **Triggers**: Pushes to main branch
-- **Jobs**: Build, test, and create semantic releases
-- **Features**: Automated versioning and changelog generation
+**Pre-push** - Comprehensive testing before push (2-3 min):
+- ✅ Full build compilation
+- ✅ Test coverage reports
+- ✅ Dependency health check
+- ✅ Docker integration tests (if available)
+- ✅ Final security validation
 
-### 5. **deploy.yml** - Deployment Pipeline
-- **Triggers**: Pushes to main branch or manual dispatch
-- **Jobs**: Deploy to staging/production environments
-- **Features**: Environment-specific deployments with health checks
+### 🚀 GitHub Actions CI (Deployment Focus - 5-10 min)
 
-### 6. **dependency-review.yml** - Dependency Management
-- **Triggers**: Changes to package.json files
-- **Jobs**: Review dependencies, audit for vulnerabilities, check licenses
-- **Features**: Automated dependency security and compliance checks
+**ci.yml** - Production deployment pipeline:
+- ✅ Application builds for deployment
+- ✅ Docker image creation and registry push
+- ✅ Docker Compose integration testing (PRs)
+- ✅ Container security scanning (Trivy)
+- ✅ CodeQL static analysis (main branch)
 
-## Monorepo Adaptations
+### 🤖 Automated Maintenance
 
-### Dependency Management
-- Uses `npm install` (root) instead of `npm run install:all`
-- Leverages npm workspaces for efficient dependency management
-- Shared dependencies are installed at the root level
+**update-dependencies.yml** - Automated dependency management:
+- ✅ Weekly dependency updates (main branch only)
+- ✅ Automated PR creation with changelogs
 
-### Caching Strategy
-- Caches `node_modules` for all workspaces
-- Uses `package-lock.json` hash for cache keys
-- Reduces build times significantly
+## Removed Workflows
 
-### Build Artifacts
-- Collects build outputs from all workspaces:
-  - `graphql-server/dist`
-  - `frontend/build`
-  - `frontend/.svelte-kit/output`
+These workflows were **removed** to eliminate redundancy:
 
-### Environment Configuration
-- Supports multiple environments (staging, production)
-- Uses GitHub environments for deployment protection
-- Centralized environment variable management
+- ❌ `dependency-review.yml` - Security audit covered by git hooks
+- ❌ `docker-ci.yml` - Docker building merged into main CI
+- ❌ `build.yml` - Build testing covered by git hooks  
+- ❌ `coverage.yml` - Coverage reports covered by git hooks
+- ❌ `deploy.yml` - Deployment merged into main CI
+- ❌ `docker-deploy.yml` - Deployment merged into main CI
 
-## Environment Variables
+## Benefits
 
-### Required Secrets
-- `CODECOV_TOKEN`: For coverage reporting
-- `GITHUB_TOKEN`: For releases and deployments (automatically provided)
-- `NPM_TOKEN`: For package publishing (if needed)
+1. **Faster Feedback** - Issues caught in 30-60s locally vs 5-10 min in CI
+2. **Reduced CI Costs** - CI only runs deployment-specific tasks
+3. **Simpler Pipeline Management** - 2 workflows instead of 8
+4. **Better Developer Experience** - Know issues before pushing
+5. **Reliable Deployments** - Comprehensive validation before any push
 
-### Optional Secrets
-- Deployment-specific credentials
-- Notification service tokens
+## Workflow Triggers
 
-## Path Filters
+- **Pre-commit**: Every commit
+- **Pre-push**: Every push attempt  
+- **CI**: Pull requests and pushes to main/dev branches
+- **Updates**: Weekly on main branch
 
-Workflows are optimized with path filters to avoid unnecessary runs:
-- Ignores `**.md` and `docs/**` for most workflows
-- Dependency review only runs on package.json changes
-- Deployment only runs on code changes
+## Development Workflow
 
-## Matrix Builds
+```bash
+# Developer makes changes
+git add .
+# → Pre-commit runs (30-60s) - lint, types, tests, security
 
-Cross-platform testing ensures compatibility:
-- **Ubuntu**: Full test suite with coverage
-- **macOS**: Test suite only
-- **Windows**: Test suite only
+git commit -m "feat: new feature"
+git push
+# → Pre-push runs (2-3m) - build, coverage, integration tests
+# → CI runs (5-10m) - deployment, container security, static analysis
+```
 
-## Artifacts
-
-Build artifacts are stored with appropriate retention:
-- Development builds: 1 day
-- Deployment builds: 7 days
-- Release builds: As per GitHub defaults
-
-## Security
-
-- Uses trusted actions with pinned versions
-- Implements security audits
-- Reviews dependencies for vulnerabilities
-- Checks licenses for compliance
-
-## Performance Optimizations
-
-- Dependency caching across jobs
-- Parallel job execution
-- Conditional job execution based on changes
-- Efficient artifact handling
-
-## Monitoring
-
-- Job summaries with detailed reports
-- PR comments for coverage and dependency changes
-- Notification support for deployment status
-- Health checks post-deployment
+This approach ensures quality at every step while minimizing redundant work and CI pipeline complexity.

@@ -12,10 +12,6 @@ export interface Standing {
   conferenceName: string;
 }
 
-export enum PointSystem {
-  International = 'International',
-  NHL = 'NHL',
-}
 export const CONFERENCES = {
   Eastern: ['Atlantic', 'Metropolitan'],
   Western: ['Pacific', 'Central']
@@ -24,6 +20,5 @@ export const CONFERENCES = {
 export type TableColumn<T> = {
   key: keyof T;
   label: string;
-  // title: string;
 };
 

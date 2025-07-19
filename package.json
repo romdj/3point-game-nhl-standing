@@ -41,6 +41,20 @@
     "clean:frontend": "cd frontend && rm -rf node_modules build .svelte-kit",
     "preview": "cd frontend && npm run preview",
     "complete-build": "clear; npm run clean; npm run install:all; npm run build; npm test",
+    "docker:build": "docker-compose build",
+    "docker:up": "docker-compose up",
+    "docker:up:build": "docker-compose up --build",
+    "docker:up:detached": "docker-compose up -d",
+    "docker:down": "docker-compose down",
+    "docker:down:volumes": "docker-compose down -v",
+    "docker:logs": "docker-compose logs -f",
+    "docker:dev": "docker-compose -f docker-compose.dev.yml up --build",
+    "docker:dev:detached": "docker-compose -f docker-compose.dev.yml up -d --build",
+    "docker:clean": "docker-compose down --rmi all -v && docker system prune -f",
+    "fix": "npm run lint:server -- --fix && npm run lint:frontend -- --fix",
+    "check:all": "npm run lint && npm run check && npm audit --audit-level=high",
+    "health": "curl -f http://localhost:4000/health && echo ' ✓ Server healthy' || echo ' ✗ Server unhealthy'",
+    "reset": "npm run clean && npm run install:all && npm run build",
     "semantic-release": "semantic-release",
     "prepare": "husky",
     "pre-commit": "pre-commit run --all-files"
@@ -70,5 +84,9 @@
     "eslint": "^9.12.0",
     "globals": "^15.0.0",
     "typescript": "^5.6.2"
+  },
+  "overrides": {
+    "cross-spawn": "^7.0.6",
+    "cookie": "^0.7.1"
   }
 }

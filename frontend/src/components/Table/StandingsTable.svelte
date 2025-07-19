@@ -2,20 +2,24 @@
   import type { Standing } from '../../domain/standing';
   import { standingsStore } from '../../stores/standingsStore';
   import { viewTypeStore } from '../../stores/viewStore';
-  import { setSort } from '../../utils/sorting';
-  import { organizeStandings } from '../../utils/standingsOrganizer';
   import { fade, slide } from 'svelte/transition';
   import { quintOut } from 'svelte/easing';
   import { DEFAULT_SORT_KEY, DEFAULT_SORT_ORDER, ANIMATION_DURATIONS, TABLE_COLUMN_WIDTHS } from '../../constants/index.js';
   import ConferenceCard from './ConferenceCard.svelte';
   import TableSection from './TableSection.svelte';
+  import { GetOrganizedStandingsUseCase, StandingsSortingService, type SortKey, type SortOrder } from '../../business';
 
-  let sortOrder: 'desc' | 'asc' = DEFAULT_SORT_ORDER;
+  let sortOrder: SortOrder = DEFAULT_SORT_ORDER;
   let standings: Standing[] = [];
-  let sortKey: keyof Standing = DEFAULT_SORT_KEY;
+  let sortKey: SortKey = DEFAULT_SORT_KEY;
+  let groupedStandings: Record<string, Standing[]> = {};
   
   // Track previous standings for position changes
   let previousStandings: Record<string, number> = {};
+
+  // Business logic services
+  const getOrganizedStandingsUseCase = new GetOrganizedStandingsUseCase();
+  const _sortingService = new StandingsSortingService();
 
   standingsStore.subscribe((value) => {
     // Store previous positions before updating
@@ -27,23 +31,38 @@
     }
     
     standings = value;
-    // Initial sort by points
-    standings = setSort(standings, DEFAULT_SORT_KEY, DEFAULT_SORT_ORDER, DEFAULT_SORT_KEY).sortedStandings;
+    // Update grouped standings when data changes
+    updateGroupedStandings();
   });
 
-  function handleSort(key: keyof Standing) {
+  function handleSort(key: SortKey) {
     if (sortKey === key) {
       sortOrder = sortOrder === 'asc' ? 'desc' : 'asc';
     } else {
       sortOrder = 'desc';
     }
     sortKey = key;
-    const result = setSort(standings, sortKey, sortOrder, key);
-    standings = result.sortedStandings;
-    sortOrder = result.newSortOrder;
+    updateGroupedStandings();
   }
 
-  $: groupedStandings = organizeStandings(standings, $viewTypeStore, sortKey, sortOrder);
+  async function updateGroupedStandings() {
+    try {
+      groupedStandings = await getOrganizedStandingsUseCase.execute({
+        viewType: $viewTypeStore,
+        sortKey,
+        sortOrder
+      });
+    } catch (error) {
+      console.error('Failed to update grouped standings:', error);
+      // Fallback to empty state
+      groupedStandings = {};
+    }
+  }
+
+  // Update grouped standings when view type changes
+  $: if ($viewTypeStore) {
+    updateGroupedStandings();
+  }
 
   // Fix the conferencePairs definition
   $: conferencePairs = ($viewTypeStore === 'conference' || $viewTypeStore === 'wildcard' || $viewTypeStore === 'division') ? 
