@@ -9,8 +9,8 @@ export interface DebugInfo {
   timestamp: string;
   userAgent: string;
   url: string;
-  localStorage: Record<string, any>;
-  sessionStorage: Record<string, any>;
+  localStorage: Record<string, string | null>;
+  sessionStorage: Record<string, string | null>;
   environment: {
     isDevelopment: boolean;
     nodeEnv: string;

@@ -6,8 +6,8 @@
 import { logger } from '../utils/logger.js';
 
 interface GraphQLResponse {
-  data?: any;
-  errors?: Array<{ message: string }>;
+  data?: Record<string, unknown> | null;
+  errors?: Array<{ message: string; path?: string[]; extensions?: Record<string, unknown> }>;
 }
 
 interface TestConfig {
@@ -15,7 +15,7 @@ interface TestConfig {
   testQueries: Array<{
     name: string;
     query: string;
-    variables?: Record<string, any>;
+    variables?: Record<string, unknown>;
   }>;
 }
 

@@ -107,3 +107,7 @@ dist
 # Compiled JavaScript files in source (TypeScript repository)
 src/**/*.js
 **/src/**/*.js
+
+
+debug_issues/
+local_debug/

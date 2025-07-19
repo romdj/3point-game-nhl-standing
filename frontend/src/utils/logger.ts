@@ -1,9 +1,9 @@
 export enum LogLevel {
-  DEBUG = 0,
-  INFO = 1,
-  WARN = 2,
-  ERROR = 3,
-  NONE = 4
+  _DEBUG = 0,
+  _INFO = 1,
+  _WARN = 2,
+  _ERROR = 3,
+  _NONE = 4
 }
 
 export interface LogEntry {
@@ -29,7 +29,7 @@ class Logger {
 
   constructor(config: Partial<LoggerConfig> = {}) {
     this.config = {
-      level: LogLevel.INFO,
+      level: LogLevel._INFO,
       enableConsole: true,
       enableStorage: false,
       maxStorageEntries: 100,
@@ -44,10 +44,10 @@ class Logger {
                           window.location.hostname.includes('dev');
       
       if (isDevelopment) {
-        this.config.level = LogLevel.DEBUG;
+        this.config.level = LogLevel._DEBUG;
         this.config.enableStorage = true;
       } else {
-        this.config.level = LogLevel.WARN;
+        this.config.level = LogLevel._WARN;
         this.config.enableStorage = false;
       }
     }
@@ -96,16 +96,16 @@ class Logger {
       }
 
       switch (entry.level) {
-        case LogLevel.DEBUG:
+        case LogLevel._DEBUG:
           console.debug(...consoleArgs);
           break;
-        case LogLevel.INFO:
+        case LogLevel._INFO:
           console.info(...consoleArgs);
           break;
-        case LogLevel.WARN:
+        case LogLevel._WARN:
           console.warn(...consoleArgs);
           break;
-        case LogLevel.ERROR:
+        case LogLevel._ERROR:
           console.error(...consoleArgs);
           if (this.config.includeStackTrace) {
             console.trace();
@@ -126,22 +126,22 @@ class Logger {
   }
 
   debug(message: string, context?: Record<string, unknown>, component?: string, operation?: string): void {
-    const entry = this.createLogEntry(LogLevel.DEBUG, message, context, component, operation);
+    const entry = this.createLogEntry(LogLevel._DEBUG, message, context, component, operation);
     this.log(entry);
   }
 
   info(message: string, context?: Record<string, unknown>, component?: string, operation?: string): void {
-    const entry = this.createLogEntry(LogLevel.INFO, message, context, component, operation);
+    const entry = this.createLogEntry(LogLevel._INFO, message, context, component, operation);
     this.log(entry);
   }
 
   warn(message: string, context?: Record<string, unknown>, component?: string, operation?: string): void {
-    const entry = this.createLogEntry(LogLevel.WARN, message, context, component, operation);
+    const entry = this.createLogEntry(LogLevel._WARN, message, context, component, operation);
     this.log(entry);
   }
 
   error(message: string, context?: Record<string, unknown>, component?: string, operation?: string): void {
-    const entry = this.createLogEntry(LogLevel.ERROR, message, context, component, operation);
+    const entry = this.createLogEntry(LogLevel._ERROR, message, context, component, operation);
     this.log(entry);
   }
 

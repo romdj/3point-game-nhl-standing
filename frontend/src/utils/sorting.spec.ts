@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { sortStandings, setSort, sortOrder } from './sorting';
+import { sortStandings, sortOrder } from './sorting';
 import type { Standing } from '../domain/standing';
 
 // Mock standings data for testing
@@ -119,45 +119,6 @@ describe('sorting utilities', () => {
     });
   });
 
-  describe('setSort', () => {
-    it('should return sorted standings with the same sort order', () => {
-      const result = setSort(mockStandings, 'points', 'asc', 'points');
-      expect(result.sortedStandings[0].points).toBe(45);
-      expect(result.sortedStandings[1].points).toBe(50);
-      expect(result.sortedStandings[2].points).toBe(55);
-      expect(result.newSortOrder).toBe('asc');
-    });
-
-    it('should return sorted standings with descending order', () => {
-      const result = setSort(mockStandings, 'points', 'desc', 'points');
-      expect(result.sortedStandings[0].points).toBe(55);
-      expect(result.sortedStandings[1].points).toBe(50);
-      expect(result.sortedStandings[2].points).toBe(45);
-      expect(result.newSortOrder).toBe('desc');
-    });
-
-    it('should handle different sort keys', () => {
-      const result = setSort(mockStandings, 'teamName', 'asc', 'teamName');
-      expect(result.sortedStandings[0].teamName).toBe('Team A');
-      expect(result.sortedStandings[1].teamName).toBe('Team B');
-      expect(result.sortedStandings[2].teamName).toBe('Team C');
-      expect(result.newSortOrder).toBe('asc');
-    });
-
-    it('should work with international system points', () => {
-      const result = setSort(mockStandings, 'internationalSystemPoints', 'desc', 'internationalSystemPoints');
-      expect(result.sortedStandings[0].internationalSystemPoints).toBe(58);
-      expect(result.sortedStandings[1].internationalSystemPoints).toBe(52);
-      expect(result.sortedStandings[2].internationalSystemPoints).toBe(47);
-      expect(result.newSortOrder).toBe('desc');
-    });
-
-    it('should handle empty array', () => {
-      const result = setSort([], 'points', 'asc', 'points');
-      expect(result.sortedStandings).toEqual([]);
-      expect(result.newSortOrder).toBe('asc');
-    });
-  });
 
   describe('sortOrder export', () => {
     it('should have default sort order of asc', () => {

@@ -3,6 +3,7 @@
  */
 
 import dotenv from 'dotenv';
+import { DEFAULT_PORTS } from '../constants/shared.js';
 
 // Load environment variables from .env file
 dotenv.config();
@@ -21,7 +22,7 @@ function validateEnv(): EnvConfig {
   return {
     NODE_ENV: (env.NODE_ENV as EnvConfig['NODE_ENV']) || 'development',
     NHL_API_BASE_URL: env.NHL_API_BASE_URL || 'https://api-web.nhle.com/v1',
-    PORT: parseInt(env.PORT || '4000', 10),
+    PORT: parseInt(env.PORT || DEFAULT_PORTS.GRAPHQL_SERVER.toString(), 10),
     CORS_ORIGIN: env.CORS_ORIGIN || 'http://localhost:5173',
     GRAPHQL_PLAYGROUND: env.GRAPHQL_PLAYGROUND === 'true' || env.NODE_ENV === 'development'
   };
