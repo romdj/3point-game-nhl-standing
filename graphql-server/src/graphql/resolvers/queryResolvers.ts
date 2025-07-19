@@ -2,6 +2,7 @@ import got from 'got';
 import type { NHLApiStandingsResponse, NHLApiTeam, StandingsQueryArgs, TransformedTeam } from '../../types/nhl-api.types.js';
 import { API_ENDPOINTS, POINT_SYSTEMS, ERROR_MESSAGES } from '../../constants/index.js';
 import { logger, PerformanceLogger } from '../../utils/logger.js';
+import { API_TIMEOUTS, RETRY_LIMITS } from '../../../../shared/constants.js';
 
 export const teamsStandings = {
   Query: {
@@ -16,10 +17,10 @@ export const teamsStandings = {
           const response = await got.get(url, {
             responseType: 'json',
             timeout: {
-              request: 10000 // 10 seconds
+              request: API_TIMEOUTS.DEFAULT_REQUEST
             },
             retry: {
-              limit: 2,
+              limit: RETRY_LIMITS.API_REQUESTS,
               methods: ['GET']
             }
           }).json<NHLApiStandingsResponse>();

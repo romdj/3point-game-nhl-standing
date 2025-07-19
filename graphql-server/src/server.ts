@@ -3,6 +3,7 @@ import mercurius from 'mercurius';
 import { schema, resolvers } from './graphql';
 import { config } from './config/env.js';
 import { logger } from './utils/logger.js';
+import { CORS_ORIGINS, HTTP_HEADERS } from '../../shared/constants.js';
 
 const app = Fastify({
   logger: config.NODE_ENV === 'development' ? {
@@ -19,12 +20,9 @@ const app = Fastify({
 // Add CORS headers
 app.addHook('onSend', (request, reply, payload, done) => {
   const origin = request.headers.origin;
-  const allowedOrigins = [
-    'http://localhost:5173',
-    'http://localhost:3000',
-    'http://127.0.0.1:5173',
-    'http://127.0.0.1:3000'
-  ];
+  const allowedOrigins = config.NODE_ENV === 'production' 
+    ? CORS_ORIGINS.PRODUCTION 
+    : CORS_ORIGINS.DEVELOPMENT;
   
   const corsOrigin = config.CORS_ORIGIN === '*' || (origin && allowedOrigins.includes(origin)) 
     ? (origin || config.CORS_ORIGIN) 
@@ -32,8 +30,8 @@ app.addHook('onSend', (request, reply, payload, done) => {
   
   reply.headers({
     'Access-Control-Allow-Origin': corsOrigin,
-    'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-    'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+    'Access-Control-Allow-Methods': HTTP_HEADERS.CORS_METHODS,
+    'Access-Control-Allow-Headers': HTTP_HEADERS.CORS_HEADERS,
     'Access-Control-Allow-Credentials': 'true'
   });
   done();
@@ -42,12 +40,9 @@ app.addHook('onSend', (request, reply, payload, done) => {
 // Handle OPTIONS requests
 app.options('*', (request, reply) => {
   const origin = request.headers.origin;
-  const allowedOrigins = [
-    'http://localhost:5173',
-    'http://localhost:3000',
-    'http://127.0.0.1:5173',
-    'http://127.0.0.1:3000'
-  ];
+  const allowedOrigins = config.NODE_ENV === 'production' 
+    ? CORS_ORIGINS.PRODUCTION 
+    : CORS_ORIGINS.DEVELOPMENT;
   
   const corsOrigin = config.CORS_ORIGIN === '*' || (origin && allowedOrigins.includes(origin)) 
     ? (origin || config.CORS_ORIGIN) 
@@ -55,8 +50,8 @@ app.options('*', (request, reply) => {
   
   reply.headers({
     'Access-Control-Allow-Origin': corsOrigin,
-    'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-    'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+    'Access-Control-Allow-Methods': HTTP_HEADERS.CORS_METHODS,
+    'Access-Control-Allow-Headers': HTTP_HEADERS.CORS_HEADERS,
     'Access-Control-Allow-Credentials': 'true'
   }).send();
 });
