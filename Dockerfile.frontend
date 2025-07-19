@@ -14,7 +14,7 @@ RUN cd frontend && npm run build
 
 # Production stage with Nginx
 FROM nginx:alpine AS production
-COPY --from=build /app/frontend/build /usr/share/nginx/html
+COPY --from=build /app/frontend/.svelte-kit/output/client /usr/share/nginx/html
 
 # Custom nginx config for SPA
 RUN echo 'server { \
