@@ -49,7 +49,7 @@ jobs:
           tags: |
             type=ref,event=branch
             type=ref,event=pr
-            type=sha,prefix={{branch}}-
+            type=sha
             type=raw,value=latest,enable={{is_default_branch}}
 
       - name: Build Docker image
@@ -122,8 +122,8 @@ jobs:
 
       - name: Test Docker Compose (Production)
         run: |
-          docker-compose build
-          docker-compose up -d
+          docker compose build
+          docker compose up -d
           sleep 30
           
           # Test GraphQL server
@@ -132,12 +132,12 @@ jobs:
           # Test frontend
           curl -f http://localhost:3000 || exit 1
           
-          docker-compose down
+          docker compose down
 
       - name: Test Docker Compose (Development)
         run: |
-          docker-compose -f docker-compose.dev.yml build
-          docker-compose -f docker-compose.dev.yml up -d
+          docker compose -f docker-compose.dev.yml build
+          docker compose -f docker-compose.dev.yml up -d
           sleep 30
           
           # Test GraphQL server
@@ -146,7 +146,7 @@ jobs:
           # Test frontend dev server
           curl -f http://localhost:5173 || exit 1
           
-          docker-compose -f docker-compose.dev.yml down
+          docker compose -f docker-compose.dev.yml down
 
   # Run npm scripts in Docker containers for consistency
   test-in-docker:
@@ -160,17 +160,20 @@ jobs:
 
       - name: Run tests in Docker
         run: |
-          # Build test image
+          # Build test image with all dependencies
           docker build -f Dockerfile.server --target build -t test-env .
           
-          # Run frontend tests
-          docker run --rm -v $(pwd):/app -w /app/frontend test-env npm test
+          # Install all workspace dependencies in container
+          docker run --rm -v $(pwd):/app -w /app test-env npm install
           
           # Run backend tests
           docker run --rm -v $(pwd):/app -w /app/graphql-server test-env npm test
           
-          # Run linting
+          # Run frontend tests  
+          docker run --rm -v $(pwd):/app -w /app/frontend test-env npm test
+          
+          # Run linting from root
           docker run --rm -v $(pwd):/app -w /app test-env npm run lint
           
-          # Run type checking
+          # Run type checking from root
           docker run --rm -v $(pwd):/app -w /app test-env npm run check

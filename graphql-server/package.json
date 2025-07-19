@@ -6,9 +6,9 @@
     "start": "node --import tsx server.ts",
     "dev": "nodemon --exec npm start",
     "build": "tsc",
-    "test": "node --experimental-vm-modules node_modules/.bin/jest",
-    "test:coverage": "node --experimental-vm-modules node_modules/.bin/jest --coverage --passWithNoTests",
-    "test:watch": "node --experimental-vm-modules node_modules/.bin/jest --watch",
+    "test": "NODE_OPTIONS='--experimental-vm-modules' npx jest",
+    "test:coverage": "NODE_OPTIONS='--experimental-vm-modules' npx jest --coverage --passWithNoTests",
+    "test:watch": "NODE_OPTIONS='--experimental-vm-modules' npx jest --watch",
     "lint": "eslint \"src/**/*.ts\" \"tests/**/*.ts\"",
     "check": "tsc --noEmit"
   },
