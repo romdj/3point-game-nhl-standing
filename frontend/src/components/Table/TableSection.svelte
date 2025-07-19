@@ -29,32 +29,32 @@
   // Get position change indicator
   function getPositionChange(teamName: string, currentIndex: number): { icon: string, class: string } {
     if (!previousStandings[teamName]) {
-      return { icon: '-', class: 'text-gray-400' };
+      return { icon: '-', class: 'text-base-content/40' };
     }
     
     const prevIndex = previousStandings[teamName];
     if (prevIndex < currentIndex) {
-      return { icon: '↓', class: 'text-red-500' };
+      return { icon: '↓', class: 'text-error' };
     } else if (prevIndex > currentIndex) {
-      return { icon: '↑', class: 'text-green-500' };
+      return { icon: '↑', class: 'text-success' };
     } else {
-      return { icon: '-', class: 'text-gray-400' };
+      return { icon: '-', class: 'text-base-content/40' };
     }
   }
 
 </script>
 
-<div class="p-4 {showSectionTitle ? 'border-b' : ''}" transition:slide={{ duration: 300 }}>
+<div class="p-4 {showSectionTitle ? 'border-b border-base-200' : ''}" transition:slide={{ duration: 300 }}>
   {#if showSectionTitle}
-    <div class="text-md mb-3 text-gray-700">
+    <div class="text-md mb-3">
       <SectionHeader {groupName} showDescription={true} />
     </div>
   {/if}
   
-  <div class="overflow-x-auto rounded-lg">
-    <table class="min-w-full table-auto">
+  <div class="overflow-x-auto">
+    <table class="table table-zebra w-full">
       <TableHeader {columns} {sortKey} {sortOrder} {onSort} />
-      <tbody class="divide-y divide-gray-200">
+      <tbody>
         {#each teams as standing, index}
           {@const playoffStatus = getPlayoffStatus(groupName, index)}
           {@const _positionChange = getPositionChange(standing.teamName, index)}
@@ -71,6 +71,3 @@
   </div>
 </div>
 
-<style>
-  /* Tooltip positioning */
-</style>

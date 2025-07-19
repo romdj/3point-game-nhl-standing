@@ -103,9 +103,9 @@
   ];
 </script>
 
-<div class="w-full max-w-7xl mx-auto px-4" in:fade={{ duration: ANIMATION_DURATIONS.FADE, easing: quintOut }}>
-  <div class="mb-6 flex flex-col sm:flex-row justify-between items-center bg-white rounded-lg shadow-sm p-4">
-    <h2 class="text-2xl font-bold text-gray-800 mb-3 sm:mb-0">
+<div class="w-full max-w-7xl mx-auto" in:fade={{ duration: ANIMATION_DURATIONS.FADE, easing: quintOut }}>
+  <div class="mb-6 flex flex-col sm:flex-row justify-between items-center bg-base-100 rounded-lg shadow-sm p-4 border border-base-200">
+    <h2 class="text-2xl font-bold text-base-content mb-3 sm:mb-0">
       {$viewTypeStore.charAt(0).toUpperCase() + $viewTypeStore.slice(1)} Standings
     </h2>
   </div>
@@ -130,34 +130,43 @@
     <!-- League View - Full Width -->
     <div class="space-y-8" in:slide={{ duration: ANIMATION_DURATIONS.SLIDE, easing: quintOut }}>
       {#each Object.entries(groupedStandings) as [groupName, groupTeams]}
-        <div class="bg-white rounded-xl shadow-md overflow-hidden">
-          <div class="bg-gradient-to-r from-gray-700 to-gray-900 text-white p-4">
+        <div class="card bg-base-100 shadow-lg border border-base-200">
+          <div class="card-header bg-gradient-primary text-primary-content p-4">
             <h3 class="text-xl font-bold group relative">
               {groupName}
               {#if groupName.includes('Wild Card')}
-                <span class="ml-2 text-sm font-normal">(Playoff Qualifiers)</span>
+                <span class="ml-2 text-sm font-normal opacity-90">(Playoff Qualifiers)</span>
               {/if}
               <!-- Tooltip on hover -->
-              <span class="invisible group-hover:visible absolute left-0 top-full mt-1 bg-gray-800 text-white text-xs rounded py-1 px-2 z-10 w-48">
-                League-wide standings
-              </span>
+              <div class="tooltip tooltip-bottom" data-tip="League-wide standings">
+                <button class="btn btn-ghost btn-xs opacity-70 hover:opacity-100 ml-2">
+                  ℹ️
+                </button>
+              </div>
             </h3>
           </div>
           
           {#if groupTeams.length > 0}
-            <TableSection 
-              {groupName} 
-              teams={groupTeams} 
-              {columns} 
-              {sortKey} 
-              {sortOrder} 
-              onSort={handleSort}
-              {previousStandings}
-              showSectionTitle={false}
-            />
+            <div class="card-body p-0">
+              <TableSection 
+                {groupName} 
+                teams={groupTeams} 
+                {columns} 
+                {sortKey} 
+                {sortOrder} 
+                onSort={handleSort}
+                {previousStandings}
+                showSectionTitle={false}
+              />
+            </div>
           {:else}
-            <div class="p-8 text-center text-gray-500 italic">
-              No teams in this group
+            <div class="card-body">
+              <div class="alert alert-info">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-current shrink-0 w-6 h-6">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                <span>No teams in this group</span>
+              </div>
             </div>
           {/if}
         </div>

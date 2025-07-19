@@ -1,0 +1,167 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom CSS for NHL Standings App */
+
+/* Base styles */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+      Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  }
+}
+
+/* Component styles */
+@layer components {
+  .container {
+    max-width: 1200px;
+  }
+
+  /* Custom table styles for better readability */
+  .standings-table {
+    @apply table table-zebra w-full;
+  }
+
+  .standings-table th {
+    @apply bg-base-200 text-base-content font-bold;
+  }
+
+  .standings-table td {
+    @apply border-base-300;
+  }
+
+  /* Custom card styles */
+  .team-card {
+    @apply card bg-base-100 shadow-sm border border-base-200;
+  }
+
+  .team-card:hover {
+    @apply shadow-md border-primary/20;
+  }
+
+  /* Custom button styles */
+  .btn-standings {
+    @apply btn btn-outline btn-primary;
+  }
+
+  .btn-standings:hover {
+    @apply btn-primary;
+  }
+
+  /* Loading state styles */
+  .loading-overlay {
+    @apply fixed inset-0 bg-base-100/80 backdrop-blur-sm flex items-center justify-center z-50;
+  }
+
+  /* Custom alert styles */
+  .alert-custom {
+    @apply alert shadow-lg;
+  }
+}
+
+/* Utility styles */
+@layer utilities {
+  .text-shadow {
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  }
+
+  .text-shadow-md {
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .bg-gradient-primary {
+    background: linear-gradient(135deg, hsl(var(--p)) 0%, hsl(var(--s)) 100%);
+  }
+
+  .bg-gradient-accent {
+    background: linear-gradient(135deg, hsl(var(--a)) 0%, hsl(var(--p)) 100%);
+  }
+
+  /* Custom scrollbar */
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: hsl(var(--p)) hsl(var(--b2));
+  }
+
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: hsl(var(--b2));
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background: hsl(var(--p));
+    border-radius: 3px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--pf));
+  }
+}
+
+/* Animation styles */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.slide-in {
+  animation: slideIn 0.3s ease-out;
+}
+
+/* Theme transition */
+html {
+  transition: color-scheme 0.3s ease;
+}
+
+* {
+  transition: color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Custom focus styles */
+.btn:focus-visible,
+.input:focus-visible,
+.select:focus-visible,
+.textarea:focus-visible {
+  @apply outline-2 outline-offset-2 outline-primary;
+}
+
+/* Print styles */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+
+  .print-only {
+    display: block !important;
+  }
+}

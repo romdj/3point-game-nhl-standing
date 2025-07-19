@@ -47,36 +47,34 @@
 </script>
 
 <ErrorBoundary fallback="Failed to load the NHL standings application" retryAction={loadStandings}>
-  <main class="min-h-screen bg-gray-50 py-8">
-    <div class="container mx-auto">
-      <h1 class="text-3xl font-bold text-center mb-8">NHL Standings</h1>
-      
-      {#if isLoading}
-        <LoadingSpinner size="lg" text="Loading NHL standings..." />
-      {:else if hasInitialError}
-        <ErrorMessage 
-          title="Failed to Load Standings"
-          message="We couldn't load the NHL standings. Please try again."
-          retryAction={loadStandings}
-          retryText="Retry"
-        />
-      {:else}
-        <ErrorBoundary fallback="An error occurred while displaying the standings">
+  <div class="space-y-6">
+    <!-- Page Header -->
+    <div class="text-center">
+      <h1 class="text-4xl font-bold text-base-content mb-2">NHL Standings</h1>
+      <p class="text-base-content/70 text-lg">
+        Explore how the standings would look with the 3-point system
+      </p>
+    </div>
+    
+    {#if isLoading}
+      <LoadingSpinner size="lg" text="Loading NHL standings..." />
+    {:else if hasInitialError}
+      <ErrorMessage 
+        title="Failed to Load Standings"
+        message="We couldn't load the NHL standings. Please try again."
+        retryAction={loadStandings}
+        retryText="Retry"
+      />
+    {:else}
+      <ErrorBoundary fallback="An error occurred while displaying the standings">
+        <div class="space-y-6">
           <ViewSelector />
           <StandingsTable />
-        </ErrorBoundary>
-      {/if}
-    </div>
-  </main>
+        </div>
+      </ErrorBoundary>
+    {/if}
+  </div>
 </ErrorBoundary>
 
 <!-- Global error display -->
 <ErrorDisplay />
-
-<style>
-  :global(body) {
-    margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
-      Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  }
-</style>

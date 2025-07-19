@@ -15,37 +15,37 @@
   const hasData = hasSeasonData(currentSeasonYear);
 </script>
 
-<div class="flex flex-col items-center space-y-4 mb-6">
+<div class="flex flex-col items-center space-y-6 mb-8">
   <!-- Season Information -->
   <div class="text-center">
-    <h2 class="text-lg font-semibold text-gray-800">
+    <h2 class="text-xl font-semibold text-base-content mb-2">
       NHL Season {seasonString}
     </h2>
-    <p class="text-sm text-gray-600">
+    <div class="text-sm">
       {#if inSeason && hasData}
-        <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
-          <span class="w-2 h-2 mr-1 bg-green-400 rounded-full"></span>
+        <div class="badge badge-success gap-2">
+          <div class="w-2 h-2 bg-success-content rounded-full"></div>
           In Season
-        </span>
+        </div>
       {:else if !inSeason && hasData}
-        <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
-          <span class="w-2 h-2 mr-1 bg-gray-400 rounded-full"></span>
+        <div class="badge badge-neutral gap-2">
+          <div class="w-2 h-2 bg-neutral-content rounded-full"></div>
           Off Season - Final Standings
-        </span>
+        </div>
       {:else}
-        <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-amber-100 text-amber-800">
-          <span class="w-2 h-2 mr-1 bg-amber-400 rounded-full"></span>
+        <div class="badge badge-warning gap-2">
+          <div class="w-2 h-2 bg-warning-content rounded-full"></div>
           {hasData ? 'Historical Data' : 'No Data Available - Showing 2022-2023'}
-        </span>
+        </div>
       {/if}
-    </p>
+    </div>
   </div>
 
   <!-- View Selector -->
-  <div class="flex justify-center space-x-2">
+  <div class="tabs tabs-boxed bg-base-200">
     {#each views as view}
       <button
-        class="px-4 py-2 rounded-lg transition-colors duration-200 {$viewTypeStore === view.id ? 'bg-blue-600 text-white' : 'bg-gray-200 hover:bg-gray-300 text-gray-700'}"
+        class="tab {$viewTypeStore === view.id ? 'tab-active' : ''}"
         on:click={() => viewTypeStore.set(view.id)}
       >
         {view.label}
