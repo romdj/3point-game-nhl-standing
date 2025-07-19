@@ -1,12 +1,11 @@
 <script lang="ts">
   export let status: 'division-leader' | 'wildcard' | 'race' | 'non-playoff';
-  export let position: number;
 
-  function getStatusInfo(status: string, position: number) {
+  function getStatusInfo(status: string) {
     switch (status) {
       case 'division-leader':
         return {
-          badge: `${position + 1}`,
+          badge: 'DL',
           color: 'bg-blue-100 text-blue-800 border-blue-200',
           tooltip: 'Division leader - automatic playoff qualifier'
         };
@@ -31,7 +30,7 @@
     }
   }
 
-  $: statusInfo = getStatusInfo(status, position);
+  $: statusInfo = getStatusInfo(status);
 </script>
 
 {#if statusInfo.badge}

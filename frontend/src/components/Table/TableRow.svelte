@@ -23,13 +23,13 @@
 <tr class="transition-all duration-150 {getRowBackground(playoffStatus)}">
   <td class="px-3 py-3 text-sm font-medium {playoffStatus === 'division-leader' ? 'text-blue-700' : 'text-gray-700'}">
     <div class="flex items-center space-x-2">
-      <span class="mr-1">{index + 1}</span>
+      <span class="mr-1">{Number(index) + 1}</span>
       <PositionChangeIndicator 
         teamName={standing.teamName} 
-        currentPosition={index} 
+        currentPosition={Number(index)} 
         {previousStandings} 
       />
-      <PlayoffStatusIndicator status={playoffStatus} position={index} />
+      <PlayoffStatusIndicator status={playoffStatus} />
     </div>
   </td>
   {#each columns as column}
