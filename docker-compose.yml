@@ -1,0 +1,84 @@
+services:
+  # GraphQL Server
+  graphql-server:
+    build:
+      context: .
+      dockerfile: Dockerfile.server
+    ports:
+      - "4000:4000"
+    environment:
+      - NODE_ENV=production
+      - PORT=4000
+      - GRAPHQL_ENDPOINT=http://localhost:4000/graphql
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:4000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    restart: unless-stopped
+    networks:
+      - nhl-network
+
+  # Frontend
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      graphql-server:
+        condition: service_healthy
+    environment:
+      - PUBLIC_GRAPHQL_ENDPOINT=http://localhost:4000/graphql
+    restart: unless-stopped
+    networks:
+      - nhl-network
+
+  # Development services
+  graphql-server-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile.server
+      target: build
+    ports:
+      - "4001:4000"
+    environment:
+      - NODE_ENV=development
+      - PORT=4000
+    volumes:
+      - ./graphql-server/src:/app/graphql-server/src
+      - ./shared:/app/shared
+    command: ["npm", "run", "dev"]
+    networks:
+      - nhl-network
+    profiles:
+      - dev
+
+  frontend-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+      target: build
+    ports:
+      - "5173:5173"
+    environment:
+      - PUBLIC_GRAPHQL_ENDPOINT=http://localhost:4001/graphql
+    volumes:
+      - ./frontend/src:/app/frontend/src
+      - ./shared:/app/shared
+    command: ["npm", "run", "dev", "--", "--host", "0.0.0.0"]
+    working_dir: /app/frontend
+    networks:
+      - nhl-network
+    profiles:
+      - dev
+
+networks:
+  nhl-network:
+    driver: bridge
+
+volumes:
+  node_modules_server:
+  node_modules_frontend:

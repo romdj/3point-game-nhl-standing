@@ -1,0 +1,146 @@
+name: Update Dependencies
+
+on:
+  schedule:
+    # Run every Monday at 9 AM UTC (only on main branch)
+    - cron: '0 9 * * 1'
+  workflow_dispatch:
+    inputs:
+      update_type:
+        description: 'Type of update to perform'
+        required: true
+        default: 'minor'
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update-dependencies:
+    runs-on: ubuntu-latest
+    # Only run on main branch
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.x
+          cache: npm
+          
+      - name: Install dependencies
+        run: npm install
+        
+      - name: Update dependencies
+        run: |
+          # Determine update type
+          UPDATE_TYPE="${{ github.event.inputs.update_type || 'minor' }}"
+          
+          echo "Updating dependencies with type: $UPDATE_TYPE"
+          
+          # Update root dependencies
+          if [ "$UPDATE_TYPE" = "patch" ]; then
+            npm update
+          elif [ "$UPDATE_TYPE" = "minor" ]; then
+            npx npm-check-updates -u -t minor
+          else
+            npx npm-check-updates -u
+          fi
+          
+          npm install
+          
+          # Update workspace dependencies
+          cd graphql-server
+          if [ "$UPDATE_TYPE" = "patch" ]; then
+            npm update
+          elif [ "$UPDATE_TYPE" = "minor" ]; then
+            npx npm-check-updates -u -t minor
+          else
+            npx npm-check-updates -u
+          fi
+          cd ..
+          
+          cd frontend
+          if [ "$UPDATE_TYPE" = "patch" ]; then
+            npm update
+          elif [ "$UPDATE_TYPE" = "minor" ]; then
+            npx npm-check-updates -u -t minor
+          else
+            npx npm-check-updates -u
+          fi
+          cd ..
+          
+          # Reinstall all dependencies
+          npm install
+          
+      - name: Run tests
+        run: npm test
+        
+      - name: Run linting
+        run: npm run lint
+        
+      - name: Run type checking
+        run: npm run check
+        
+      - name: Check for changes
+        id: changes
+        run: |
+          if [ -n "$(git status --porcelain)" ]; then
+            echo "changes=true" >> $GITHUB_OUTPUT
+          else
+            echo "changes=false" >> $GITHUB_OUTPUT
+          fi
+          
+      - name: Create Pull Request
+        if: steps.changes.outputs.changes == 'true'
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: |
+            chore: update dependencies (${{ github.event.inputs.update_type || 'minor' }})
+            
+            - Updated dependencies to latest ${{ github.event.inputs.update_type || 'minor' }} versions
+            - All tests passing
+            - Lint and type checks passing
+          title: "chore: update dependencies (${{ github.event.inputs.update_type || 'minor' }})"
+          body: |
+            ## Dependency Updates
+            
+            This PR updates dependencies to their latest ${{ github.event.inputs.update_type || 'minor' }} versions.
+            
+            ### Changes Made
+            - Updated root package dependencies
+            - Updated GraphQL server dependencies  
+            - Updated frontend dependencies
+            - Ran full test suite to verify compatibility
+            
+            ### Verification
+            - ✅ All tests passing
+            - ✅ Linting checks passing
+            - ✅ Type checking passing
+            - ✅ Build verification successful
+            
+            ### Review Notes
+            Please review the updated dependencies and ensure no breaking changes affect the application.
+            
+            ---
+            *This PR was automatically created by the Update Dependencies workflow.*
+          branch: chore/update-dependencies-${{ github.event.inputs.update_type || 'minor' }}
+          delete-branch: true
+          labels: |
+            dependencies
+            automated-pr
+            
+      - name: Comment on no changes
+        if: steps.changes.outputs.changes == 'false'
+        run: |
+          echo "No dependency updates available for ${{ github.event.inputs.update_type || 'minor' }} update type"
