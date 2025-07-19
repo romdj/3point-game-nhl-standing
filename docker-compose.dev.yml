@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   # Development GraphQL Server with hot reload
   graphql-server:
