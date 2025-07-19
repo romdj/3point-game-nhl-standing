@@ -67,10 +67,10 @@ app.get('/health', async () => {
   return { status: 'ok', timestamp: new Date().toISOString() };
 });
 
-app.listen({ port: config.PORT, host: '0.0.0.0' }, (err, address) => {
-  if (err) {
-    logger.error('Failed to start server', err);
+app.listen({ port: config.PORT, host: '0.0.0.0' }, (error, serverAddress) => {
+  if (error) {
+    logger.error('Failed to start server', error);
     process.exit(1);
   }
-  logger.info(`Server is running at ${address}`);
+  logger.info(`Server is running at ${serverAddress}`);
 });
