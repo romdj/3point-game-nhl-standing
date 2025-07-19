@@ -1,8 +1,8 @@
 import Fastify from 'fastify';
 import mercurius from 'mercurius';
-import { schema, resolvers } from './src/graphql';
-import { config } from './src/config/env.js';
-import { logger } from './src/utils/logger.js';
+import { schema, resolvers } from './graphql';
+import { config } from './config/env.js';
+import { logger } from './utils/logger.js';
 
 const app = Fastify({
   logger: config.NODE_ENV === 'development' ? {

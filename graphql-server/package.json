@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "node --import tsx server.ts",
+    "start": "node --import tsx src/server.ts",
     "dev": "nodemon --exec npm start",
     "build": "tsc",
     "test": "NODE_OPTIONS='--experimental-vm-modules' npx jest",
