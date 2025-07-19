@@ -2,7 +2,7 @@ import got from 'got';
 import type { NHLApiStandingsResponse, NHLApiTeam, StandingsQueryArgs, TransformedTeam } from '../../types/nhl-api.types.js';
 import { API_ENDPOINTS, POINT_SYSTEMS, ERROR_MESSAGES } from '../../constants/index.js';
 import { logger, PerformanceLogger } from '../../utils/logger.js';
-import { API_TIMEOUTS, RETRY_LIMITS } from '../../../../shared/constants.js';
+import { API_TIMEOUTS, RETRY_LIMITS } from '../../constants/shared.js';
 
 export const teamsStandings = {
   Query: {

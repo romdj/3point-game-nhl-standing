@@ -3,7 +3,7 @@ import mercurius from 'mercurius';
 import { schema, resolvers } from './graphql';
 import { config } from './config/env.js';
 import { logger } from './utils/logger.js';
-import { CORS_ORIGINS, HTTP_HEADERS } from '../../shared/constants.js';
+import { CORS_ORIGINS, HTTP_HEADERS } from './constants/shared.js';
 
 const app = Fastify({
   logger: config.NODE_ENV === 'development' ? {

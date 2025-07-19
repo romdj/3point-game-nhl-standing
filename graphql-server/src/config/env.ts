@@ -3,7 +3,7 @@
  */
 
 import dotenv from 'dotenv';
-import { DEFAULT_PORTS } from '../../../shared/constants.js';
+import { DEFAULT_PORTS } from '../constants/shared.js';
 
 // Load environment variables from .env file
 dotenv.config();
