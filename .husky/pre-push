@@ -3,19 +3,24 @@ set -e
 
 echo "🚀 Running pre-push checks (comprehensive local validation)..."
 
-# 1. Run full build to ensure everything compiles
+# 1. Clean environment to ensure fresh build
+echo "🧹 Cleaning build artifacts and dependencies..."
+npm run clean
+npm install
+
+# 2. Run full build to ensure everything compiles
 echo "🏗️  Running full build..."
 npm run build
 
-# 2. Run comprehensive tests with coverage
+# 3. Run comprehensive tests with coverage
 echo "🧪 Running tests with coverage..."
 npm run test:coverage
 
-# 3. Check for outdated dependencies (warning only)
+# 4. Check for outdated dependencies (warning only)
 echo "📦 Checking for outdated dependencies..."
 npm outdated || echo "ℹ️  Some dependencies may be outdated (non-blocking)"
 
-# 4. Run Docker integration tests (if Docker is available)
+# 5. Run Docker integration tests (if Docker is available)
 if command -v docker >/dev/null 2>&1 && docker info >/dev/null 2>&1; then
   echo "🐳 Running Docker integration tests..."
   
@@ -59,7 +64,7 @@ else
   echo "ℹ️  Docker not available - skipping Docker integration tests (will run in CI)"
 fi
 
-# 5. Final security check
+# 6. Final security check
 echo "🔒 Final security audit..."
 npm audit --audit-level=high || {
   echo "❌ High severity security vulnerabilities must be fixed before push!"
