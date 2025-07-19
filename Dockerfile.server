@@ -20,7 +20,7 @@ WORKDIR /app
 COPY package*.json ./
 COPY shared/ ./shared/
 COPY graphql-server/package*.json ./graphql-server/
-RUN npm ci --only=production
+RUN npm ci --omit=dev --ignore-scripts
 
 # Copy built application
 COPY --from=build /app/graphql-server/dist ./graphql-server/dist
