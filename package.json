@@ -1,6 +1,6 @@
 {
   "name": "3point-game-nhl-standing",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Showcase what the NHL standings would be if the Games were worth 3 points",
   "keywords": [
     "NHL®",
@@ -57,7 +57,14 @@
     "reset": "npm run clean && npm run install:all && npm run build",
     "semantic-release": "semantic-release",
     "prepare": "husky",
-    "pre-commit": "pre-commit run --all-files"
+    "pre-commit": "pre-commit run --all-files",
+    "version:bump:minor": "npm run version:bump -- minor",
+    "version:bump:major": "npm run version:bump -- major",
+    "version:bump:patch": "npm run version:bump -- patch",
+    "version:bump": "node scripts/bump-version.js",
+    "release:prepare": "node scripts/prepare-release.js",
+    "release:branch": "npm run release:prepare && git checkout -b release/v$(node -p \"require('./package.json').version\")",
+    "release:tag": "git tag v$(node -p \"require('./package.json').version\") && git push origin v$(node -p \"require('./package.json').version\")"
   },
   "repository": {
     "type": "git",
