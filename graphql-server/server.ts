@@ -67,6 +67,11 @@ app.register(mercurius, {
   graphiql: config.GRAPHQL_PLAYGROUND,
 });
 
+// Health check endpoint
+app.get('/health', async () => {
+  return { status: 'ok', timestamp: new Date().toISOString() };
+});
+
 app.listen({ port: config.PORT, host: '0.0.0.0' }, (err, address) => {
   if (err) {
     logger.error('Failed to start server', err);

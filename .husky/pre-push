@@ -39,7 +39,7 @@ if command -v docker >/dev/null 2>&1 && docker info >/dev/null 2>&1; then
     sleep 15
     
     # Test GraphQL server
-    if curl -f http://localhost:4000/graphql >/dev/null 2>&1; then
+    if curl -f http://localhost:4000/health >/dev/null 2>&1; then
       echo "✅ GraphQL server is responding"
     else
       echo "❌ GraphQL server not responding"
