@@ -1,6 +1,6 @@
 import Fastify from 'fastify';
 import mercurius from 'mercurius';
-import { schema, resolvers } from './graphql';
+import { schema, resolvers } from './graphql/index.js';
 import { config } from './config/env.js';
 import { logger } from './utils/logger.js';
 import { CORS_ORIGINS, HTTP_HEADERS } from './constants/shared.js';
