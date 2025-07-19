@@ -17,12 +17,3 @@ export function sortStandings(standings: Standing[], sortKey: keyof Standing, so
   });
 }
 
-export function setSort(
-  standings: Standing[],
-  sortKey: keyof Standing,
-  sortOrder: 'asc' | 'desc',
-  _newSortKey: keyof Standing
-): { sortedStandings: Standing[], newSortOrder: 'asc' | 'desc' } {
-  const sortedStandings = sortStandings(standings, sortKey, sortOrder);
-  return { sortedStandings, newSortOrder: sortOrder };
-}

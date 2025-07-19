@@ -208,7 +208,7 @@ describe('StandingsService', () => {
       
       expect(status.isCached).toBe(false);
       expect(status.age).toBe(0);
-      expect(status.expired).toBe(true);
+      expect(status.isExpired).toBe(true);
     });
 
     it('should report cache status correctly', async () => {
@@ -217,7 +217,7 @@ describe('StandingsService', () => {
       
       expect(status.isCached).toBe(true);
       expect(status.age).toBeGreaterThanOrEqual(0);
-      expect(status.expired).toBe(false);
+      expect(status.isExpired).toBe(false);
     });
   });
 });

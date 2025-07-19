@@ -147,15 +147,15 @@ export class StandingsService {
   /**
    * Get cache status
    */
-  public getCacheStatus(): { isCached: boolean; age: number; expired: boolean } {
+  public getCacheStatus(): { isCached: boolean; age: number; isExpired: boolean } {
     const now = Date.now();
     const age = this.cacheTimestamp === 0 ? 0 : now - this.cacheTimestamp;
-    const expired = this.cacheTimestamp === 0 || age > this.CACHE_TTL_MS;
+    const isExpired = this.cacheTimestamp === 0 || age > this.CACHE_TTL_MS;
     
     return {
       isCached: this.cachedStandings !== null,
       age,
-      expired
+      isExpired
     };
   }
 }
