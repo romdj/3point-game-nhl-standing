@@ -1,20 +1,20 @@
 #!/bin/sh
 set -e
 
-echo "🚀 Running pre-commit checks..."
+echo "🚀 Running pre-commit checks (fast local validation)..."
 
-# 1. Run linting and type checking
+# 1. Run linting and type checking (fast)
 echo "📝 Running linting..."
 npm run lint
 
 echo "🔍 Running type checking..."
 npm run check
 
-# 2. Run tests to ensure they pass
-echo "🧪 Running tests..."
+# 2. Run unit tests only (fast)
+echo "🧪 Running unit tests..."
 npm test
 
-# 3. Security audit
+# 3. Security audit (high severity only)
 echo "🔒 Running security audit..."
 npm audit --audit-level=high || {
   echo "⚠️  High severity security vulnerabilities found!"
@@ -22,56 +22,4 @@ npm audit --audit-level=high || {
   exit 1
 }
 
-# Show any moderate/low vulnerabilities as warnings
-echo "ℹ️  Checking for lower severity vulnerabilities..."
-npm audit --audit-level=moderate || echo "⚠️  Some moderate/low severity vulnerabilities found (non-blocking)"
-
-# 4. Check for outdated dependencies (warning only)
-echo "📦 Checking for outdated dependencies..."
-npm outdated || echo "ℹ️  Some dependencies may be outdated (non-blocking)"
-
-# 5. Validate Docker files if they exist
-if [ -f "Dockerfile" ]; then
-  echo "🐳 Validating Dockerfiles..."
-  if command -v hadolint >/dev/null 2>&1; then
-    hadolint Dockerfile || echo "⚠️  Dockerfile linting issues found (non-blocking)"
-    hadolint Dockerfile.frontend || echo "⚠️  Dockerfile.frontend linting issues found (non-blocking)"
-    hadolint Dockerfile.server || echo "⚠️  Dockerfile.server linting issues found (non-blocking)"
-  else
-    echo "ℹ️  hadolint not installed - skipping Dockerfile validation"
-  fi
-  
-  # Only test Docker build if Docker daemon is running
-  if command -v docker >/dev/null 2>&1 && docker info >/dev/null 2>&1; then
-    echo "🧪 Testing Docker build (build stage only)..."
-    docker build -f Dockerfile.frontend --target build -t test-frontend-build . || {
-      echo "❌ Frontend Docker build failed!"
-      exit 1
-    }
-    docker build -f Dockerfile.server --target build -t test-server-build . || {
-      echo "❌ Server Docker build failed!"
-      exit 1
-    }
-    echo "✅ Docker builds successful"
-  else
-    echo "ℹ️  Docker not available or daemon not running - skipping Docker build tests"
-  fi
-fi
-
-# 6. Validate docker-compose files
-if [ -f "docker-compose.yml" ] && command -v docker >/dev/null 2>&1 && docker info >/dev/null 2>&1; then
-  echo "🔧 Validating Docker Compose files..."
-  docker compose config -q || {
-    echo "❌ docker-compose.yml validation failed!"
-    exit 1
-  }
-  docker compose -f docker-compose.dev.yml config -q || {
-    echo "❌ docker-compose.dev.yml validation failed!"
-    exit 1
-  }
-  echo "✅ Docker Compose files valid"
-elif [ -f "docker-compose.yml" ]; then
-  echo "ℹ️  Docker not available - skipping Docker Compose validation"
-fi
-
-echo "✅ All pre-commit checks passed!"
+echo "✅ Pre-commit checks passed! (Docker validation and deployment tests run in CI)"

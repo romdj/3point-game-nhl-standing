@@ -1,9 +1,9 @@
 #!/bin/sh
 set -e
 
-echo "🚀 Running pre-push checks..."
+echo "🚀 Running pre-push checks (comprehensive local validation)..."
 
-# 1. Run build to ensure everything compiles
+# 1. Run full build to ensure everything compiles
 echo "🏗️  Running full build..."
 npm run build
 
@@ -11,13 +11,17 @@ npm run build
 echo "🧪 Running tests with coverage..."
 npm run test:coverage
 
-# 3. Run Docker integration tests (if Docker is available)
-if command -v docker >/dev/null 2>&1; then
+# 3. Check for outdated dependencies (warning only)
+echo "📦 Checking for outdated dependencies..."
+npm outdated || echo "ℹ️  Some dependencies may be outdated (non-blocking)"
+
+# 4. Run Docker integration tests (if Docker is available)
+if command -v docker >/dev/null 2>&1 && docker info >/dev/null 2>&1; then
   echo "🐳 Running Docker integration tests..."
   
   # Test Docker Compose setup
   if [ -f "docker-compose.yml" ]; then
-    echo "🧪 Testing Docker Compose (quick test)..."
+    echo "🧪 Testing Docker Compose (quick smoke test)..."
     
     # Build images
     docker compose build
@@ -52,18 +56,15 @@ if command -v docker >/dev/null 2>&1; then
     echo "✅ Docker integration tests passed"
   fi
 else
-  echo "ℹ️  Docker not available - skipping Docker integration tests"
+  echo "ℹ️  Docker not available - skipping Docker integration tests (will run in CI)"
 fi
 
-# 4. Final security check
+# 5. Final security check
 echo "🔒 Final security audit..."
 npm audit --audit-level=high || {
   echo "❌ High severity security vulnerabilities must be fixed before push!"
   exit 1
 }
 
-# Show any moderate/low vulnerabilities as warnings
-echo "ℹ️  Checking for lower severity vulnerabilities..."
-npm audit --audit-level=moderate || echo "⚠️  Some moderate/low severity vulnerabilities found (non-blocking)"
-
 echo "✅ All pre-push checks passed! Ready to push 🎉"
+echo "ℹ️  CI will handle: Production builds, Container registry, CodeQL analysis, Trivy security scans"
