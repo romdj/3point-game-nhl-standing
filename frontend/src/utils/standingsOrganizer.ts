@@ -14,7 +14,7 @@ type SortOrder = 'asc' | 'desc';
 
 export function organizeStandings(
   standings: Standing[], 
-  viewType: 'conference' | 'division' | 'wildcard' | 'league',
+  viewType: 'conference' | 'division' | 'wildcard' | 'league' | 'comparison',
   sortKey: SortKey = 'internationalSystemPoints',
   sortOrder: SortOrder = 'desc'
 ): GroupedStandings {
@@ -25,6 +25,8 @@ export function organizeStandings(
       return groupByDivision(standings, sortKey, sortOrder);
     case 'wildcard':
       return organizeWildCard(standings, sortKey, sortOrder);
+    case 'comparison':
+      return { 'NHL': standings };
     case 'league':
     default:
       return { 'NHL': standings };

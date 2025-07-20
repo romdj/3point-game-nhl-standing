@@ -3,7 +3,7 @@ import { CONFERENCES } from '../../domain/standing';
 import { getAppConfig } from '../../config';
 import { StandingsSortingService, type SortKey, type SortOrder } from './StandingsSortingService';
 
-export type ViewType = 'conference' | 'division' | 'wildcard' | 'league';
+export type ViewType = 'conference' | 'division' | 'wildcard' | 'league' | 'comparison';
 
 export interface GroupedStandings {
   [key: string]: Standing[];
@@ -32,6 +32,8 @@ export class StandingsGroupingService {
         return this.groupByDivision(standings, sortKey, sortOrder);
       case 'wildcard':
         return this.organizeWildCard(standings, sortKey, sortOrder);
+      case 'comparison':
+        return { 'NHL': standings };
       case 'league':
       default:
         return { 'NHL': standings };

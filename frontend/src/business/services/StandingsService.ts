@@ -5,7 +5,7 @@ import { StandingsGroupingService } from './StandingsGroupingService';
 import { getAppConfig } from '../../config';
 import { logger } from '../../utils/logger';
 
-export type ViewType = 'conference' | 'division' | 'wildcard' | 'league';
+export type ViewType = 'conference' | 'division' | 'wildcard' | 'league' | 'comparison';
 export type SortKey = keyof Standing;
 export type SortOrder = 'asc' | 'desc';
 
