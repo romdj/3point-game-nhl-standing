@@ -6,6 +6,8 @@ import type { Standing } from '../domain/standing';
 const mockStandings: Standing[] = [
   {
     teamName: 'Team A',
+    teamAbbrev: 'TMA',
+    teamLogo: 'https://assets.nhle.com/logos/nhl/svg/TMA_light.svg',
     points: 50,
     internationalSystemPoints: 52,
     wins: 20,
@@ -16,9 +18,16 @@ const mockStandings: Standing[] = [
     otLosses: 5,
     conferenceName: 'Eastern',
     divisionName: 'Atlantic',
+    goalFor: 120,
+    goalAgainst: 110,
+    goalDifferential: 10,
+    winPercentage: 0.667,
+    date: '2024-04-15'
   },
   {
     teamName: 'Team B',
+    teamAbbrev: 'TMB',
+    teamLogo: 'https://assets.nhle.com/logos/nhl/svg/TMB_light.svg',
     points: 45,
     internationalSystemPoints: 47,
     wins: 18,
@@ -29,9 +38,16 @@ const mockStandings: Standing[] = [
     otLosses: 2,
     conferenceName: 'Eastern',
     divisionName: 'Atlantic',
+    goalFor: 105,
+    goalAgainst: 115,
+    goalDifferential: -10,
+    winPercentage: 0.600,
+    date: '2024-04-15'
   },
   {
     teamName: 'Team C',
+    teamAbbrev: 'TMC',
+    teamLogo: 'https://assets.nhle.com/logos/nhl/svg/TMC_light.svg',
     points: 55,
     internationalSystemPoints: 58,
     wins: 22,
@@ -42,6 +58,11 @@ const mockStandings: Standing[] = [
     otLosses: 1,
     conferenceName: 'Western',
     divisionName: 'Pacific',
+    goalFor: 135,
+    goalAgainst: 105,
+    goalDifferential: 30,
+    winPercentage: 0.733,
+    date: '2024-04-15'
   }
 ];
 

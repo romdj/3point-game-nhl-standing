@@ -46,7 +46,21 @@
   </td>
   {#each columns as column}
     <td class="text-sm {column.key === 'teamName' ? 'font-medium' : 'text-center'} {getTextColor(playoffStatus, column.key === 'teamName')}">
-      {standing[column.key]}
+      {#if column.key === 'teamName'}
+        <div class="flex items-center gap-3">
+          {#if standing.teamLogo}
+            <img 
+              src={standing.teamLogo} 
+              alt="{standing.teamName} logo"
+              class="w-6 h-6"
+              loading="lazy"
+            />
+          {/if}
+          <span>{standing[column.key]}</span>
+        </div>
+      {:else}
+        {standing[column.key]}
+      {/if}
     </td>
   {/each}
 </tr>

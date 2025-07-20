@@ -22,6 +22,8 @@ describe('StandingsService', () => {
   const mockStandings: Standing[] = [
     {
       teamName: 'Boston Bruins',
+      teamAbbrev: 'BOS',
+      teamLogo: 'https://assets.nhle.com/logos/nhl/svg/BOS_light.svg',
       gamesPlayed: 82,
       wins: 50,
       losses: 20,
@@ -31,10 +33,17 @@ describe('StandingsService', () => {
       points: 112,
       internationalSystemPoints: 150,
       divisionName: 'Atlantic',
-      conferenceName: 'Eastern'
+      conferenceName: 'Eastern',
+      goalFor: 280,
+      goalAgainst: 210,
+      goalDifferential: 70,
+      winPercentage: 0.683,
+      date: '2024-04-15'
     },
     {
       teamName: 'Toronto Maple Leafs',
+      teamAbbrev: 'TOR',
+      teamLogo: 'https://assets.nhle.com/logos/nhl/svg/TOR_light.svg',
       gamesPlayed: 82,
       wins: 45,
       losses: 25,
@@ -44,7 +53,12 @@ describe('StandingsService', () => {
       points: 102,
       internationalSystemPoints: 140,
       divisionName: 'Atlantic',
-      conferenceName: 'Eastern'
+      conferenceName: 'Eastern',
+      goalFor: 250,
+      goalAgainst: 225,
+      goalDifferential: 25,
+      winPercentage: 0.622,
+      date: '2024-04-15'
     }
   ];
 

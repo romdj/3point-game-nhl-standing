@@ -2,10 +2,12 @@
   import { onMount } from "svelte";
   import { StandingsTable } from "../components/Table";
   import ViewSelector from "../components/ViewSelector.svelte";
+  import HistoricalComparison from "../components/HistoricalComparison.svelte";
   import ErrorBoundary from "../components/ErrorBoundary.svelte";
   import ErrorDisplay from "../components/ErrorDisplay.svelte";
   import { LoadingSpinner, ErrorMessage } from "../components/UI";
   import { standingsStore } from "../stores/standingsStore";
+  import { viewTypeStore } from "../stores/viewStore";
   import { AppErrorHandler } from "../utils/errorHandler";
   import { logger } from "../utils/logger";
   import { StandingsService } from "../business";
@@ -69,7 +71,11 @@
       <ErrorBoundary fallback="An error occurred while displaying the standings">
         <div class="space-y-6">
           <ViewSelector />
-          <StandingsTable />
+          {#if $viewTypeStore === 'comparison'}
+            <HistoricalComparison />
+          {:else}
+            <StandingsTable />
+          {/if}
         </div>
       </ErrorBoundary>
     {/if}

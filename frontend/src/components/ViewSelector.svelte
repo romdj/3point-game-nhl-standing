@@ -6,7 +6,8 @@
     { id: 'division', label: 'Division' },
     { id: 'wildcard', label: 'Wild Card' },
     { id: 'conference', label: 'Conference' },
-    { id: 'league', label: 'League' }
+    { id: 'league', label: 'League' },
+    { id: 'comparison', label: 'Historical Comparison' }
   ];
 
   const currentSeasonYear = getCurrentNHLSeasonYear();

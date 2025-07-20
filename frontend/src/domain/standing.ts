@@ -3,6 +3,8 @@ export interface Standing {
   otWins: number;
   internationalSystemPoints: number;
   teamName: string;
+  teamAbbrev: string;
+  teamLogo: string;
   points: number;
   wins: number;
   regulationWins: number;
@@ -10,6 +12,11 @@ export interface Standing {
   otLosses: number;
   divisionName: string;
   conferenceName: string;
+  goalFor: number;
+  goalAgainst: number;
+  goalDifferential: number;
+  winPercentage: number;
+  date: string;
 }
 
 export const CONFERENCES = {

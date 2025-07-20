@@ -7,6 +7,8 @@ const mockStandings: Standing[] = [
   // Eastern Conference - Atlantic Division
   {
     teamName: 'Boston Bruins',
+    teamAbbrev: 'BOS',
+    teamLogo: 'https://assets.nhle.com/logos/nhl/svg/BOS_light.svg',
     points: 60,
     internationalSystemPoints: 65,
     divisionName: 'Atlantic',
@@ -17,9 +19,16 @@ const mockStandings: Standing[] = [
     regulationWins: 22,
     otWins: 3,
     otLosses: 2,
+    goalFor: 140,
+    goalAgainst: 105,
+    goalDifferential: 35,
+    winPercentage: 0.714,
+    date: '2024-04-15'
   },
   {
     teamName: 'Toronto Maple Leafs',
+    teamAbbrev: 'TOR',
+    teamLogo: 'https://assets.nhle.com/logos/nhl/svg/TOR_light.svg',
     points: 55,
     internationalSystemPoints: 60,
     divisionName: 'Atlantic',
@@ -30,9 +39,16 @@ const mockStandings: Standing[] = [
     regulationWins: 20,
     otWins: 2,
     otLosses: 3,
+    goalFor: 125,
+    goalAgainst: 115,
+    goalDifferential: 10,
+    winPercentage: 0.629,
+    date: '2024-04-15'
   },
   {
     teamName: 'Tampa Bay Lightning',
+    teamAbbrev: 'TBL',
+    teamLogo: 'https://assets.nhle.com/logos/nhl/svg/TBL_light.svg',
     points: 50,
     internationalSystemPoints: 55,
     divisionName: 'Atlantic',
@@ -43,9 +59,16 @@ const mockStandings: Standing[] = [
     regulationWins: 18,
     otWins: 2,
     otLosses: 5,
+    goalFor: 120,
+    goalAgainst: 118,
+    goalDifferential: 2,
+    winPercentage: 0.571,
+    date: '2024-04-15'
   },
   {
     teamName: 'Florida Panthers',
+    teamAbbrev: 'FLA',
+    teamLogo: 'https://assets.nhle.com/logos/nhl/svg/FLA_light.svg',
     points: 45,
     internationalSystemPoints: 50,
     divisionName: 'Atlantic',
@@ -56,10 +79,17 @@ const mockStandings: Standing[] = [
     regulationWins: 16,
     otWins: 2,
     otLosses: 7,
+    goalFor: 115,
+    goalAgainst: 125,
+    goalDifferential: -10,
+    winPercentage: 0.514,
+    date: '2024-04-15'
   },
   // Eastern Conference - Metropolitan Division
   {
     teamName: 'New York Rangers',
+    teamAbbrev: 'NYR',
+    teamLogo: 'https://assets.nhle.com/logos/nhl/svg/NYR_light.svg',
     points: 52,
     internationalSystemPoints: 57,
     divisionName: 'Metropolitan',
@@ -70,9 +100,16 @@ const mockStandings: Standing[] = [
     regulationWins: 19,
     otWins: 2,
     otLosses: 4,
+    goalFor: 130,
+    goalAgainst: 120,
+    goalDifferential: 10,
+    winPercentage: 0.600,
+    date: '2024-04-15'
   },
   {
     teamName: 'New Jersey Devils',
+    teamAbbrev: 'NJD',
+    teamLogo: 'https://assets.nhle.com/logos/nhl/svg/NJD_light.svg',
     points: 48,
     internationalSystemPoints: 53,
     divisionName: 'Metropolitan',
@@ -83,10 +120,17 @@ const mockStandings: Standing[] = [
     regulationWins: 17,
     otWins: 2,
     otLosses: 6,
+    goalFor: 110,
+    goalAgainst: 115,
+    goalDifferential: -5,
+    winPercentage: 0.543,
+    date: '2024-04-15'
   },
   // Western Conference - Central Division
   {
     teamName: 'Colorado Avalanche',
+    teamAbbrev: 'COL',
+    teamLogo: 'https://assets.nhle.com/logos/nhl/svg/COL_light.svg',
     points: 58,
     internationalSystemPoints: 63,
     divisionName: 'Central',
@@ -97,10 +141,17 @@ const mockStandings: Standing[] = [
     regulationWins: 21,
     otWins: 3,
     otLosses: 1,
+    goalFor: 145,
+    goalAgainst: 110,
+    goalDifferential: 35,
+    winPercentage: 0.686,
+    date: '2024-04-15'
   },
   // Western Conference - Pacific Division
   {
     teamName: 'Vegas Golden Knights',
+    teamAbbrev: 'VGK',
+    teamLogo: 'https://assets.nhle.com/logos/nhl/svg/VGK_light.svg',
     points: 54,
     internationalSystemPoints: 59,
     divisionName: 'Pacific',
@@ -111,6 +162,11 @@ const mockStandings: Standing[] = [
     regulationWins: 20,
     otWins: 2,
     otLosses: 3,
+    goalFor: 135,
+    goalAgainst: 120,
+    goalDifferential: 15,
+    winPercentage: 0.629,
+    date: '2024-04-15'
   }
 ];
 

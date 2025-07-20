@@ -7,6 +7,8 @@ import type { Standing } from '../domain/standing';
 const mockStandings: Standing[] = [
   {
     teamName: 'Boston Bruins',
+    teamAbbrev: 'BOS',
+    teamLogo: 'https://assets.nhle.com/logos/nhl/svg/BOS_light.svg',
     points: 60,
     internationalSystemPoints: 65,
     divisionName: 'Atlantic',
@@ -17,9 +19,16 @@ const mockStandings: Standing[] = [
     regulationWins: 22,
     otWins: 3,
     otLosses: 2,
+    goalFor: 140,
+    goalAgainst: 105,
+    goalDifferential: 35,
+    winPercentage: 0.714,
+    date: '2024-04-15'
   },
   {
     teamName: 'Toronto Maple Leafs',
+    teamAbbrev: 'TOR',
+    teamLogo: 'https://assets.nhle.com/logos/nhl/svg/TOR_light.svg',
     points: 55,
     internationalSystemPoints: 60,
     divisionName: 'Atlantic',
@@ -30,6 +39,11 @@ const mockStandings: Standing[] = [
     regulationWins: 20,
     otWins: 2,
     otLosses: 3,
+    goalFor: 125,
+    goalAgainst: 115,
+    goalDifferential: 10,
+    winPercentage: 0.629,
+    date: '2024-04-15'
   }
 ];
 
@@ -95,6 +109,8 @@ describe('standingsStore', () => {
     // Add a new team using update
     const newTeam: Standing = {
       teamName: 'New York Rangers',
+      teamAbbrev: 'NYR',
+      teamLogo: 'https://assets.nhle.com/logos/nhl/svg/NYR_light.svg',
       points: 52,
       internationalSystemPoints: 57,
       divisionName: 'Metropolitan',
@@ -105,6 +121,11 @@ describe('standingsStore', () => {
       regulationWins: 19,
       otWins: 2,
       otLosses: 4,
+      goalFor: 120,
+      goalAgainst: 110,
+      goalDifferential: 10,
+      winPercentage: 0.600,
+      date: '2024-04-15'
     };
 
     standingsStore.update(standings => [...standings, newTeam]);
@@ -149,6 +170,8 @@ describe('standingsStore', () => {
   it('should handle complex standing objects correctly', () => {
     const complexStanding: Standing = {
       teamName: 'Complex Team',
+      teamAbbrev: 'CMP',
+      teamLogo: 'https://assets.nhle.com/logos/nhl/svg/CMP_light.svg',
       points: 0,
       internationalSystemPoints: 0,
       divisionName: 'Atlantic',
@@ -159,6 +182,11 @@ describe('standingsStore', () => {
       regulationWins: 0,
       otWins: 0,
       otLosses: 0,
+      goalFor: 0,
+      goalAgainst: 0,
+      goalDifferential: 0,
+      winPercentage: 0.000,
+      date: '2024-04-15'
     };
 
     standingsStore.set([complexStanding]);
