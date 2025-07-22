@@ -12,7 +12,7 @@
 
   // Check if column is sortable - all Standing fields including powerplay stats
   const isSortableColumn = (key: StandingTableColumn['key']): key is keyof Standing => {
-    return key in ({} as Standing); // All Standing fields are now sortable
+    return true; // All Standing fields are now sortable
   };
 </script>
 
