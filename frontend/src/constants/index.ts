@@ -51,4 +51,5 @@ export const TABLE_COLUMN_WIDTHS = {
   TEAM_NAME: 'w-48',
   SMALL_STAT: 'w-16',
   MEDIUM_STAT: 'w-20',
+  POWERPLAY_STAT: 'w-24',
 } as const;

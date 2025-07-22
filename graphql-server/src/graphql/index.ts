@@ -3,6 +3,7 @@ import { typeDefs } from './schemas/querySchema';
 
 export const resolvers = {
   Query: teamsStandings.Query,
-};  // Ensure that Query is exported in the expected format
+  Team: teamsStandings.Team,
+};  // Ensure that Query and Team resolvers are exported
 
 export const schema = typeDefs;

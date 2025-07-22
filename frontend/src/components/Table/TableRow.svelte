@@ -1,11 +1,11 @@
 <script lang="ts">
-  import type { Standing } from '../../domain/standing';
+  import type { Standing, StandingTableColumn } from '../../domain/standing';
   import PlayoffStatusIndicator from './PlayoffStatusIndicator.svelte';
   import PositionChangeIndicator from './PositionChangeIndicator.svelte';
 
   export let standing: Standing;
   export let index: number;
-  export let columns: Array<{ key: keyof Standing; label: string; width: string }>;
+  export let columns: StandingTableColumn[];
   export let playoffStatus: 'division-leader' | 'wildcard' | 'race' | 'non-playoff' = 'non-playoff';
   export let previousStandings: Record<string, number> = {};
 
@@ -28,6 +28,54 @@
       case 'wildcard': return 'text-success font-semibold';
       case 'race': return 'text-warning font-semibold';
       default: return 'text-base-content';
+    }
+  }
+
+  // Get value for column, handling nested powerplay stats
+  function getColumnValue(standing: Standing, key: string): string | number | null {
+    switch (key) {
+      case 'minutesPerPowerplayGoal':
+        return standing.powerplayStats?.minutesPerPowerplayGoal ?? null;
+      case 'powerplayPercentage':
+        return standing.powerplayStats?.powerplayPercentage ?? null;
+      default:
+        return standing[key as keyof Standing] as string | number;
+    }
+  }
+
+  // Format powerplay values for display
+  function formatPowerplayValue(key: string, value: string | number | null): string {
+    if (value === null || value === undefined) return 'N/A';
+    
+    switch (key) {
+      case 'minutesPerPowerplayGoal':
+        return typeof value === 'number' ? value.toFixed(1) : 'N/A';
+      case 'powerplayPercentage':
+        return typeof value === 'number' ? `${value.toFixed(1)}%` : 'N/A';
+      default:
+        return String(value);
+    }
+  }
+
+  // Get efficiency color for powerplay stats
+  function getPowerplayEfficiencyColor(key: string, value: string | number | null): string {
+    if (value === null || value === undefined) return 'text-gray-400';
+    
+    switch (key) {
+      case 'minutesPerPowerplayGoal':
+        if (typeof value === 'number') {
+          if (value < 8) return 'text-green-600'; // Very efficient
+          if (value > 12) return 'text-red-600';  // Inefficient
+        }
+        return 'text-base-content';
+      case 'powerplayPercentage':
+        if (typeof value === 'number') {
+          if (value > 25) return 'text-green-600';  // Very good PP%
+          if (value < 15) return 'text-red-600';   // Poor PP%
+        }
+        return 'text-base-content';
+      default:
+        return 'text-base-content';
     }
   }
 </script>
@@ -58,8 +106,16 @@
           {/if}
           <span>{standing[column.key]}</span>
         </div>
+      {:else if column.key === 'minutesPerPowerplayGoal' || column.key === 'powerplayPercentage'}
+        {@const value = getColumnValue(standing, column.key)}
+        <span 
+          class="font-medium {getPowerplayEfficiencyColor(column.key, value)}"
+          title={column.tooltip || ''}
+        >
+          {formatPowerplayValue(column.key, value)}
+        </span>
       {:else}
-        {standing[column.key]}
+        {getColumnValue(standing, column.key)}
       {/if}
     </td>
   {/each}

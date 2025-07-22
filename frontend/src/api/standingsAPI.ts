@@ -25,6 +25,13 @@ const STANDINGS_QUERY = gql`
       goalDifferential
       winPercentage
       date
+      powerplayStats {
+        powerplayGoals
+        powerplayMinutes
+        minutesPerPowerplayGoal
+        powerplayOpportunities
+        powerplayPercentage
+      }
     }
   }
 `;

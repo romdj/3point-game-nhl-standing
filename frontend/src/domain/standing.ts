@@ -1,3 +1,11 @@
+export interface PowerplayStats {
+  powerplayGoals: number;
+  powerplayMinutes: number;
+  minutesPerPowerplayGoal: number | null;
+  powerplayOpportunities: number;
+  powerplayPercentage: number;
+}
+
 export interface Standing {
   gamesPlayed: number;
   otWins: number;
@@ -17,6 +25,7 @@ export interface Standing {
   goalDifferential: number;
   winPercentage: number;
   date: string;
+  powerplayStats?: PowerplayStats;
 }
 
 export const CONFERENCES = {
@@ -27,5 +36,12 @@ export const CONFERENCES = {
 export type TableColumn<T> = {
   key: keyof T;
   label: string;
+};
+
+export type StandingTableColumn = {
+  key: keyof Standing | 'minutesPerPowerplayGoal' | 'powerplayPercentage';
+  label: string;
+  width: string;
+  tooltip?: string;
 };
 

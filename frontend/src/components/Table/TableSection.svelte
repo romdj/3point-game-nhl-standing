@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { Standing } from '../../domain/standing';
+  import type { Standing, StandingTableColumn } from '../../domain/standing';
   import { slide } from 'svelte/transition';
   import TableHeader from './TableHeader.svelte';
   import TableRow from './TableRow.svelte';
@@ -8,7 +8,7 @@
 
   export let groupName: string;
   export let teams: Standing[];
-  export let columns: Array<{ key: keyof Standing; label: string; width: string }>;
+  export let columns: StandingTableColumn[];
   export let sortKey: SortKey;
   export let sortOrder: SortOrder;
   export let onSort: (_key: SortKey) => void;

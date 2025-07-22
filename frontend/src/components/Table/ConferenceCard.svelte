@@ -1,10 +1,10 @@
 <script lang="ts">
-  import type { Standing } from '../../domain/standing';
+  import type { Standing, StandingTableColumn } from '../../domain/standing';
   import TableSection from './TableSection.svelte';
 
   export let conferenceIndex: number;
   export let conferenceGroups: Record<string, Standing[]>;
-  export let columns: Array<{ key: keyof Standing; label: string; width: string }>;
+  export let columns: StandingTableColumn[];
   export let sortKey: keyof Standing;
   export let sortOrder: 'asc' | 'desc';
   export let onSort: (_key: keyof Standing) => void;
