@@ -6,6 +6,7 @@ import config from '../config/env.js';
 
 export const API_ENDPOINTS = {
   NHL_STANDINGS: `${config.NHL_API_BASE_URL}/standings`,
+  NHL_TEAM_STATS: (teamId: string, season: string) => `https://api.nhle.com/stats/rest/en/team/summary?cayenneExp=seasonId=${season} and teamId=${teamId}`,
 } as const;
 
 export const POINT_SYSTEMS = {
