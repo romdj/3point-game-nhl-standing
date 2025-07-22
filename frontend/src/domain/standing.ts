@@ -26,6 +26,9 @@ export interface Standing {
   winPercentage: number;
   date: string;
   powerplayStats?: PowerplayStats;
+  // Derived powerplay fields for sorting
+  minutesPerPowerplayGoal?: number | null;
+  powerplayPercentage?: number | null;
 }
 
 export const CONFERENCES = {
@@ -39,7 +42,7 @@ export type TableColumn<T> = {
 };
 
 export type StandingTableColumn = {
-  key: keyof Standing | 'minutesPerPowerplayGoal' | 'powerplayPercentage';
+  key: keyof Standing;
   label: string;
   width: string;
   tooltip?: string;

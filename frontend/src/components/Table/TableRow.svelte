@@ -31,16 +31,9 @@
     }
   }
 
-  // Get value for column, handling nested powerplay stats
-  function getColumnValue(standing: Standing, key: string): string | number | null {
-    switch (key) {
-      case 'minutesPerPowerplayGoal':
-        return standing.powerplayStats?.minutesPerPowerplayGoal ?? null;
-      case 'powerplayPercentage':
-        return standing.powerplayStats?.powerplayPercentage ?? null;
-      default:
-        return standing[key as keyof Standing] as string | number;
-    }
+  // Get value for column
+  function getColumnValue(standing: Standing, key: keyof Standing): string | number | null {
+    return standing[key] as string | number | null;
   }
 
   // Format powerplay values for display

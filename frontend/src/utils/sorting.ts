@@ -7,8 +7,12 @@ export function sortStandings(standings: Standing[], sortKey: keyof Standing, so
     const aValue = a[sortKey];
     const bValue = b[sortKey];
 
-    if (aValue === undefined || bValue === undefined) {
-      return 0;
+    // Handle null/undefined values - put them at the end regardless of sort order
+    if (aValue === null || aValue === undefined) {
+      return bValue === null || bValue === undefined ? 0 : 1;
+    }
+    if (bValue === null || bValue === undefined) {
+      return -1;
     }
 
     if (aValue < bValue) return sortOrder === 'asc' ? -1 : 1;

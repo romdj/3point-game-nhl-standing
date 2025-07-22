@@ -10,9 +10,9 @@
     onSort(key);
   };
 
-  // Check if column is sortable (only regular Standing fields for now)
+  // Check if column is sortable - all Standing fields including powerplay stats
   const isSortableColumn = (key: StandingTableColumn['key']): key is keyof Standing => {
-    return key !== 'minutesPerPowerplayGoal' && key !== 'powerplayPercentage';
+    return key in ({} as Standing); // All Standing fields are now sortable
   };
 </script>
 

@@ -69,7 +69,14 @@ export const fetchStandingsForDate = async (date: string) => {
           'fetchStandingsForDate'
         );
         
-        return queryResult.data.standings;
+        // Transform standings to include derived powerplay fields for sorting
+        const transformedStandings = queryResult.data.standings.map((standing: any) => ({
+          ...standing,
+          minutesPerPowerplayGoal: standing.powerplayStats?.minutesPerPowerplayGoal ?? null,
+          powerplayPercentage: standing.powerplayStats?.powerplayPercentage ?? null,
+        }));
+        
+        return transformedStandings;
       },
       'api',
       { operation: 'fetchStandingsForDate', date }
