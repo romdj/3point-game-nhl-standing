@@ -8,6 +8,7 @@
   export let columns: StandingTableColumn[];
   export let playoffStatus: 'division-leader' | 'wildcard' | 'race' | 'non-playoff' = 'non-playoff';
   export let previousStandings: Record<string, number> = {};
+  export let allStandings: Standing[] = []; // For percentile calculations
 
   // Get team row background color based on status
   function getRowBackground(status: string): string {
@@ -50,23 +51,48 @@
     }
   }
 
-  // Get efficiency color for powerplay stats
+  // Calculate percentile for a value within a dataset
+  function calculatePercentile(value: number, values: number[]): number {
+    const sortedValues = [...values].sort((a, b) => a - b);
+    const index = sortedValues.findIndex(v => v >= value);
+    return index === -1 ? 100 : (index / sortedValues.length) * 100;
+  }
+
+  // Get efficiency color for powerplay stats based on percentiles
   function getPowerplayEfficiencyColor(key: string, value: string | number | null): string {
-    if (value === null || value === undefined) return 'text-gray-400';
+    if (value === null || value === undefined || typeof value !== 'number') {
+      return 'text-gray-400';
+    }
     
     switch (key) {
-      case 'minutesPerPowerplayGoal':
-        if (typeof value === 'number') {
-          if (value < 8) return 'text-green-600'; // Very efficient
-          if (value > 12) return 'text-red-600';  // Inefficient
-        }
+      case 'minutesPerPowerplayGoal': {
+        // Get valid values for percentile calculation
+        const validValues = allStandings
+          .map(s => s.minutesPerPowerplayGoal)
+          .filter((v): v is number => v !== null && v !== undefined);
+        
+        if (validValues.length === 0) return 'text-base-content';
+        
+        const percentile = calculatePercentile(value, validValues);
+        // For min/PPG: lower is better, so green for bottom 25%, red for top 25%
+        if (percentile <= 25) return 'text-green-600'; // Top performers (efficient)
+        if (percentile >= 75) return 'text-red-600';   // Bottom performers (inefficient)
         return 'text-base-content';
-      case 'powerplayPercentage':
-        if (typeof value === 'number') {
-          if (value > 25) return 'text-green-600';  // Very good PP%
-          if (value < 15) return 'text-red-600';   // Poor PP%
-        }
+      }
+      case 'powerplayPercentage': {
+        // Get valid values for percentile calculation
+        const validValues = allStandings
+          .map(s => s.powerplayPercentage)
+          .filter((v): v is number => v !== null && v !== undefined);
+        
+        if (validValues.length === 0) return 'text-base-content';
+        
+        const percentile = calculatePercentile(value, validValues);
+        // For PP%: higher is better, so green for top 25%, red for bottom 25%
+        if (percentile >= 75) return 'text-green-600'; // Top performers (high PP%)
+        if (percentile <= 25) return 'text-red-600';   // Bottom performers (low PP%)
         return 'text-base-content';
+      }
       default:
         return 'text-base-content';
     }

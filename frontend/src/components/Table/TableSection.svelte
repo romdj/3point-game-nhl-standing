@@ -14,6 +14,7 @@
   export let onSort: (_key: SortKey) => void;
   export let previousStandings: Record<string, number> = {};
   export let showSectionTitle: boolean = false;
+  export let allStandings: Standing[] = []; // For percentile calculations
 
   // Business logic service
   const groupingService = new StandingsGroupingService();
@@ -64,6 +65,7 @@
             {columns} 
             {playoffStatus} 
             {previousStandings}
+            {allStandings}
           />
         {/each}
       </tbody>

@@ -9,6 +9,7 @@
   export let sortOrder: 'asc' | 'desc';
   export let onSort: (_key: keyof Standing) => void;
   export let previousStandings: Record<string, number> = {};
+  export let allStandings: Standing[] = []; // For percentile calculations
   export let viewType: 'conference' | 'division' | 'wildcard';
 
   $: conferenceName = conferenceIndex === 0 ? 'Western Conference' : 'Eastern Conference';
@@ -35,6 +36,7 @@
             {sortOrder} 
             {onSort}
             {previousStandings}
+            {allStandings}
             showSectionTitle={true}
           />
         {/if}
@@ -53,6 +55,7 @@
             {sortOrder} 
             {onSort}
             {previousStandings}
+            {allStandings}
             showSectionTitle={viewType === 'division'}
           />
         {/if}
