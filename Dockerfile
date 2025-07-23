@@ -2,7 +2,7 @@
 # This builds both the GraphQL server and SvelteKit frontend
 
 # Build stage for GraphQL server
-FROM node:20-alpine AS server-build
+FROM node:22-alpine AS server-build
 WORKDIR /app
 
 # Copy root package.json and install workspace dependencies
@@ -16,7 +16,7 @@ COPY graphql-server/ ./graphql-server/
 RUN cd graphql-server && npm run build
 
 # Build stage for frontend
-FROM node:20-alpine AS frontend-build
+FROM node:22-alpine AS frontend-build
 WORKDIR /app
 
 # Copy root package.json and install workspace dependencies
@@ -30,7 +30,7 @@ COPY frontend/ ./frontend/
 RUN cd frontend && npm run build
 
 # Production stage
-FROM node:20-alpine AS production
+FROM node:22-alpine AS production
 WORKDIR /app
 
 # Install production dependencies only

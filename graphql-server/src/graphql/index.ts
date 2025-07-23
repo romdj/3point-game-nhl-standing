@@ -1,5 +1,5 @@
-import { teamsStandings } from './resolvers/queryResolvers';
-import { typeDefs } from './schemas/querySchema';
+import { teamsStandings } from './resolvers/queryResolvers.js';
+import { typeDefs } from './schemas/querySchema.js';
 
 export const resolvers = {
   Query: teamsStandings.Query,

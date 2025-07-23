@@ -1,5 +1,5 @@
 # Server-only Dockerfile for development
-FROM node:20-alpine AS build
+FROM node:22-alpine AS build
 WORKDIR /app
 
 # Copy workspace files
@@ -13,7 +13,7 @@ COPY graphql-server/ ./graphql-server/
 RUN cd graphql-server && npm run build
 
 # Production stage
-FROM node:20-alpine AS production
+FROM node:22-alpine AS production
 WORKDIR /app
 
 # Install production dependencies
@@ -24,7 +24,7 @@ RUN npm ci --omit=dev --ignore-scripts
 
 # Copy built application
 COPY --from=build /app/graphql-server/dist ./graphql-server/dist
-COPY --from=build /app/graphql-server/src/graphql/schemas/schema.graphql ./graphql-server/src/graphql/schemas/
+COPY --from=build /app/graphql-server/src/graphql/schemas/schema.graphql ./graphql-server/dist/src/graphql/schemas/
 
 # Install curl for health checks
 RUN apk add --no-cache curl
