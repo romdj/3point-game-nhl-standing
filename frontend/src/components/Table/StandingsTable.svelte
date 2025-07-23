@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { Standing } from '../../domain/standing';
+  import type { Standing, StandingTableColumn } from '../../domain/standing';
   import { standingsStore } from '../../stores/standingsStore';
   import { viewTypeStore } from '../../stores/viewStore';
   import { fade, slide } from 'svelte/transition';
@@ -92,7 +92,7 @@
       return acc;
     }, [{}, {}] as Array<Record<string, Standing[]>>) : null;
 
-  const columns: Array<{ key: keyof Standing; label: string; width: string }> = [
+  const columns: StandingTableColumn[] = [
     { key: 'teamName', label: 'Team', width: TABLE_COLUMN_WIDTHS.TEAM_NAME },
     { key: 'gamesPlayed', label: 'GP', width: TABLE_COLUMN_WIDTHS.SMALL_STAT },
     { key: 'wins', label: 'W', width: TABLE_COLUMN_WIDTHS.SMALL_STAT },
@@ -100,6 +100,8 @@
     { key: 'otLosses', label: 'OTL', width: TABLE_COLUMN_WIDTHS.SMALL_STAT },
     { key: 'points', label: 'PTS', width: TABLE_COLUMN_WIDTHS.SMALL_STAT },
     { key: 'internationalSystemPoints', label: 'IIHF PTS', width: TABLE_COLUMN_WIDTHS.MEDIUM_STAT },
+    { key: 'minutesPerPowerplayGoal', label: 'Min/PPG', width: TABLE_COLUMN_WIDTHS.POWERPLAY_STAT, tooltip: 'Minutes per powerplay goal: Total PP time ÷ PP goals. Lower values indicate more efficient powerplay scoring. Green = top 25% (most efficient), Red = bottom 25% (least efficient)' },
+    { key: 'powerplayPercentage', label: 'PP%', width: TABLE_COLUMN_WIDTHS.SMALL_STAT, tooltip: 'Powerplay percentage: (PP goals ÷ PP opportunities) × 100. Traditional measure of powerplay success rate. Green = top 25% (highest %), Red = bottom 25% (lowest %)' },
   ];
 </script>
 
@@ -122,6 +124,7 @@
           {sortOrder}
           onSort={handleSort}
           {previousStandings}
+          allStandings={$standingsStore}
           viewType={$viewTypeStore}
         />
       {/each}
@@ -156,6 +159,7 @@
                 {sortOrder} 
                 onSort={handleSort}
                 {previousStandings}
+                allStandings={$standingsStore}
                 showSectionTitle={false}
               />
             </div>

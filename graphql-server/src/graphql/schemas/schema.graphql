@@ -22,6 +22,15 @@ type Team {
   teamLogo: String
   winPercentage: Float
   wins: Int
+  powerplayStats: PowerplayStats
+}
+
+type PowerplayStats {
+  powerplayGoals: Int!
+  powerplayMinutes: Float!
+  minutesPerPowerplayGoal: Float
+  powerplayOpportunities: Int!
+  powerplayPercentage: Float!
 }
 
 type Query {

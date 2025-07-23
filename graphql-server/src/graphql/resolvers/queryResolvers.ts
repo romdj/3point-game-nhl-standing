@@ -3,6 +3,7 @@ import type { NHLApiStandingsResponse, NHLApiTeam, StandingsQueryArgs, Transform
 import { API_ENDPOINTS, POINT_SYSTEMS, ERROR_MESSAGES } from '../../constants/index.js';
 import { logger, PerformanceLogger } from '../../utils/logger.js';
 import { API_TIMEOUTS, RETRY_LIMITS } from '../../constants/shared.js';
+import { powerplayService } from '../../services/powerplayService.js';
 
 export const teamsStandings = {
   Query: {
@@ -76,6 +77,33 @@ export const teamsStandings = {
           throw new Error(ERROR_MESSAGES.FETCH_STANDINGS_FAILED);
         }
       }, { date: requestDate });
+    }
+  },
+  
+  Team: {
+    powerplayStats: async (parent: TransformedTeam) => {
+      logger.debug({ 
+        teamAbbrev: parent.teamAbbrev,
+        teamName: parent.teamName 
+      }, 'Fetching powerplay stats for team');
+      
+      try {
+        const powerplayStats = await powerplayService.getPowerplayStats(parent.teamAbbrev);
+        
+        logger.debug({ 
+          teamAbbrev: parent.teamAbbrev,
+          powerplayStats 
+        }, 'Successfully fetched powerplay stats');
+        
+        return powerplayStats;
+      } catch (error) {
+        logger.error({ 
+          teamAbbrev: parent.teamAbbrev,
+          error: error instanceof Error ? error.message : String(error) 
+        }, 'Failed to fetch powerplay stats for team');
+        
+        return null;
+      }
     }
   }
 };

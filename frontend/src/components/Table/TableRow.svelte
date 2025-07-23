@@ -1,13 +1,14 @@
 <script lang="ts">
-  import type { Standing } from '../../domain/standing';
+  import type { Standing, StandingTableColumn } from '../../domain/standing';
   import PlayoffStatusIndicator from './PlayoffStatusIndicator.svelte';
   import PositionChangeIndicator from './PositionChangeIndicator.svelte';
 
   export let standing: Standing;
   export let index: number;
-  export let columns: Array<{ key: keyof Standing; label: string; width: string }>;
+  export let columns: StandingTableColumn[];
   export let playoffStatus: 'division-leader' | 'wildcard' | 'race' | 'non-playoff' = 'non-playoff';
   export let previousStandings: Record<string, number> = {};
+  export let allStandings: Standing[] = []; // For percentile calculations
 
   // Get team row background color based on status
   function getRowBackground(status: string): string {
@@ -28,6 +29,72 @@
       case 'wildcard': return 'text-success font-semibold';
       case 'race': return 'text-warning font-semibold';
       default: return 'text-base-content';
+    }
+  }
+
+  // Get value for column
+  function getColumnValue(standing: Standing, key: keyof Standing): string | number | null {
+    return standing[key] as string | number | null;
+  }
+
+  // Format powerplay values for display
+  function formatPowerplayValue(key: string, value: string | number | null): string {
+    if (value === null || value === undefined) return 'N/A';
+    
+    switch (key) {
+      case 'minutesPerPowerplayGoal':
+        return typeof value === 'number' ? value.toFixed(1) : 'N/A';
+      case 'powerplayPercentage':
+        return typeof value === 'number' ? `${value.toFixed(1)}%` : 'N/A';
+      default:
+        return String(value);
+    }
+  }
+
+  // Calculate percentile for a value within a dataset
+  function calculatePercentile(value: number, values: number[]): number {
+    const sortedValues = [...values].sort((a, b) => a - b);
+    const index = sortedValues.findIndex(v => v >= value);
+    return index === -1 ? 100 : (index / sortedValues.length) * 100;
+  }
+
+  // Get efficiency color for powerplay stats based on percentiles
+  function getPowerplayEfficiencyColor(key: string, value: string | number | null): string {
+    if (value === null || value === undefined || typeof value !== 'number') {
+      return 'text-gray-400';
+    }
+    
+    switch (key) {
+      case 'minutesPerPowerplayGoal': {
+        // Get valid values for percentile calculation
+        const validValues = allStandings
+          .map(s => s.minutesPerPowerplayGoal)
+          .filter((v): v is number => v !== null && v !== undefined);
+        
+        if (validValues.length === 0) return 'text-base-content';
+        
+        const percentile = calculatePercentile(value, validValues);
+        // For min/PPG: lower is better, so green for bottom 25%, red for top 25%
+        if (percentile <= 25) return 'text-green-600'; // Top performers (efficient)
+        if (percentile >= 75) return 'text-red-600';   // Bottom performers (inefficient)
+        return 'text-base-content';
+      }
+      case 'powerplayPercentage': {
+        // Get valid values for percentile calculation
+        const validValues = allStandings
+          .map(s => s.powerplayPercentage)
+          .filter((v): v is number => v !== null && v !== undefined);
+        
+        if (validValues.length === 0) return 'text-base-content';
+        
+        const percentile = calculatePercentile(value, validValues);
+        // For PP%: higher is better, so green for top 25%, red for bottom 25%
+        if (percentile >= 75) return 'text-green-600'; // Top performers (high PP%)
+        if (percentile <= 25) return 'text-red-600';   // Bottom performers (low PP%)
+        return 'text-base-content';
+      }
+      default:
+        return 'text-base-content';
     }
   }
 </script>
@@ -58,8 +125,16 @@
           {/if}
           <span>{standing[column.key]}</span>
         </div>
+      {:else if column.key === 'minutesPerPowerplayGoal' || column.key === 'powerplayPercentage'}
+        {@const value = getColumnValue(standing, column.key)}
+        <span 
+          class="font-medium {getPowerplayEfficiencyColor(column.key, value)}"
+          title={column.tooltip || ''}
+        >
+          {formatPowerplayValue(column.key, value)}
+        </span>
       {:else}
-        {standing[column.key]}
+        {getColumnValue(standing, column.key)}
       {/if}
     </td>
   {/each}
