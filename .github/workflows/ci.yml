@@ -20,6 +20,10 @@ jobs:
   # Build and deploy only - everything else handled by git hooks
   build-and-deploy:
     runs-on: ubuntu-latest
+    outputs:
+      frontend-image: ${{ steps.meta-frontend.outputs.tags }}
+      server-image: ${{ steps.meta-server.outputs.tags }}
+      build-success: ${{ steps.build.conclusion == 'success' }}
     permissions:
       contents: read
       packages: write
@@ -38,6 +42,7 @@ jobs:
         run: npm install
 
       - name: Build applications
+        id: build
         run: npm run build
 
       - name: Set up Docker Buildx
@@ -99,29 +104,43 @@ jobs:
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         uses: aquasecurity/trivy-action@master
         with:
-          image-ref: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-frontend:${{ github.sha }}
+          image-ref: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-frontend:latest
           format: 'sarif'
           output: 'trivy-frontend-results.sarif'
 
-      - name: Upload Trivy scan results
+      - name: Run security scan on Server Docker image
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-server:latest
+          format: 'sarif'
+          output: 'trivy-server-results.sarif'
+
+      - name: Upload Frontend Trivy scan results
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         uses: github/codeql-action/upload-sarif@v3
         with:
           sarif_file: 'trivy-frontend-results.sarif'
 
-      # - name: Test deployment with Docker Compose
-      #   if : github.event_name == 'pull_request'
-      #   run: |
-      #     docker compose up -d
-      #     sleep 30
+      - name: Upload Server Trivy scan results
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: 'trivy-server-results.sarif'
 
-      #     # Test GraphQL server
-      #     curl -f http://localhost:4000/health || exit 1
+      - name: Test deployment with Docker Compose
+        if: github.event_name == 'pull_request'
+        run: |
+          docker compose up -d
+          sleep 30
 
-      #     # Test frontend
-      #     curl -f http://localhost:5173/health || exit 1
+          # Test GraphQL server
+          curl -f http://localhost:4000/health || exit 1
 
-      #     docker compose down
+          # Test frontend
+          curl -f http://localhost:3000/health || exit 1
+
+          docker compose down
 
   # CodeQL security analysis (only things that can't run locally)
   security-analysis:
