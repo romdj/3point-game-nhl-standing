@@ -4,6 +4,12 @@ on:
   schedule:
     # Run every Monday at 9 AM UTC (only on main branch)
     - cron: '0 9 * * 1'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'package*.json'
+      - 'graphql-server/package*.json'
+      - 'frontend/package*.json'
   workflow_dispatch:
     inputs:
       update_type:
@@ -23,8 +29,8 @@ permissions:
 jobs:
   update-dependencies:
     runs-on: ubuntu-latest
-    # Only run on main branch
-    if: github.ref == 'refs/heads/main'
+    # Run on main branch for scheduled/manual updates, or on any branch for pull requests
+    if: github.ref == 'refs/heads/main' || github.event_name == 'pull_request'
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -42,45 +48,57 @@ jobs:
         
       - name: Update dependencies
         run: |
-          # Determine update type
-          UPDATE_TYPE="${{ github.event.inputs.update_type || 'minor' }}"
-          
-          echo "Updating dependencies with type: $UPDATE_TYPE"
-          
-          # Update root dependencies
-          if [ "$UPDATE_TYPE" = "patch" ]; then
-            npm update
-          elif [ "$UPDATE_TYPE" = "minor" ]; then
-            npx npm-check-updates -u -t minor
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            echo "Pull request detected - validating current dependencies"
+            echo "Checking for outdated dependencies..."
+            
+            # Check for outdated dependencies without updating
+            npx npm-check-updates
+            cd graphql-server && npx npm-check-updates && cd ..
+            cd frontend && npx npm-check-updates && cd ..
+            
+            echo "Dependencies check completed"
           else
-            npx npm-check-updates -u
+            # Determine update type
+            UPDATE_TYPE="${{ github.event.inputs.update_type || 'minor' }}"
+            
+            echo "Updating dependencies with type: $UPDATE_TYPE"
+            
+            # Update root dependencies
+            if [ "$UPDATE_TYPE" = "patch" ]; then
+              npm update
+            elif [ "$UPDATE_TYPE" = "minor" ]; then
+              npx npm-check-updates -u -t minor
+            else
+              npx npm-check-updates -u
+            fi
+            
+            npm install
+            
+            # Update workspace dependencies
+            cd graphql-server
+            if [ "$UPDATE_TYPE" = "patch" ]; then
+              npm update
+            elif [ "$UPDATE_TYPE" = "minor" ]; then
+              npx npm-check-updates -u -t minor
+            else
+              npx npm-check-updates -u
+            fi
+            cd ..
+            
+            cd frontend
+            if [ "$UPDATE_TYPE" = "patch" ]; then
+              npm update
+            elif [ "$UPDATE_TYPE" = "minor" ]; then
+              npx npm-check-updates -u -t minor
+            else
+              npx npm-check-updates -u
+            fi
+            cd ..
+            
+            # Reinstall all dependencies
+            npm install
           fi
-          
-          npm install
-          
-          # Update workspace dependencies
-          cd graphql-server
-          if [ "$UPDATE_TYPE" = "patch" ]; then
-            npm update
-          elif [ "$UPDATE_TYPE" = "minor" ]; then
-            npx npm-check-updates -u -t minor
-          else
-            npx npm-check-updates -u
-          fi
-          cd ..
-          
-          cd frontend
-          if [ "$UPDATE_TYPE" = "patch" ]; then
-            npm update
-          elif [ "$UPDATE_TYPE" = "minor" ]; then
-            npx npm-check-updates -u -t minor
-          else
-            npx npm-check-updates -u
-          fi
-          cd ..
-          
-          # Reinstall all dependencies
-          npm install
           
       - name: Run tests
         run: npm test
@@ -101,7 +119,7 @@ jobs:
           fi
           
       - name: Create Pull Request
-        if: steps.changes.outputs.changes == 'true'
+        if: steps.changes.outputs.changes == 'true' && github.event_name != 'pull_request'
         uses: peter-evans/create-pull-request@v6
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -141,6 +159,18 @@ jobs:
             automated-pr
             
       - name: Comment on no changes
-        if: steps.changes.outputs.changes == 'false'
+        if: steps.changes.outputs.changes == 'false' && github.event_name != 'pull_request'
         run: |
           echo "No dependency updates available for ${{ github.event.inputs.update_type || 'minor' }} update type"
+          
+      - name: Summary for pull request
+        if: github.event_name == 'pull_request'
+        run: |
+          echo "## Dependency Validation Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "✅ Dependencies validated successfully" >> $GITHUB_STEP_SUMMARY
+          echo "✅ All tests passing" >> $GITHUB_STEP_SUMMARY  
+          echo "✅ Linting checks passing" >> $GITHUB_STEP_SUMMARY
+          echo "✅ Type checking passing" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "This pull request includes dependency changes that have been validated." >> $GITHUB_STEP_SUMMARY
