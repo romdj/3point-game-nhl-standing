@@ -15,27 +15,27 @@
 		"lint": "eslint ."
 	},
 	"devDependencies": {
-		"@sveltejs/adapter-auto": "^6.0.1",
-		"@sveltejs/kit": "^2.25.1",
-		"@sveltejs/vite-plugin-svelte": "^6.1.0",
-		"@testing-library/jest-dom": "^6.0.0",
-		"@testing-library/svelte": "^5.0.0",
+		"@sveltejs/adapter-auto": "^6.0.2",
+		"@sveltejs/kit": "^2.27.3",
+		"@sveltejs/vite-plugin-svelte": "^6.1.1",
+		"@testing-library/jest-dom": "^6.6.4",
+		"@testing-library/svelte": "^5.2.8",
 		"@vitest/coverage-v8": "^3.2.4",
 		"@vitest/ui": "^3.2.4",
-		"autoprefixer": "^10.4.20",
-		"eslint-plugin-svelte": "^2.44.1",
+		"autoprefixer": "^10.4.21",
+		"eslint-plugin-svelte": "^2.46.1",
 		"happy-dom": "^18.0.1",
-		"postcss": "^8.4.48",
-		"svelte": "^5.36.8",
-		"svelte-check": "^4.0.0",
-		"tailwindcss": "^3.4.14",
-		"vite": "^7.0.5",
+		"postcss": "^8.5.6",
+		"svelte": "^5.38.0",
+		"svelte-check": "^4.3.1",
+		"tailwindcss": "^3.4.17",
+		"vite": "^7.1.1",
 		"vitest": "^3.2.4"
 	},
 	"type": "module",
 	"dependencies": {
-		"@urql/svelte": "^4.2.1",
-		"daisyui": "^4.12.12",
-		"svelte-table": "^0.6.3"
+		"@urql/svelte": "^4.2.3",
+		"daisyui": "^4.12.24",
+		"svelte-table": "^0.6.5"
 	}
 }
