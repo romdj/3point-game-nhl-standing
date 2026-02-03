@@ -22,7 +22,7 @@
     "apollo-server": "^3.13.0",
     "dotenv": "^16.6.1",
     "got": "^13.0.0",
-    "fastify": "^5.4.0",
+    "fastify": "^5.7.3",
     "graphql": "^16.11.0",
     "mercurius": "^15.1.0",
     "pino-pretty": "^13.1.1"
